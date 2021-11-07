@@ -48,7 +48,14 @@ public class Player : MonoBehaviour
 	private LayerMask playerLayer;
 	[SerializeField]
 	private float groundCheckRadius = .03f;
-	
+
+	[Header("Sound")]
+	[Space]
+	[SerializeField]
+	private float stepTime = .6f;
+
+	private float stepTimer;
+
 	/// SAUT
 
 	/// <summary>
@@ -125,6 +132,16 @@ public class Player : MonoBehaviour
 			walkParticle.Play();
 		}
 		wasWalking = IsWalking;
+
+		if (IsWalking)
+        {
+			stepTimer += Time.deltaTime;
+			if (stepTimer >= stepTime)
+            {
+				stepTimer = 0f;
+				StepSound();
+            }
+        }
 	}
 
 	private void UpdateGrounded()
