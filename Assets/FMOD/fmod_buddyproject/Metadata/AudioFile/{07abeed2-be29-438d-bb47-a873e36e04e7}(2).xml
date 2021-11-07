@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.02.00">
+	<object class="AudioFile" id="{07abeed2-be29-438d-bb47-a873e36e04e7}">
+		<property name="assetPath">
+			<value>Robots, Voice, Droid, Sci-Fi, Emote 9 SND7186 3.wav</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>96</value>
+		</property>
+		<property name="channelCount">
+			<value>2</value>
+		</property>
+		<property name="length">
+			<value>0.55479166666666668</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{e373284c-fc12-4502-9131-cf062ca39ce5}</destination>
+		</relationship>
+	</object>
+</objects>

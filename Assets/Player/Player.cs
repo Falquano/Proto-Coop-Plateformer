@@ -5,6 +5,9 @@ using UnityEngine.InputSystem;
 
 public class Player : MonoBehaviour
 {
+	public int ID { get; private set; }
+	private static int nextID;
+
 	[Header("Objects")]
 	[Space]
 	private Rigidbody2D body;
@@ -83,6 +86,9 @@ public class Player : MonoBehaviour
 
 	private void Awake()
 	{
+		ID = nextID;
+		nextID++;
+
 		if (manager == null)
 			manager = GameObject.Find("@Player Manager").GetComponent<PlayerManager>();
 
@@ -97,7 +103,15 @@ public class Player : MonoBehaviour
 	}
 
     private void Update()
-    {
+	{
+		UpdateGrounded();
+
+		if (Grounded && !wasGrounded)
+		{
+			Debug.Log(Grounded);
+			LandSound();
+		}
+
 		lastJumpInput += Time.deltaTime;
 		helpTime += Time.deltaTime;
 
@@ -113,10 +127,8 @@ public class Player : MonoBehaviour
 		wasWalking = IsWalking;
 	}
 
-    void FixedUpdate()
-	{
-		timeSinceFall += Time.fixedDeltaTime;
-
+	private void UpdateGrounded()
+    {
 		wasGrounded = Grounded;
 		Grounded = false;
 		foreach (Transform transform in GroundCheckPositions)
@@ -125,26 +137,33 @@ public class Player : MonoBehaviour
 			{
 				Grounded = true;
 				timeSinceFall = 0;
-			} else
+			}
+			else
 			{
 				Collider2D[] results = new Collider2D[manager.PlayerCount];
 				Physics2D.OverlapCircle(transform.position, groundCheckRadius, new ContactFilter2D() { layerMask = playerLayer }, results);
 				if (results.Length <= 0)
 					break;
 
-				foreach(Collider2D collider in results)
-                {
+				foreach (Collider2D collider in results)
+				{
 					if (collider == null)
 						continue;
 
 					if (!collider.GetComponent<Player>().Equals(this))
-                    {
+					{
 						Grounded = true;
 						break;
-                    }
-                }
+					}
+				}
 			}
 		}
+	}
+
+    void FixedUpdate()
+	{
+		timeSinceFall += Time.fixedDeltaTime;
+		UpdateGrounded();
 
 		if (Grounded)
 			helpAvailable = true;
@@ -197,7 +216,8 @@ public class Player : MonoBehaviour
 		{
 			targetVelocity.y = jumpStrength;
 			Grounded = false;
-			Debug.Log($"Coyote : {timeSinceFall}/{coyoteTime},\nPrejump : {lastJumpInput}/{preJumpTime}");
+			//Debug.Log($"Coyote : {timeSinceFall}/{coyoteTime},\nPrejump : {lastJumpInput}/{preJumpTime}");
+			JumpSound();
 		}
 
 		if (currentHelpStrength >= .01f)
@@ -225,9 +245,9 @@ public class Player : MonoBehaviour
         }			
     }
 
-	// INPUTS
+    // INPUTS
 
-	public void InputHorizontalMovement(InputAction.CallbackContext context)
+    public void InputHorizontalMovement(InputAction.CallbackContext context)
 	{
 		horizontalMove = context.ReadValue<float>() * runSpeed;
 	}
@@ -246,6 +266,7 @@ public class Player : MonoBehaviour
 		if (context.performed && helpAvailable && helpTime >= helpCooldown)
 		{
 			State = PlayerState.OfferingHelp;
+			HelpSound();
 		} else if (context.canceled)
         {
 			State = PlayerState.Moving;
@@ -275,6 +296,7 @@ public class Player : MonoBehaviour
 		currentHelpStrength = 1f;
 		State = PlayerState.Moving;
 		helpAvailable = true;
+		HelpedSound();
 	}
 
     private void OnDrawGizmosSelected()
@@ -301,6 +323,38 @@ public class Player : MonoBehaviour
 
 		state = value;
     }
+
+	// SONS
+	public void StepSound()
+    {
+		FMODUnity.RuntimeManager.PlayOneShot("event:/walk");
+	}
+
+	public void JumpSound()
+    {
+		FMODUnity.RuntimeManager.PlayOneShot("event:/jump");
+	}
+
+	public void HelpSound()
+    {
+		FMODUnity.RuntimeManager.PlayOneShot("event:/capacity");
+	}
+
+	public void HelpedSound()
+    {
+		FMODUnity.RuntimeManager.PlayOneShot("event:/capacited");
+	}
+
+	public void LandSound()
+    {
+		//Debug.Log("Paf");
+		FMODUnity.RuntimeManager.PlayOneShot("event:/landing");
+	}
+
+	public void WallGrabSound()
+    {
+		FMODUnity.RuntimeManager.PlayOneShot("event:/wallgrab");
+	}
 }
 
 /// <summary>
