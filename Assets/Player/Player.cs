@@ -18,6 +18,8 @@ public class Player : MonoBehaviour
 	[SerializeField]
 	private TrailRenderer jumpTrail;
 	private static PlayerManager manager;
+	[SerializeField]
+	private GameObject ImpactParticlePrefab;
 
 	[Header("Values")]
 	[Space]
@@ -365,6 +367,7 @@ public class Player : MonoBehaviour
 	public void LandSound()
     {
 		//Debug.Log("Paf");
+		Instantiate(ImpactParticlePrefab, new Vector3(transform.position.x, transform.position.y, 3), Quaternion.identity);
 		FMODUnity.RuntimeManager.PlayOneShot("event:/landing");
 	}
 
