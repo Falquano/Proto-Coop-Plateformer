@@ -16,18 +16,19 @@ public class Player : MonoBehaviour
 	[SerializeField] private TrailRenderer jumpTrail;
 	private static PlayerManager manager;
 	[SerializeField] private GameObject ImpactParticlePrefab;
+	[SerializeField] private HelpOrienter helpOrienter;
 
 	[Header("Values")]
 	[Space]
 	[SerializeField] private float runSpeed = 40f;
 	[SerializeField] private float jumpStrength = 30f;
 	[SerializeField] private float helpStrength = 20f;
+	[SerializeField] private float helpVerticalPortion = .2f;
 	[SerializeField] private float helpLoss = .02f;
 	[SerializeField] private float helpCooldown = 1f;
 	[SerializeField] private float helpRadius = 4f;
 	[SerializeField] private float preJumpTime = .1f;
 	[SerializeField] private float coyoteTime = .1f;
-	[SerializeField] private float minimumFallTimeForParticles = .55f;
 
 	[Header("Ground Checks")]
 	[Space]
@@ -59,6 +60,7 @@ public class Player : MonoBehaviour
 
 	private bool helpAvailable = true;
 	private float helpTime = 10f;
+	public Vector2 AimDirection { get; private set; }
 
 	/// <summary>
 	/// Indique si le joueur est sur le sol et se déplace.
@@ -209,7 +211,8 @@ public class Player : MonoBehaviour
 
 			if (Vector2.Distance(transform.position, otherPlayer.transform.position) <= helpRadius)
 			{
-				otherPlayer.PullUp();
+				//otherPlayer.PullUp();
+				otherPlayer.HelpMe(this);
 				State = PlayerState.Moving;
 				helpTime = 0f;
 				helpAvailable = false;
@@ -280,7 +283,7 @@ public class Player : MonoBehaviour
 
 	public void InputJump(InputAction.CallbackContext context)
 	{
-		if (context.performed)
+		if (context.performed && State != PlayerState.OfferingHelp)
 		{
 			jump = true;
 			lastJumpInput = 0;
@@ -291,6 +294,7 @@ public class Player : MonoBehaviour
 	{
 		if (context.performed && helpAvailable && helpTime >= helpCooldown)
 		{
+			helpOrienter.ResetDirection();
 			State = PlayerState.OfferingHelp;
 			HelpSound();
 		} else if (context.canceled)
@@ -303,28 +307,43 @@ public class Player : MonoBehaviour
     {
 		if (context.performed)
 			Respawn();
-    }
+	}
+
+	public void InputAim(InputAction.CallbackContext context)
+	{
+		Vector2 aimInput = context.ReadValue<Vector2>();
+		if (aimInput.magnitude == 0)
+			return;
+		
+		AimDirection = aimInput.normalized;
+	}
 
 	// ACTIONS
 
 	/// <summary>
-	/// Attire ce joueur vers son compagnon.
-	/// TODO : tenter de donner une impulsion verticale uniquement ? Pourrait être plus "intuitif"...
+	/// Similaire à <see cref="PullUp"/>, mais dans la direction vers laquelle vise le joueur aidant.
+	/// En plus de cette direction, on ajoute un peu de boost vers le haut !
 	/// </summary>
+	/// <param name="otherPlayer"></param>
 	public void HelpMe(Player otherPlayer)
 	{
-		helpDirection = (otherPlayer.transform.position - transform.position).normalized;
-		currentHelpStrength = 1f;
-		State = PlayerState.Moving;
-		helpAvailable = true;
+		helpDirection =
+			(Vector3)otherPlayer.AimDirection.normalized * (1f - otherPlayer.helpVerticalPortion) // Visée
+			+ otherPlayer.transform.up * otherPlayer.helpVerticalPortion; // Poussée vers le haut
+		ActivateBoost();
 	}
 
 	/// <summary>
-	/// Similaire à <see cref="HelpMe"/> mais uniquement vers le haut, pour l'instant ça parrait mieux, faudrait polir HelpMe.
+	/// Lance le joueur vers le haut.
 	/// </summary>
 	public void PullUp()
     {
 		helpDirection = Vector3.up;
+		ActivateBoost();
+	}
+
+	private void ActivateBoost()
+	{
 		currentHelpStrength = 1f;
 		State = PlayerState.Boost;
 		helpAvailable = true;

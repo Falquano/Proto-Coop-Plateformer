@@ -30,7 +30,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 5478215713898102290}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
 --- !u!198 &8960756328138258602
 ParticleSystem:
@@ -4804,6 +4804,36 @@ ParticleSystemRenderer:
   m_Mesh2: {fileID: 0}
   m_Mesh3: {fileID: 0}
   m_MaskInteraction: 0
+--- !u!1 &411947262126159942
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4872568798592923730}
+  m_Layer: 6
+  m_Name: HelpParticleTarget
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4872568798592923730
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 411947262126159942}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 5478215713898102290}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5478215713375891559
 GameObject:
   m_ObjectHideFlags: 0
@@ -4900,6 +4930,7 @@ Transform:
   - {fileID: 5478215714746086251}
   - {fileID: 5478215713402439819}
   - {fileID: 7526047492544466456}
+  - {fileID: 4872568798592923730}
   - {fileID: 3784829204717261269}
   - {fileID: 4951836116173246200}
   m_Father: {fileID: 0}
@@ -4917,7 +4948,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Actions: {fileID: 0}
+  m_Actions: {fileID: -944628639613478452, guid: 8643785bc8f20bf439ed4289400ee4d9, type: 3}
   m_NotificationBehavior: 2
   m_UIInputModule: {fileID: 0}
   m_DeviceLostEvent:
@@ -5006,6 +5037,22 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 5c2adcfe-a27f-4293-b095-7f696142f421
     m_ActionName: Player/Respawn[/Keyboard/r]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 5478215713898102293}
+        m_TargetAssemblyTypeName: Player, Assembly-CSharp
+        m_MethodName: InputAim
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 5e12afb5-76ca-49b7-92ce-f3e61b80f9a4
+    m_ActionName: Player/Aim[/Keyboard/upArrow,/Keyboard/downArrow,/Keyboard/leftArrow,/Keyboard/rightArrow,/Keyboard/i,/Keyboard/k,/Keyboard/j,/Keyboard/l,/Keyboard/w,/Keyboard/s,/Keyboard/a,/Keyboard/d,/XInputControllerWindows/leftStick,/XInputControllerWindows/dpad,/XInputControllerWindows/rightStick]
   m_NeverAutoSwitchControlSchemes: 1
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
@@ -5027,15 +5074,16 @@ MonoBehaviour:
   walkParticle: {fileID: 8960756328138258602}
   jumpTrail: {fileID: 5372543180767162905}
   ImpactParticlePrefab: {fileID: 3880576406777092154, guid: 6862013d7416be34cb2a6f87a20a3379, type: 3}
+  helpOrienter: {fileID: 9026444031555321122}
   runSpeed: 20
   jumpStrength: 15
   helpStrength: 22
+  helpVerticalPortion: 0.2
   helpLoss: 0.035
   helpCooldown: 1
   helpRadius: 4.2
   preJumpTime: 0.1
   coyoteTime: 0.1
-  minimumFallTimeForParticles: 0.3
   GroundCheckPositions:
   - {fileID: 5478215713375891558}
   - {fileID: 5478215714746086251}
@@ -5186,6 +5234,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7526047492544466456}
   - component: {fileID: 6197859226634991890}
+  - component: {fileID: 9026444031555321122}
   m_Layer: 6
   m_Name: HelpRadius
   m_TagString: Player
@@ -5247,17 +5296,32 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: -2413806693520163455, guid: c05aa169a5333e0439a19e34f7a17a6f, type: 3}
-  m_Color: {r: 0.9245283, g: 0.9092898, b: 0.5712887, a: 0.2627451}
+  m_Sprite: {fileID: 21300000, guid: 90ac0aa8c3514d14b923e75eaf336e0a, type: 3}
+  m_Color: {r: 1, g: 0.95555556, b: 0, a: 0.2509804}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 5.12, y: 5.12}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &9026444031555321122
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6605336123091220826}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b4011846b7ab1c74f8c57e2e7a77b16a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 5478215713898102293}
+  target: {fileID: 4872568798592923730}
+  smoothTime: 0.075
 --- !u!1 &8646929327084591399
 GameObject:
   m_ObjectHideFlags: 0
@@ -5287,7 +5351,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 5478215713898102290}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!96 &5372543180767162905
 TrailRenderer:
