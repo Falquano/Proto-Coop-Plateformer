@@ -4917,12 +4917,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Actions: {fileID: -944628639613478452, guid: 8643785bc8f20bf439ed4289400ee4d9, type: 3}
+  m_Actions: {fileID: 0}
   m_NotificationBehavior: 2
   m_UIInputModule: {fileID: 0}
   m_DeviceLostEvent:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 5478215713898102293}
+        m_TargetAssemblyTypeName: Player, Assembly-CSharp
+        m_MethodName: DeviceLost
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_DeviceRegainedEvent:
     m_PersistentCalls:
       m_Calls: []
@@ -5023,6 +5035,7 @@ MonoBehaviour:
   helpRadius: 4.2
   preJumpTime: 0.1
   coyoteTime: 0.1
+  minimumFallTimeForParticles: 0.3
   GroundCheckPositions:
   - {fileID: 5478215713375891558}
   - {fileID: 5478215714746086251}

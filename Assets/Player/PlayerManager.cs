@@ -50,6 +50,8 @@ public class PlayerManager : MonoBehaviour
 
     public void OnPlayerLeft(PlayerInput playerInput)
     {
+        Debug.LogWarning("Player left");
         players.Remove(playerInput.GetComponent<Player>());
+        Destroy(playerInput.gameObject);
     }
 }

@@ -388,6 +388,11 @@ public class Player : MonoBehaviour
 		}
 	}
 
+	public void DeviceLost(PlayerInput playerInput)
+    {
+		manager.OnPlayerLeft(playerInput);
+    }
+
 	// SONS
 	public void StepSound()
     {
