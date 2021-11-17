@@ -100,7 +100,8 @@ public class Player : MonoBehaviour
 		helpHighlight.SetActive(false);
 
 		SpriteRenderer spriteRenderer = GetComponent<SpriteRenderer>();
-		spriteRenderer.color = Random.ColorHSV(0f, 1f, 0.7f, 0.8f, 0.7f, 0.8f);
+		//spriteRenderer.color = Random.ColorHSV(0f, 1f, 0.7f, 0.8f, 0.7f, 0.8f); // Ancienne méthode d'assignation de couleur
+		spriteRenderer.color = Color.HSVToRGB(manager.RequestHue(), .75f, .75f); // Nouvelle méthode, couleur unique !
 
 		lastGroundedLocation = transform.position;
 	}
@@ -409,8 +410,18 @@ public class Player : MonoBehaviour
 
 	public void DeviceLost(PlayerInput playerInput)
     {
-		manager.OnPlayerLeft(playerInput);
+		RemovePlayer(playerInput);
     }
+
+	public void RemovePlayer(PlayerInput playerInput)
+    {
+		SpriteRenderer spriteRenderer = GetComponent<SpriteRenderer>();
+		float h;
+		Color.RGBToHSV(spriteRenderer.color, out h, out _, out _);
+		manager.AddAvailableHue(h);
+
+		manager.OnPlayerLeft(playerInput);
+	}
 
 	// SONS
 	public void StepSound()
