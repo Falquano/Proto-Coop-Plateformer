@@ -87,6 +87,8 @@ public class Player : MonoBehaviour
 
 	private PlayerState state;
 
+	private bool doesIgnoreOtherPlayers;
+	public bool DoesIgnoreOtherPlayers { get => doesIgnoreOtherPlayers; set => SetDoesIgnoreOtherPlayers(value); }
 	/// <summary>
 	/// L'état du joueur. Voir <see cref="PlayerState"/>.
 	/// </summary>
@@ -202,6 +204,9 @@ public class Player : MonoBehaviour
 			case PlayerState.OfferingHelp:
 				UpdateHelp();
 				break;
+			case PlayerState.Boost:
+				UpdateBoost();
+				break;
         }
 
 		UpdateTrail();
@@ -246,14 +251,24 @@ public class Player : MonoBehaviour
 			JumpSound();
 		}
 
-		if (currentHelpStrength >= .01f)
-		{
-			targetVelocity = helpDirection * currentHelpStrength * helpStrength;
-			currentHelpStrength -= helpLoss;
-		}
-
 		body.velocity = targetVelocity;
 
+		jump = false;
+	}
+
+	private void UpdateBoost()
+	{
+		if (currentHelpStrength <= .01f)
+		{
+			DoesIgnoreOtherPlayers = false;
+			State = PlayerState.Moving;
+			return;
+		}
+
+		Vector2 targetVelocity = helpDirection * currentHelpStrength * helpStrength;
+		currentHelpStrength -= helpLoss;
+
+		body.velocity = targetVelocity;
 		jump = false;
 	}
 
@@ -326,9 +341,10 @@ public class Player : MonoBehaviour
     {
 		helpDirection = Vector3.up;
 		currentHelpStrength = 1f;
-		State = PlayerState.Moving;
+		State = PlayerState.Boost;
 		helpAvailable = true;
 		HelpedSound();
+		DoesIgnoreOtherPlayers = true;
 	}
 
 	/// <summary>
@@ -374,6 +390,19 @@ public class Player : MonoBehaviour
 		state = value;
     }
 
+	private void SetDoesIgnoreOtherPlayers(bool value)
+    {
+		doesIgnoreOtherPlayers = value;
+		IgnoreOtherPlayers(value);
+    }
+	private void IgnoreOtherPlayers(bool ignore = true)
+	{
+		foreach (Player player in manager.Players)
+		{
+			Physics2D.IgnoreCollision(this.GetComponent<Collider2D>(), player.GetComponent<Collider2D>(), ignore);
+		}
+	}
+
 	// SONS
 	public void StepSound()
     {
@@ -414,5 +443,6 @@ public class Player : MonoBehaviour
 public enum PlayerState
 {
 	Moving,
-	OfferingHelp
+	OfferingHelp,
+	Boost
 }
