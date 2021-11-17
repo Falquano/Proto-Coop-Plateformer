@@ -11,49 +11,34 @@ public class Player : MonoBehaviour
 	[Header("Objects")]
 	[Space]
 	private Rigidbody2D body;
-	[SerializeField]
-	private GameObject helpHighlight;
-	[SerializeField]
-	private ParticleSystem walkParticle;
-	[SerializeField]
-	private TrailRenderer jumpTrail;
+	[SerializeField] private GameObject helpHighlight;
+	[SerializeField] private ParticleSystem walkParticle;
+	[SerializeField] private TrailRenderer jumpTrail;
 	private static PlayerManager manager;
 	[SerializeField] private GameObject ImpactParticlePrefab;
 
 	[Header("Values")]
 	[Space]
-	[SerializeField]
-	private float runSpeed = 40f;
-	[SerializeField]
-	private float jumpStrength = 30f;
-	[SerializeField]
-	private float helpStrength = 20f;
-	[SerializeField]
-	private float helpLoss = .02f;
-	[SerializeField]
-	private float helpCooldown = 1f;
-	[SerializeField]
-	private float helpRadius = 4f;
-	[SerializeField]
-	private float preJumpTime = .1f;
-	[SerializeField]
-	private float coyoteTime = .1f;
+	[SerializeField] private float runSpeed = 40f;
+	[SerializeField] private float jumpStrength = 30f;
+	[SerializeField] private float helpStrength = 20f;
+	[SerializeField] private float helpLoss = .02f;
+	[SerializeField] private float helpCooldown = 1f;
+	[SerializeField] private float helpRadius = 4f;
+	[SerializeField] private float preJumpTime = .1f;
+	[SerializeField] private float coyoteTime = .1f;
+	[SerializeField] private float minimumFallTimeForParticles = .55f;
 
 	[Header("Ground Checks")]
 	[Space]
-	[SerializeField]
-	private Transform[] GroundCheckPositions;
-	[SerializeField]
-	private LayerMask groundLayer;
-	[SerializeField]
-	private LayerMask playerLayer;
-	[SerializeField]
-	private float groundCheckRadius = .03f;
+	[SerializeField] private Transform[] GroundCheckPositions;
+	[SerializeField] private LayerMask groundLayer;
+	[SerializeField] private LayerMask playerLayer;
+	[SerializeField] private float groundCheckRadius = .03f;
 
 	[Header("Sound")]
 	[Space]
-	[SerializeField]
-	private float stepTime = .6f;
+	[SerializeField] private float stepTime = .6f;
 
 	private float stepTimer;
 
@@ -426,7 +411,6 @@ public class Player : MonoBehaviour
 
 	public void LandSound()
     {
-		//Debug.Log("Paf");
 		Instantiate(ImpactParticlePrefab, new Vector3(transform.position.x, transform.position.y, 3), Quaternion.identity);
 		FMODUnity.RuntimeManager.PlayOneShot("event:/landing");
 	}
