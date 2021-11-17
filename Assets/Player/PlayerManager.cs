@@ -12,22 +12,19 @@ public class PlayerManager : MonoBehaviour
     [SerializeField] 
     private Camera mainCamera;
 
-    private bool K1;
-    private bool K2;
-    private bool K3;
+    public bool FollowPlayers { get; set; } = false;
 
-    public bool FollowPlayers { get; set; } = true;
+    public int Count => players.Count;
 
-    public int PlayerCount => players.Count;
-
-    // Start is called before the first frame update
     void Start()
     {
         players = new List<Player>();
 
         manager = GetComponent<PlayerInputManager>();
-        manager.JoinPlayer(PlayerCount + 1, PlayerCount + 1, "Keyboard 1", pairWithDevice: Keyboard.current);
-        manager.JoinPlayer(PlayerCount + 1, PlayerCount + 1, "Keyboard 2", pairWithDevice: Keyboard.current);
+        manager.JoinPlayer(Count + 1, Count + 1, "Keyboard 1", pairWithDevice: Keyboard.current);
+        manager.JoinPlayer(Count + 1, Count + 1, "Keyboard 2", pairWithDevice: Keyboard.current);
+        
+        manager.EnableJoining();
     }
 
     private void Update()
@@ -38,7 +35,7 @@ public class PlayerManager : MonoBehaviour
         Vector3 pos = Vector3.zero;
         foreach (Player player in players)
             pos += player.transform.position;
-        pos /= PlayerCount;
+        pos /= Count;
         pos -= Vector3.forward * 10f;
 
         pos.y = mainCamera.transform.position.y;
@@ -46,13 +43,13 @@ public class PlayerManager : MonoBehaviour
         mainCamera.transform.position = pos;
     }
 
-    public void AddPlayer(PlayerInput player)
+    public void OnPlayerJoined(PlayerInput playerInput)
     {
-        players.Add(player.GetComponent<Player>());
+        players.Add(playerInput.GetComponent<Player>());
     }
 
-    public void PlayerLeft(PlayerInput player)
+    public void OnPlayerLeft(PlayerInput playerInput)
     {
-        players.Remove(player.GetComponent<Player>());
+        players.Remove(playerInput.GetComponent<Player>());
     }
 }
