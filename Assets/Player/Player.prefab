@@ -5081,7 +5081,7 @@ MonoBehaviour:
   helpVerticalPortion: 0.2
   helpLoss: 0.035
   helpCooldown: 1
-  helpRadius: 4.2
+  helpRadius: 2.2
   preJumpTime: 0.1
   coyoteTime: 0.1
   GroundCheckPositions:
@@ -5241,7 +5241,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &7526047492544466456
 Transform:
   m_ObjectHideFlags: 0
