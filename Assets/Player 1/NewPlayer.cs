@@ -22,45 +22,36 @@ public class NewPlayer : MonoBehaviour
     //cb test axis
     public void InputControllerAxis(InputAction.CallbackContext context)
     {
+        
         InputAxis = context.ReadValue<Vector2>();
+        Debug.Log(InputAxis);
     }
 
 
     /// <summary>
     /// Rigidbody of the player
     /// </summary>
-    private Rigidbody rb;
+    private Rigidbody2D rb;
     void Start()
     {
-        rb = GetComponent<Rigidbody>();
+        rb = GetComponent<Rigidbody2D>();
     }
 
     void FixedUpdate()
     {
-        JumpingInputUpdate(InputAxis);
-        // MoveUpdate();
+        PositionFUpdate();
     }
 
+    
+    [SerializeField] float movementSpeed;
 
-    [SerializeField] float axisMinJumpDetection;
-    private bool isAllowedJumping;
     /// <summary>
-    /// Returns weither the controller axis value is detected as a jump or not
+    /// Update the movement
     /// </summary>
-    /// <param name="ctrlAxis"></param>
-    /// <returns></returns>
-    bool JumpingInputUpdate(Vector2 ctrlAxis)
+    void PositionFUpdate()
     {
-        if (ctrlAxis.y >= axisMinJumpDetection)
-        {
-            return true;
-        }
-        return false;
-    }
-
-    void PositionUpdate()
-    {
-		
+        Debug.Log(InputAxis*movementSpeed*Time.fixedDeltaTime);
+        rb.AddForce(InputAxis*movementSpeed*Time.fixedDeltaTime,ForceMode2D.Force);
     }
 
 
@@ -70,8 +61,6 @@ public class NewPlayer : MonoBehaviour
     /// Utiliser directement <see cref="State"/>.
     /// </summary>
     /// <param name="value">Nouvelle valeur d'�tat</param>
-
-
     public void DeviceLost(PlayerInput playerInput)
     {
         RemovePlayer(playerInput);
