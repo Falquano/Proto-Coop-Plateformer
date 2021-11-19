@@ -5084,8 +5084,10 @@ MonoBehaviour:
   helpStrength: 22
   helpVerticalPortion: 0.2
   helpLoss: 0.035
-  helpCooldown: 1
-  helpRadius: 4.2
+  helpCooldown: 0
+  baseHelpRadius: 4.2
+  helpRadiusDecay: 0.33
+  helpRadiusModRecoveryPerSecond: 0.15
   preJumpTime: 0.1
   coyoteTime: 0.1
   GroundCheckPositions:

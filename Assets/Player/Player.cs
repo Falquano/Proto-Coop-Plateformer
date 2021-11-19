@@ -26,7 +26,11 @@ public class Player : MonoBehaviour
 	[SerializeField] private float helpVerticalPortion = .2f;
 	[SerializeField] private float helpLoss = .02f;
 	[SerializeField] private float helpCooldown = 1f;
-	[SerializeField] private float helpRadius = 4f;
+	[SerializeField] private float baseHelpRadius = 4.2f;
+	private float helpRadiusMod = 1f;
+	public float helpRadius => baseHelpRadius * helpRadiusMod;
+	[SerializeField] private float helpRadiusDecay = .25f;
+	[SerializeField] private float helpRadiusModRecoveryPerSecond = .25f;
 	[SerializeField] private float preJumpTime = .1f;
 	[SerializeField] private float coyoteTime = .1f;
 
@@ -140,6 +144,9 @@ public class Player : MonoBehaviour
 				StepSound();
             }
         }
+
+		helpRadiusMod = Mathf.Clamp(helpRadiusMod + helpRadiusModRecoveryPerSecond * Time.deltaTime, 0f, 1f);
+		helpHighlight.transform.localScale = new Vector3(helpRadius * 2, helpRadius * 2, 1); // Mise à jour de la taille du cercle
 	}
 
 	private void UpdateIsGrounded()
@@ -223,6 +230,7 @@ public class Player : MonoBehaviour
 				State = PlayerState.Moving;
 				helpTime = 0f;
 				helpAvailable = false;
+				helpRadiusMod = Mathf.Clamp(helpRadiusMod - helpRadiusDecay, 0f, 1f);
 			}
 		}
     }
