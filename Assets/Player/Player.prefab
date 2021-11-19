@@ -30,7 +30,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 5478215713898102290}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
 --- !u!198 &8960756328138258602
 ParticleSystem:
@@ -4804,36 +4804,6 @@ ParticleSystemRenderer:
   m_Mesh2: {fileID: 0}
   m_Mesh3: {fileID: 0}
   m_MaskInteraction: 0
---- !u!1 &411947262126159942
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 4872568798592923730}
-  m_Layer: 6
-  m_Name: HelpParticleTarget
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &4872568798592923730
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 411947262126159942}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 5478215713898102290}
-  m_RootOrder: 4
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5478215713375891559
 GameObject:
   m_ObjectHideFlags: 0
@@ -4905,6 +4875,9 @@ GameObject:
   - component: {fileID: 5478215713898102290}
   - component: {fileID: 5478215713898102295}
   - component: {fileID: 5478215713898102293}
+  - component: {fileID: 7869166897254784966}
+  - component: {fileID: 6375719382510468886}
+  - component: {fileID: 2694868286265927042}
   - component: {fileID: 5478215713898102291}
   - component: {fileID: 5478215713898102289}
   - component: {fileID: 5478215713898102288}
@@ -4930,7 +4903,6 @@ Transform:
   - {fileID: 5478215714746086251}
   - {fileID: 5478215713402439819}
   - {fileID: 7526047492544466456}
-  - {fileID: 4872568798592923730}
   - {fileID: 3784829204717261269}
   - {fileID: 4951836116173246200}
   m_Father: {fileID: 0}
@@ -5009,7 +4981,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 5478215713898102293}
         m_TargetAssemblyTypeName: Player, Assembly-CSharp
-        m_MethodName: InputHelp
+        m_MethodName: InputPull
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -5025,8 +4997,8 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 5478215713898102293}
         m_TargetAssemblyTypeName: Player, Assembly-CSharp
-        m_MethodName: Respawn
-        m_Mode: 1
+        m_MethodName: InputRespawn
+        m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -5038,10 +5010,14 @@ MonoBehaviour:
     m_ActionId: 5c2adcfe-a27f-4293-b095-7f696142f421
     m_ActionName: Player/Respawn[/Keyboard/r]
   - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 5e12afb5-76ca-49b7-92ce-f3e61b80f9a4
+    m_ActionName: Player/Aim[/Keyboard/upArrow,/Keyboard/downArrow,/Keyboard/leftArrow,/Keyboard/rightArrow,/Keyboard/i,/Keyboard/k,/Keyboard/j,/Keyboard/l,/Keyboard/w,/Keyboard/s,/Keyboard/a,/Keyboard/d,/XInputControllerWindows/leftStick,/XInputControllerWindows/dpad,/XInputControllerWindows/rightStick]
+  - m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 5478215713898102293}
         m_TargetAssemblyTypeName: Player, Assembly-CSharp
-        m_MethodName: InputAim
+        m_MethodName: InputPush
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -5051,8 +5027,8 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-    m_ActionId: 5e12afb5-76ca-49b7-92ce-f3e61b80f9a4
-    m_ActionName: Player/Aim[/Keyboard/upArrow,/Keyboard/downArrow,/Keyboard/leftArrow,/Keyboard/rightArrow,/Keyboard/i,/Keyboard/k,/Keyboard/j,/Keyboard/l,/Keyboard/w,/Keyboard/s,/Keyboard/a,/Keyboard/d,/XInputControllerWindows/leftStick,/XInputControllerWindows/dpad,/XInputControllerWindows/rightStick]
+    m_ActionId: 3802d88b-5ddd-45a5-be1b-d70a6103ba79
+    m_ActionName: Player/Push[/Keyboard/e,/Keyboard/o]
   m_NeverAutoSwitchControlSchemes: 1
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
@@ -5070,18 +5046,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67c8059f6d0939544be811bffc7e719b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  helpHighlight: {fileID: 6605336123091220826}
-  walkParticle: {fileID: 8960756328138258602}
-  jumpTrail: {fileID: 5372543180767162905}
-  ImpactParticlePrefab: {fileID: 3880576406777092154, guid: 6862013d7416be34cb2a6f87a20a3379, type: 3}
-  helpOrienter: {fileID: 9026444031555321122}
+  Sound: {fileID: 2694868286265927042}
+  FX: {fileID: 6375719382510468886}
+  Help: {fileID: 7869166897254784966}
   runSpeed: 20
   jumpStrength: 15
-  helpStrength: 22
-  helpVerticalPortion: 0.2
-  helpLoss: 0.035
-  helpCooldown: 1
-  helpRadius: 2.2
   preJumpTime: 0.1
   coyoteTime: 0.1
   GroundCheckPositions:
@@ -5096,6 +5065,53 @@ MonoBehaviour:
     m_Bits: 64
   groundCheckRadius: 0.03
   stepTime: 0.3
+--- !u!114 &7869166897254784966
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5478215713898102318}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 39bb033bc2a03e446a9570f3510adabb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  FX: {fileID: 6375719382510468886}
+  helpStrength: 20
+  helpLoss: 0.035
+  helpCooldown: 0.1
+  baseHelpRadius: 4.2
+  helpRadiusDecay: 0.33
+  helpRadiusModRecoveryPerSecond: 0.15
+--- !u!114 &6375719382510468886
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5478215713898102318}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9c8a84d1b6ea13c469867f61633afbac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  helpHighlight: {fileID: 6605336123091220826}
+  walkParticle: {fileID: 8960756328138258602}
+  jumpTrail: {fileID: 5372543180767162905}
+  ImpactParticlePrefab: {fileID: 3880576406777092154, guid: 6862013d7416be34cb2a6f87a20a3379, type: 3}
+--- !u!114 &2694868286265927042
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5478215713898102318}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fb1f24809830248448e1c1d74fb65f31, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!212 &5478215713898102291
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -5314,13 +5330,13 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6605336123091220826}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b4011846b7ab1c74f8c57e2e7a77b16a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 5478215713898102293}
-  target: {fileID: 4872568798592923730}
+  target: {fileID: 0}
   smoothTime: 0.075
 --- !u!1 &8646929327084591399
 GameObject:
@@ -5351,7 +5367,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 5478215713898102290}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!96 &5372543180767162905
 TrailRenderer:
