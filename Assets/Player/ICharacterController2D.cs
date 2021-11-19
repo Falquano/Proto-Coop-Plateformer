@@ -11,5 +11,4 @@ public abstract class ICharacterController2D : MonoBehaviour
     // Il faut aussi s'occuper des ground checks
 
     public abstract void Jump();
-
 }
