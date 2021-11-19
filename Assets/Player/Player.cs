@@ -61,6 +61,7 @@ public class Player : MonoBehaviour
 	private bool helpAvailable = true;
 	private float helpTime = 10f;
 	public Vector2 AimDirection { get; private set; }
+	private float helpMod = 1f;
 
 	/// <summary>
 	/// Indique si le joueur est sur le sol et se déplace.
@@ -213,7 +214,12 @@ public class Player : MonoBehaviour
 			if (Vector2.Distance(transform.position, otherPlayer.transform.position) <= helpRadius)
 			{
 				//otherPlayer.PullUp();
-				otherPlayer.HelpMe(this);
+				//otherPlayer.HelpMe(this);
+				if (helpMod >= 1f)
+					otherPlayer.PushMe(this);
+				else
+					otherPlayer.PullMe(this);
+
 				State = PlayerState.Moving;
 				helpTime = 0f;
 				helpAvailable = false;
@@ -304,6 +310,34 @@ public class Player : MonoBehaviour
         }
 	}
 
+	public void InputPush(InputAction.CallbackContext context)
+	{
+		if (context.performed && helpAvailable && helpTime >= helpCooldown)
+		{
+			helpMod = 1f;
+			State = PlayerState.OfferingHelp;
+			HelpSound();
+		}
+		else if (context.canceled)
+		{
+			State = PlayerState.Moving;
+		}
+	}
+
+	public void InputPull(InputAction.CallbackContext context)
+	{
+		if (context.performed && helpAvailable && helpTime >= helpCooldown)
+		{
+			helpMod = -1f;
+			State = PlayerState.OfferingHelp;
+			HelpSound();
+		}
+		else if (context.canceled)
+		{
+			State = PlayerState.Moving;
+		}
+	}
+
 	public void InputRespawn(InputAction.CallbackContext context)
     {
 		if (context.performed)
@@ -331,6 +365,18 @@ public class Player : MonoBehaviour
 		helpDirection =
 			(Vector3)otherPlayer.AimDirection.normalized * (1f - otherPlayer.helpVerticalPortion) // Visée
 			+ otherPlayer.transform.up * otherPlayer.helpVerticalPortion; // Poussée vers le haut
+		ActivateBoost();
+	}
+
+	public void PullMe(Player otherPlayer)
+	{
+		helpDirection = (otherPlayer.transform.position - transform.position).normalized;
+		ActivateBoost();
+	}
+
+	public void PushMe(Player otherPlayer)
+	{
+		helpDirection = (transform.position - otherPlayer.transform.position).normalized;
 		ActivateBoost();
 	}
 
@@ -364,8 +410,7 @@ public class Player : MonoBehaviour
 				|| screenSpawnLocation.x > Camera.main.pixelWidth
 				|| screenSpawnLocation.y > Camera.main.pixelHeight)
 			transform.position = Camera.main.ScreenToWorldPoint(
-				new Vector3(Camera.main.pixelWidth / 2, spawnWorldLocation.y, 
-							Camera.main.pixelHeight / 2));
+				new Vector3(Camera.main.pixelWidth / 2, Camera.main.pixelHeight / 2, spawnWorldLocation.z));
 		else
 			transform.position = spawnWorldLocation;
     }
