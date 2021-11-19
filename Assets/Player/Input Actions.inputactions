@@ -133,28 +133,6 @@
                     "isPartOfComposite": false
                 },
                 {
-                    "name": "negative",
-                    "id": "ccd0324d-18e8-43dd-b025-1f7f0eebfa41",
-                    "path": "<Keyboard>/leftArrow",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Keyboard 3",
-                    "action": "Horizontal Movement",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "positive",
-                    "id": "c8b6a28a-d8c5-4545-be7e-1f99905475fa",
-                    "path": "<Keyboard>/rightArrow",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Keyboard 3",
-                    "action": "Horizontal Movement",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
                     "name": "",
                     "id": "ec7f6a27-8327-466f-84ab-a65827bfbf4f",
                     "path": "<Gamepad>/leftStick/x",
@@ -222,17 +200,6 @@
                 },
                 {
                     "name": "",
-                    "id": "6bbad5b2-765a-4a9a-882f-f3e72d73401b",
-                    "path": "<Keyboard>/upArrow",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Keyboard 3",
-                    "action": "Jump",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "a891cf68-2c83-4c47-9f32-fe42048afaef",
                     "path": "<Keyboard>/q",
                     "interactions": "",
@@ -277,17 +244,6 @@
                 },
                 {
                     "name": "",
-                    "id": "32a4cef7-efc6-4fc1-8c05-22063e8cac75",
-                    "path": "<Keyboard>/rightCtrl",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Keyboard 3",
-                    "action": "Pull",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "ca577571-ded7-428e-8446-217d125045d9",
                     "path": "<Keyboard>/r",
                     "interactions": "",
@@ -307,50 +263,6 @@
                     "action": "Aim",
                     "isComposite": true,
                     "isPartOfComposite": false
-                },
-                {
-                    "name": "up",
-                    "id": "c3661aad-b530-4c89-841a-ef33d0140684",
-                    "path": "<Keyboard>/upArrow",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Keyboard 3",
-                    "action": "Aim",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "down",
-                    "id": "9ffa87f1-9498-4b65-a62e-c6f12fd6f00a",
-                    "path": "<Keyboard>/downArrow",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Keyboard 3",
-                    "action": "Aim",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "left",
-                    "id": "2c4a000d-301e-4a01-8f2d-89c1bdd1c744",
-                    "path": "<Keyboard>/leftArrow",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Keyboard 3",
-                    "action": "Aim",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "right",
-                    "id": "99048821-7bba-4a7e-816d-3186c86ea336",
-                    "path": "<Keyboard>/rightArrow",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Keyboard 3",
-                    "action": "Aim",
-                    "isComposite": false,
-                    "isPartOfComposite": true
                 },
                 {
                     "name": "P2 K",
@@ -577,17 +489,6 @@
                 {
                     "devicePath": "<Mouse>",
                     "isOptional": true,
-                    "isOR": false
-                }
-            ]
-        },
-        {
-            "name": "Keyboard 3",
-            "bindingGroup": "Keyboard 3",
-            "devices": [
-                {
-                    "devicePath": "<Keyboard>",
-                    "isOptional": false,
                     "isOR": false
                 }
             ]
