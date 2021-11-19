@@ -46,7 +46,7 @@ public class PlayerHelp : MonoBehaviour
 	{
 		foreach (Player otherPlayer in manager.Players)
 		{
-			if (otherPlayer.Equals(this))
+			if (otherPlayer.Equals(player))
 				continue;
 
 			if (Vector2.Distance(transform.position, otherPlayer.transform.position) <= helpRadius)

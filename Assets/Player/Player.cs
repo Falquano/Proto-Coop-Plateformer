@@ -311,6 +311,7 @@ public class Player : MonoBehaviour
 
 	public void PullMe(Player otherPlayer)
 	{
+		Debug.Log("ZPI");
 		helpDirection = (otherPlayer.transform.position - transform.position).normalized;
 		ActivateBoost();
 	}
@@ -386,6 +387,7 @@ public class Player : MonoBehaviour
 
 	private void SetDoesIgnoreOtherPlayers(bool value)
     {
+		Debug.Log(value);
 		doesIgnoreOtherPlayers = value;
 		IgnoreOtherPlayers(value);
     }

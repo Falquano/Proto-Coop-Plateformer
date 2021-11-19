@@ -17,8 +17,7 @@ public class PlayerFXEmitter : MonoBehaviour
 
 	public void SetHelpActive(bool active)
 	{
-		Debug.Log("BLIP");
-		helpHighlight.SetActive(false);
+		helpHighlight.SetActive(active);
 	}
 
 	public void InstantiateImpactParticle()

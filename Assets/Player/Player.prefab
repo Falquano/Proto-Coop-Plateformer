@@ -5083,7 +5083,7 @@ MonoBehaviour:
   helpCooldown: 0.1
   baseHelpRadius: 4.2
   helpRadiusDecay: 0.33
-  helpRadiusModRecoveryPerSecond: 0.015
+  helpRadiusModRecoveryPerSecond: 0.15
 --- !u!114 &6375719382510468886
 MonoBehaviour:
   m_ObjectHideFlags: 0
