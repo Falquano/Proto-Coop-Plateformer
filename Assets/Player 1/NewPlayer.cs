@@ -38,6 +38,7 @@ public class NewPlayer : MonoBehaviour
     void FixedUpdate()
     {
         JumpingInputUpdate(InputAxis);
+        // MoveUpdate();
     }
 
 

@@ -22,7 +22,7 @@ public class NewHelpOrienter : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        target.up = player.AimDirection;
+        // target.up = player.AimDirection;
 
         transform.rotation = Quaternion.Euler(0, 0, Mathf.SmoothDampAngle(transform.eulerAngles.z, target.eulerAngles.z, ref currentVelocity, smoothTime));
     }
