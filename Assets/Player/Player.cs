@@ -69,7 +69,7 @@ public class Player : MonoBehaviour
 	/// L'�tat du joueur. Voir <see cref="PlayerState"/>.
 	/// </summary>
 	public PlayerState State { get => state; set => SetPlayerState(value); }
-	
+
 	// MISES A JOUR
 
 	private void Awake()
