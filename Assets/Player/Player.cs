@@ -87,7 +87,7 @@ public class Player : MonoBehaviour
 		FX.SetHelpActive(false);
 		State = PlayerState.Moving;
 
-		SpriteRenderer spriteRenderer = GetComponent<SpriteRenderer>();
+		SpriteRenderer spriteRenderer = GetComponentInChildren<SpriteRenderer>();
 		//spriteRenderer.color = Random.ColorHSV(0f, 1f, 0.7f, 0.8f, 0.7f, 0.8f); // Ancienne méthode d'assignation de couleur
 		spriteRenderer.color = Color.HSVToRGB(manager.RequestHue(), .75f, .75f); // Nouvelle méthode, couleur unique !
 
@@ -311,7 +311,6 @@ public class Player : MonoBehaviour
 
 	public void PullMe(Player otherPlayer)
 	{
-		Debug.Log("ZPI");
 		helpDirection = (otherPlayer.transform.position - transform.position).normalized;
 		ActivateBoost();
 	}
@@ -387,7 +386,6 @@ public class Player : MonoBehaviour
 
 	private void SetDoesIgnoreOtherPlayers(bool value)
     {
-		Debug.Log(value);
 		doesIgnoreOtherPlayers = value;
 		IgnoreOtherPlayers(value);
     }
