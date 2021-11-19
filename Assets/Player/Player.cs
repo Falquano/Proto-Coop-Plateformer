@@ -12,26 +12,15 @@ public class Player : MonoBehaviour
 	[Header("Objects")]
 	[Space]
 	private Rigidbody2D body;
-	[SerializeField] private GameObject helpHighlight;
-	[SerializeField] private ParticleSystem walkParticle;
-	[SerializeField] private TrailRenderer jumpTrail;
 	private static PlayerManager manager;
-	[SerializeField] private GameObject ImpactParticlePrefab;
-	[SerializeField] private HelpOrienter helpOrienter;
+	[SerializeField] private PlayerSoundEmitter Sound;
+	[SerializeField] private PlayerFXEmitter FX;
+	[SerializeField] private PlayerHelp Help;
 
 	[Header("Values")]
 	[Space]
 	[SerializeField] private float runSpeed = 40f;
 	[SerializeField] private float jumpStrength = 30f;
-	[SerializeField] private float helpStrength = 20f;
-	[SerializeField] private float helpVerticalPortion = .2f;
-	[SerializeField] private float helpLoss = .02f;
-	[SerializeField] private float helpCooldown = 1f;
-	[SerializeField] private float baseHelpRadius = 4.2f;
-	private float helpRadiusMod = 1f;
-	public float helpRadius => baseHelpRadius * helpRadiusMod;
-	[SerializeField] private float helpRadiusDecay = .25f;
-	[SerializeField] private float helpRadiusModRecoveryPerSecond = .25f;
 	[SerializeField] private float preJumpTime = .1f;
 	[SerializeField] private float coyoteTime = .1f;
 
@@ -61,12 +50,6 @@ public class Player : MonoBehaviour
 	private float timeSinceFall = 1f;
 	private float lastJumpInput = 1f;
 
-	/// AIDE
-
-	private bool helpAvailable = true;
-	private float helpTime = 10f;
-	public Vector2 AimDirection { get; private set; }
-	private float helpMod = 1f;
 
 	/// <summary>
 	/// Indique si le joueur est sur le sol et se déplace.
@@ -101,9 +84,8 @@ public class Player : MonoBehaviour
 
 		body = GetComponent<Rigidbody2D>();
 		IsGrounded = true;
-		helpHighlight.transform.localScale = new Vector3(helpRadius * 2, helpRadius * 2, 1);
+		FX.SetHelpActive(false);
 		State = PlayerState.Moving;
-		helpHighlight.SetActive(false);
 
 		SpriteRenderer spriteRenderer = GetComponent<SpriteRenderer>();
 		//spriteRenderer.color = Random.ColorHSV(0f, 1f, 0.7f, 0.8f, 0.7f, 0.8f); // Ancienne méthode d'assignation de couleur
@@ -118,21 +100,20 @@ public class Player : MonoBehaviour
 
 		if (IsGrounded && !wasGrounded)
 		{
-			//Debug.Log(IsGrounded);
-			LandSound();
+			FX.InstantiateImpactParticle();
+			Sound.LandSound();
 		}
 
 		lastJumpInput += Time.deltaTime;
-		helpTime += Time.deltaTime;
 
 		//Debug.Log(IsWalking);
 		if (wasWalking && !IsWalking)
 		{
-			walkParticle.Stop();
+			FX.StopWalkParticle();
 		}
 		else if (!wasWalking && IsWalking)
 		{
-			walkParticle.Play();
+			FX.StartWalkParticle();
 		}
 		wasWalking = IsWalking;
 
@@ -142,12 +123,10 @@ public class Player : MonoBehaviour
 			if (stepTimer >= stepTime)
             {
 				stepTimer = 0f;
-				StepSound();
+				Sound.StepSound();
             }
         }
 
-		helpRadiusMod = Mathf.Clamp(helpRadiusMod + helpRadiusModRecoveryPerSecond * Time.deltaTime, 0f, 1f);
-		helpHighlight.transform.localScale = new Vector3(helpRadius * 2, helpRadius * 2, 1); // Mise à jour de la taille du cercle
 	}
 
 	private void UpdateIsGrounded()
@@ -191,7 +170,7 @@ public class Player : MonoBehaviour
 		UpdateIsGrounded();
 
 		if (IsGrounded)
-			helpAvailable = true;
+			Help.SetAvailable();
 
 		switch (State)
         {
@@ -199,7 +178,7 @@ public class Player : MonoBehaviour
 				UpdateMove();
 				break;
 			case PlayerState.OfferingHelp:
-				UpdateHelp();
+				Help.UpdateHelp(manager);
 				break;
 			case PlayerState.Boost:
 				UpdateBoost();
@@ -209,32 +188,7 @@ public class Player : MonoBehaviour
 		UpdateTrail();
 	}
 
-	/// <summary>
-	/// Mise à jour du personnage quand il est en état d'aide
-	/// </summary>
-	private void UpdateHelp()
-    {
-		foreach (Player otherPlayer in manager.Players)
-		{
-			if (otherPlayer.Equals(this))
-				continue;
-
-			if (Vector2.Distance(transform.position, otherPlayer.transform.position) <= helpRadius)
-			{
-				//otherPlayer.PullUp();
-				//otherPlayer.HelpMe(this);
-				if (helpMod >= 1f)
-					otherPlayer.PushMe(this);
-				else
-					otherPlayer.PullMe(this);
-
-				State = PlayerState.Moving;
-				helpTime = 0f;
-				helpAvailable = false;
-				helpRadiusMod = Mathf.Clamp(helpRadiusMod - helpRadiusDecay, 0f, 1f);
-			}
-		}
-    }
+	
 
 	/// <summary>
 	/// Mise à jour du personnage quand il se déplace
@@ -252,7 +206,7 @@ public class Player : MonoBehaviour
 			targetVelocity.y = jumpStrength;
 			IsGrounded = false;
 			//Debug.Log($"Coyote : {timeSinceFall}/{coyoteTime},\nPrejump : {lastJumpInput}/{preJumpTime}");
-			JumpSound();
+			Sound.JumpSound();
 		}
 
 		body.velocity = targetVelocity;
@@ -269,8 +223,8 @@ public class Player : MonoBehaviour
 			return;
 		}
 
-		Vector2 targetVelocity = helpDirection * currentHelpStrength * helpStrength;
-		currentHelpStrength -= helpLoss;
+		Vector2 targetVelocity = helpDirection * currentHelpStrength * Help.Strength;
+		currentHelpStrength -= Help.Loss;
 
 		body.velocity = targetVelocity;
 		jump = false;
@@ -280,13 +234,10 @@ public class Player : MonoBehaviour
     {
 		if (wasGrounded && !IsGrounded)
         {
-			jumpTrail.Clear();
-			//jumpTrail.enabled = true;
-			jumpTrail.emitting = true;
+			FX.ResetJumpTrail();
 		} else if (!wasGrounded && IsGrounded)
         {
-			//jumpTrail.enabled = false;
-			jumpTrail.emitting = false;
+			FX.StopJumpTrail();
         }			
     }
 
@@ -308,11 +259,10 @@ public class Player : MonoBehaviour
 
 	public void InputHelp(InputAction.CallbackContext context)
 	{
-		if (context.performed && helpAvailable && helpTime >= helpCooldown)
+		if (context.performed && Help.CanHelp)
 		{
-			helpOrienter.ResetDirection();
 			State = PlayerState.OfferingHelp;
-			HelpSound();
+			Sound.HelpSound();
 		} else if (context.canceled)
         {
 			State = PlayerState.Moving;
@@ -321,11 +271,11 @@ public class Player : MonoBehaviour
 
 	public void InputPush(InputAction.CallbackContext context)
 	{
-		if (context.performed && helpAvailable && helpTime >= helpCooldown)
+		if (context.performed && Help.CanHelp)
 		{
-			helpMod = 1f;
+			Help.HelpMod = 1f;
 			State = PlayerState.OfferingHelp;
-			HelpSound();
+			Sound.HelpSound();
 		}
 		else if (context.canceled)
 		{
@@ -335,11 +285,11 @@ public class Player : MonoBehaviour
 
 	public void InputPull(InputAction.CallbackContext context)
 	{
-		if (context.performed && helpAvailable && helpTime >= helpCooldown)
+		if (context.performed && Help.CanHelp)
 		{
-			helpMod = -1f;
+			Help.HelpMod = -1f;
 			State = PlayerState.OfferingHelp;
-			HelpSound();
+			Sound.HelpSound();
 		}
 		else if (context.canceled)
 		{
@@ -357,29 +307,7 @@ public class Player : MonoBehaviour
 		}
 	}
 
-	public void InputAim(InputAction.CallbackContext context)
-	{
-		Vector2 aimInput = context.ReadValue<Vector2>();
-		if (aimInput.magnitude == 0)
-			return;
-		
-		AimDirection = aimInput.normalized;
-	}
-
 	// ACTIONS
-
-	/// <summary>
-	/// Similaire à <see cref="PullUp"/>, mais dans la direction vers laquelle vise le joueur aidant.
-	/// En plus de cette direction, on ajoute un peu de boost vers le haut !
-	/// </summary>
-	/// <param name="otherPlayer"></param>
-	public void HelpMe(Player otherPlayer)
-	{
-		helpDirection =
-			(Vector3)otherPlayer.AimDirection.normalized * (1f - otherPlayer.helpVerticalPortion) // Visée
-			+ otherPlayer.transform.up * otherPlayer.helpVerticalPortion; // Poussée vers le haut
-		ActivateBoost();
-	}
 
 	public void PullMe(Player otherPlayer)
 	{
@@ -406,8 +334,8 @@ public class Player : MonoBehaviour
 	{
 		currentHelpStrength = 1f;
 		State = PlayerState.Boost;
-		helpAvailable = true;
-		HelpedSound();
+		Help.SetAvailable();
+		Sound.HelpedSound();
 		DoesIgnoreOtherPlayers = true;
 	}
 
@@ -447,12 +375,11 @@ public class Player : MonoBehaviour
     {
 		if (state == PlayerState.Moving && value == PlayerState.OfferingHelp)
         {
-			helpHighlight.SetActive(true);
+			FX.SetHelpActive(true);
         } else if (state == PlayerState.OfferingHelp && value == PlayerState.Moving)
         {
-			helpHighlight.SetActive(false);
+			FX.SetHelpActive(false);
 		}
-
 
 		state = value;
     }
@@ -483,38 +410,6 @@ public class Player : MonoBehaviour
 		manager.AddAvailableHue(h);
 
 		manager.OnPlayerLeft(playerInput);
-	}
-
-	// SONS
-	public void StepSound()
-    {
-		FMODUnity.RuntimeManager.PlayOneShot("event:/walk");
-	}
-
-	public void JumpSound()
-    {
-		FMODUnity.RuntimeManager.PlayOneShot("event:/jump");
-	}
-
-	public void HelpSound()
-    {
-		FMODUnity.RuntimeManager.PlayOneShot("event:/capacity");
-	}
-
-	public void HelpedSound()
-    {
-		FMODUnity.RuntimeManager.PlayOneShot("event:/capacited");
-	}
-
-	public void LandSound()
-    {
-		Instantiate(ImpactParticlePrefab, new Vector3(transform.position.x, transform.position.y, 3), Quaternion.identity);
-		FMODUnity.RuntimeManager.PlayOneShot("event:/landing");
-	}
-
-	public void WallGrabSound()
-    {
-		FMODUnity.RuntimeManager.PlayOneShot("event:/wallgrab");
 	}
 }
 
