@@ -5046,9 +5046,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67c8059f6d0939544be811bffc7e719b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Sound: {fileID: 2694868286265927042}
-  FX: {fileID: 6375719382510468886}
-  Help: {fileID: 7869166897254784966}
+  sound: {fileID: 2694868286265927042}
+  fx: {fileID: 6375719382510468886}
+  help: {fileID: 7869166897254784966}
+  model: {fileID: 9138074447473001644}
   runSpeed: 20
   jumpStrength: 15
   preJumpTime: 0.1

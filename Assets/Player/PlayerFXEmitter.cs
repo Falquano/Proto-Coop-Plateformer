@@ -45,4 +45,9 @@ public class PlayerFXEmitter : MonoBehaviour
 	{
 		jumpTrail.emitting = false;
 	}
+
+	public void SetHelpColor(Color color)
+    {
+		helpHighlight.GetComponent<SpriteRenderer>().color = color;
+    }
 }
