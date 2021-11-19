@@ -41,7 +41,7 @@ public class Player : MonoBehaviour
 
 	/// <summary>
 	/// Indique si le personnage est sur le sol ou sur un autre joueur. 
-	/// Mise à jour fixe.
+	/// Mise ï¿½ jour fixe.
 	/// </summary>
 	public bool IsGrounded { private set; get; }
 	private Vector3 lastGroundedLocation;
@@ -52,7 +52,7 @@ public class Player : MonoBehaviour
 
 
 	/// <summary>
-	/// Indique si le joueur est sur le sol et se déplace.
+	/// Indique si le joueur est sur le sol et se dï¿½place.
 	/// </summary>
 	public bool IsWalking => (Mathf.Abs(body.velocity.x) > .01f && IsGrounded);
 
@@ -66,10 +66,10 @@ public class Player : MonoBehaviour
 	private bool doesIgnoreOtherPlayers;
 	public bool DoesIgnoreOtherPlayers { get => doesIgnoreOtherPlayers; set => SetDoesIgnoreOtherPlayers(value); }
 	/// <summary>
-	/// L'état du joueur. Voir <see cref="PlayerState"/>.
+	/// L'ï¿½tat du joueur. Voir <see cref="PlayerState"/>.
 	/// </summary>
 	public PlayerState State { get => state; set => SetPlayerState(value); }
-
+	
 	// MISES A JOUR
 
 	private void Awake()
@@ -88,8 +88,8 @@ public class Player : MonoBehaviour
 		State = PlayerState.Moving;
 
 		SpriteRenderer spriteRenderer = GetComponentInChildren<SpriteRenderer>();
-		//spriteRenderer.color = Random.ColorHSV(0f, 1f, 0.7f, 0.8f, 0.7f, 0.8f); // Ancienne méthode d'assignation de couleur
-		spriteRenderer.color = Color.HSVToRGB(manager.RequestHue(), .75f, .75f); // Nouvelle méthode, couleur unique !
+		//spriteRenderer.color = Random.ColorHSV(0f, 1f, 0.7f, 0.8f, 0.7f, 0.8f); // Ancienne mÃ©thode d'assignation de couleur
+		spriteRenderer.color = Color.HSVToRGB(manager.RequestHue(), .75f, .75f); // Nouvelle mÃ©thode, couleur unique !
 
 		lastGroundedLocation = transform.position;
 	}
@@ -191,7 +191,7 @@ public class Player : MonoBehaviour
 	
 
 	/// <summary>
-	/// Mise à jour du personnage quand il se déplace
+	/// Mise ï¿½ jour du personnage quand il se dï¿½place
 	/// </summary>
 	private void UpdateMove()
     {
@@ -200,8 +200,8 @@ public class Player : MonoBehaviour
 			body.velocity.y);
 
 		if ((IsGrounded && jump) // On est sur le sol et on saute
-			|| (timeSinceFall <= coyoteTime && jump) // On vient de quitter le sol et on saute (il faudrait vérifier que l'on ne vient pas de sauter !)
-			|| (IsGrounded && lastJumpInput <= preJumpTime)) // On vient d'atterir et on a appuyé sur saut pendant la chute
+			|| (timeSinceFall <= coyoteTime && jump) // On vient de quitter le sol et on saute (il faudrait vï¿½rifier que l'on ne vient pas de sauter !)
+			|| (IsGrounded && lastJumpInput <= preJumpTime)) // On vient d'atterir et on a appuyï¿½ sur saut pendant la chute
 		{
 			targetVelocity.y = jumpStrength;
 			IsGrounded = false;
@@ -340,8 +340,8 @@ public class Player : MonoBehaviour
 	}
 
 	/// <summary>
-	/// Renvoie le joueur au dernier endroit "sûr" auquel il était. Si cet endroit n'est plus à l'écran il est téléporté au milieu de l'écran
-	/// Un jour faudrait faire ça plus proprement mais on va s'en contenter pour l'instant.
+	/// Renvoie le joueur au dernier endroit "sï¿½r" auquel il ï¿½tait. Si cet endroit n'est plus ï¿½ l'ï¿½cran il est tï¿½lï¿½portï¿½ au milieu de l'ï¿½cran
+	/// Un jour faudrait faire ï¿½a plus proprement mais on va s'en contenter pour l'instant.
 	/// </summary>
 	public void Respawn()
     {
@@ -370,7 +370,7 @@ public class Player : MonoBehaviour
 	/// <summary>
 	/// Utiliser directement <see cref="State"/>.
 	/// </summary>
-	/// <param name="value">Nouvelle valeur d'État</param>
+	/// <param name="value">Nouvelle valeur d'ï¿½tat</param>
 	private void SetPlayerState(PlayerState value)
     {
 		if (state == PlayerState.Moving && value == PlayerState.OfferingHelp)
@@ -414,7 +414,7 @@ public class Player : MonoBehaviour
 }
 
 /// <summary>
-/// États possibles du joueur.
+/// ï¿½tats possibles du joueur.
 /// </summary>
 public enum PlayerState
 {
