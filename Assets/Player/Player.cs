@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour
 {
@@ -349,7 +350,11 @@ public class Player : MonoBehaviour
 	public void InputRespawn(InputAction.CallbackContext context)
     {
 		if (context.performed)
-			Respawn();
+		{
+			Debug.LogWarning("RELOADING");
+			SceneManager.LoadScene("SampleScene");
+			//Respawn();
+		}
 	}
 
 	public void InputAim(InputAction.CallbackContext context)
