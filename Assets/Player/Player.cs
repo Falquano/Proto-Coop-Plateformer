@@ -422,8 +422,12 @@ public class Player : MonoBehaviour
 		if (screenSpawnLocation.x < 0 || screenSpawnLocation.y < 0
 				|| screenSpawnLocation.x > Camera.main.pixelWidth
 				|| screenSpawnLocation.y > Camera.main.pixelHeight)
-			transform.position = Camera.main.ScreenToWorldPoint(
-				new Vector3(Camera.main.pixelWidth / 2, Camera.main.pixelHeight / 2, spawnWorldLocation.z));
+		{
+			Vector3 newpos = Camera.main.ScreenToWorldPoint(
+				new Vector3(Camera.main.pixelWidth / 2, Camera.main.pixelHeight / 2, 0));
+			newpos.z = 0;
+			transform.position = newpos;
+		}
 		else
 			transform.position = spawnWorldLocation;
     }
