@@ -13,9 +13,10 @@ public class Player : MonoBehaviour
 	[Space]
 	private Rigidbody2D body;
 	private static PlayerManager manager;
-	[SerializeField] private PlayerSoundEmitter Sound;
-	[SerializeField] private PlayerFXEmitter FX;
-	[SerializeField] private PlayerHelp Help;
+	[SerializeField] private PlayerSoundEmitter sound;
+	[SerializeField] private PlayerFXEmitter fx;
+	[SerializeField] private PlayerHelp help;
+	[SerializeField] private GameObject model;
 
 	[Header("Values")]
 	[Space]
@@ -84,12 +85,14 @@ public class Player : MonoBehaviour
 
 		body = GetComponent<Rigidbody2D>();
 		IsGrounded = true;
-		FX.SetHelpActive(false);
+		fx.SetHelpActive(false);
 		State = PlayerState.Moving;
 
-		SpriteRenderer spriteRenderer = GetComponentInChildren<SpriteRenderer>();
-		//spriteRenderer.color = Random.ColorHSV(0f, 1f, 0.7f, 0.8f, 0.7f, 0.8f); // Ancienne méthode d'assignation de couleur
-		spriteRenderer.color = Color.HSVToRGB(manager.RequestHue(), .75f, .75f); // Nouvelle méthode, couleur unique !
+		SpriteRenderer spriteRenderer = model.GetComponent<SpriteRenderer>();
+		Color color = Color.HSVToRGB(manager.RequestHue(), .75f, .75f); // Nouvelle méthode, couleur unique !
+		spriteRenderer.color = color;
+		color.a = .2f;
+		fx.SetHelpColor(color);
 
 		lastGroundedLocation = transform.position;
 	}
@@ -100,8 +103,8 @@ public class Player : MonoBehaviour
 
 		if (IsGrounded && !wasGrounded)
 		{
-			FX.InstantiateImpactParticle();
-			Sound.LandSound();
+			fx.InstantiateImpactParticle();
+			sound.LandSound();
 		}
 
 		lastJumpInput += Time.deltaTime;
@@ -109,11 +112,11 @@ public class Player : MonoBehaviour
 		//Debug.Log(IsWalking);
 		if (wasWalking && !IsWalking)
 		{
-			FX.StopWalkParticle();
+			fx.StopWalkParticle();
 		}
 		else if (!wasWalking && IsWalking)
 		{
-			FX.StartWalkParticle();
+			fx.StartWalkParticle();
 		}
 		wasWalking = IsWalking;
 
@@ -123,7 +126,7 @@ public class Player : MonoBehaviour
 			if (stepTimer >= stepTime)
             {
 				stepTimer = 0f;
-				Sound.StepSound();
+				sound.StepSound();
             }
         }
 
@@ -170,7 +173,7 @@ public class Player : MonoBehaviour
 		UpdateIsGrounded();
 
 		if (IsGrounded)
-			Help.SetAvailable();
+			help.SetAvailable();
 
 		switch (State)
         {
@@ -178,7 +181,7 @@ public class Player : MonoBehaviour
 				UpdateMove();
 				break;
 			case PlayerState.OfferingHelp:
-				Help.UpdateHelp(manager);
+				help.UpdateHelp(manager);
 				break;
 			case PlayerState.Boost:
 				UpdateBoost();
@@ -206,7 +209,7 @@ public class Player : MonoBehaviour
 			targetVelocity.y = jumpStrength;
 			IsGrounded = false;
 			//Debug.Log($"Coyote : {timeSinceFall}/{coyoteTime},\nPrejump : {lastJumpInput}/{preJumpTime}");
-			Sound.JumpSound();
+			sound.JumpSound();
 		}
 
 		body.velocity = targetVelocity;
@@ -223,8 +226,8 @@ public class Player : MonoBehaviour
 			return;
 		}
 
-		Vector2 targetVelocity = helpDirection * currentHelpStrength * Help.Strength;
-		currentHelpStrength -= Help.Loss;
+		Vector2 targetVelocity = helpDirection * currentHelpStrength * help.Strength;
+		currentHelpStrength -= help.Loss;
 
 		body.velocity = targetVelocity;
 		jump = false;
@@ -234,10 +237,10 @@ public class Player : MonoBehaviour
     {
 		if (wasGrounded && !IsGrounded)
         {
-			FX.ResetJumpTrail();
+			fx.ResetJumpTrail();
 		} else if (!wasGrounded && IsGrounded)
         {
-			FX.StopJumpTrail();
+			fx.StopJumpTrail();
         }			
     }
 
@@ -259,10 +262,10 @@ public class Player : MonoBehaviour
 
 	public void InputHelp(InputAction.CallbackContext context)
 	{
-		if (context.performed && Help.CanHelp)
+		if (context.performed && help.CanHelp)
 		{
 			State = PlayerState.OfferingHelp;
-			Sound.HelpSound();
+			sound.HelpSound();
 		} else if (context.canceled)
         {
 			State = PlayerState.Moving;
@@ -271,11 +274,11 @@ public class Player : MonoBehaviour
 
 	public void InputPush(InputAction.CallbackContext context)
 	{
-		if (context.performed && Help.CanHelp)
+		if (context.performed && help.CanHelp)
 		{
-			Help.HelpMod = 1f;
+			help.HelpMod = 1f;
 			State = PlayerState.OfferingHelp;
-			Sound.HelpSound();
+			sound.HelpSound();
 		}
 		else if (context.canceled)
 		{
@@ -285,11 +288,11 @@ public class Player : MonoBehaviour
 
 	public void InputPull(InputAction.CallbackContext context)
 	{
-		if (context.performed && Help.CanHelp)
+		if (context.performed && help.CanHelp)
 		{
-			Help.HelpMod = -1f;
+			help.HelpMod = -1f;
 			State = PlayerState.OfferingHelp;
-			Sound.HelpSound();
+			sound.HelpSound();
 		}
 		else if (context.canceled)
 		{
@@ -334,8 +337,8 @@ public class Player : MonoBehaviour
 	{
 		currentHelpStrength = 1f;
 		State = PlayerState.Boost;
-		Help.SetAvailable();
-		Sound.HelpedSound();
+		help.SetAvailable();
+		sound.HelpedSound();
 		DoesIgnoreOtherPlayers = true;
 	}
 
@@ -375,10 +378,10 @@ public class Player : MonoBehaviour
     {
 		if (state == PlayerState.Moving && value == PlayerState.OfferingHelp)
         {
-			FX.SetHelpActive(true);
+			fx.SetHelpActive(true);
         } else if (state == PlayerState.OfferingHelp && value == PlayerState.Moving)
         {
-			FX.SetHelpActive(false);
+			fx.SetHelpActive(false);
 		}
 
 		state = value;
