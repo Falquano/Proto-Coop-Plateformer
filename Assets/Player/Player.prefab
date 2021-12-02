@@ -4876,6 +4876,7 @@ GameObject:
   - component: {fileID: 5478215713898102295}
   - component: {fileID: 5478215713898102293}
   - component: {fileID: 7869166897254784966}
+  - component: {fileID: 6071091946422848239}
   - component: {fileID: 6375719382510468886}
   - component: {fileID: 2694868286265927042}
   - component: {fileID: 5478215713898102289}
@@ -5050,21 +5051,7 @@ MonoBehaviour:
   fx: {fileID: 6375719382510468886}
   help: {fileID: 7869166897254784966}
   model: {fileID: 9138074447473001644}
-  runSpeed: 20
-  jumpStrength: 15
-  preJumpTime: 0.1
-  coyoteTime: 0.1
-  GroundCheckPositions:
-  - {fileID: 5478215713375891558}
-  - {fileID: 5478215714746086251}
-  - {fileID: 5478215713402439819}
-  groundLayer:
-    serializedVersion: 2
-    m_Bits: 1
-  playerLayer:
-    serializedVersion: 2
-    m_Bits: 64
-  groundCheckRadius: 0.03
+  characterController: {fileID: 6071091946422848239}
   stepTime: 0.3
 --- !u!114 &7869166897254784966
 MonoBehaviour:
@@ -5085,6 +5072,34 @@ MonoBehaviour:
   baseHelpRadius: 4.2
   helpRadiusDecay: 0.33
   helpRadiusModRecoveryPerSecond: 0.15
+--- !u!114 &6071091946422848239
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5478215713898102318}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 13d0f855afe6f984c8e1d6f9526a1675, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  body: {fileID: 5478215713898102289}
+  coyoteTime: 0.1
+  jumpBufferTime: 0.1
+  runSpeed: 800
+  jumpStrength: 16
+  GroundCheckPositions:
+  - {fileID: 5478215713375891558}
+  - {fileID: 5478215714746086251}
+  - {fileID: 5478215713402439819}
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 1
+  playerLayer:
+    serializedVersion: 2
+    m_Bits: 64
+  groundCheckRadius: 0.03
 --- !u!114 &6375719382510468886
 MonoBehaviour:
   m_ObjectHideFlags: 0
