@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour
 {
@@ -11,22 +12,16 @@ public class Player : MonoBehaviour
 	[Header("Objects")]
 	[Space]
 	private Rigidbody2D body;
-	[SerializeField] private GameObject helpHighlight;
-	[SerializeField] private ParticleSystem walkParticle;
-	[SerializeField] private TrailRenderer jumpTrail;
 	private static PlayerManager manager;
-	[SerializeField] private GameObject ImpactParticlePrefab;
-	[SerializeField] private HelpOrienter helpOrienter;
+	[SerializeField] private PlayerSoundEmitter sound;
+	[SerializeField] private PlayerFXEmitter fx;
+	[SerializeField] private PlayerHelp help;
+	[SerializeField] private GameObject model;
 
 	[Header("Values")]
 	[Space]
 	[SerializeField] private float runSpeed = 40f;
 	[SerializeField] private float jumpStrength = 30f;
-	[SerializeField] private float helpStrength = 20f;
-	[SerializeField] private float helpVerticalPortion = .2f;
-	[SerializeField] private float helpLoss = .02f;
-	[SerializeField] private float helpCooldown = 1f;
-	[SerializeField] private float helpRadius = 4f;
 	[SerializeField] private float preJumpTime = .1f;
 	[SerializeField] private float coyoteTime = .1f;
 
@@ -47,7 +42,7 @@ public class Player : MonoBehaviour
 
 	/// <summary>
 	/// Indique si le personnage est sur le sol ou sur un autre joueur. 
-	/// Mise à jour fixe.
+	/// Mise ï¿½ jour fixe.
 	/// </summary>
 	public bool IsGrounded { private set; get; }
 	private Vector3 lastGroundedLocation;
@@ -56,14 +51,9 @@ public class Player : MonoBehaviour
 	private float timeSinceFall = 1f;
 	private float lastJumpInput = 1f;
 
-	/// AIDE
-
-	private bool helpAvailable = true;
-	private float helpTime = 10f;
-	public Vector2 AimDirection { get; private set; }
 
 	/// <summary>
-	/// Indique si le joueur est sur le sol et se déplace.
+	/// Indique si le joueur est sur le sol et se dï¿½place.
 	/// </summary>
 	public bool IsWalking => (Mathf.Abs(body.velocity.x) > .01f && IsGrounded);
 
@@ -77,7 +67,7 @@ public class Player : MonoBehaviour
 	private bool doesIgnoreOtherPlayers;
 	public bool DoesIgnoreOtherPlayers { get => doesIgnoreOtherPlayers; set => SetDoesIgnoreOtherPlayers(value); }
 	/// <summary>
-	/// L'état du joueur. Voir <see cref="PlayerState"/>.
+	/// L'ï¿½tat du joueur. Voir <see cref="PlayerState"/>.
 	/// </summary>
 	public PlayerState State { get => state; set => SetPlayerState(value); }
 
@@ -95,13 +85,14 @@ public class Player : MonoBehaviour
 
 		body = GetComponent<Rigidbody2D>();
 		IsGrounded = true;
-		helpHighlight.transform.localScale = new Vector3(helpRadius * 2, helpRadius * 2, 1);
+		fx.SetHelpActive(false);
 		State = PlayerState.Moving;
-		helpHighlight.SetActive(false);
 
-		SpriteRenderer spriteRenderer = GetComponent<SpriteRenderer>();
-		//spriteRenderer.color = Random.ColorHSV(0f, 1f, 0.7f, 0.8f, 0.7f, 0.8f); // Ancienne méthode d'assignation de couleur
-		spriteRenderer.color = Color.HSVToRGB(manager.RequestHue(), .75f, .75f); // Nouvelle méthode, couleur unique !
+		SpriteRenderer spriteRenderer = model.GetComponent<SpriteRenderer>();
+		Color color = Color.HSVToRGB(manager.RequestHue(), .75f, .75f); // Nouvelle mÃ©thode, couleur unique !
+		spriteRenderer.color = color;
+		color.a = .2f;
+		fx.SetHelpColor(color);
 
 		lastGroundedLocation = transform.position;
 	}
@@ -112,21 +103,20 @@ public class Player : MonoBehaviour
 
 		if (IsGrounded && !wasGrounded)
 		{
-			//Debug.Log(IsGrounded);
-			LandSound();
+			fx.InstantiateImpactParticle();
+			sound.LandSound();
 		}
 
 		lastJumpInput += Time.deltaTime;
-		helpTime += Time.deltaTime;
 
 		//Debug.Log(IsWalking);
 		if (wasWalking && !IsWalking)
 		{
-			walkParticle.Stop();
+			fx.StopWalkParticle();
 		}
 		else if (!wasWalking && IsWalking)
 		{
-			walkParticle.Play();
+			fx.StartWalkParticle();
 		}
 		wasWalking = IsWalking;
 
@@ -136,9 +126,10 @@ public class Player : MonoBehaviour
 			if (stepTimer >= stepTime)
             {
 				stepTimer = 0f;
-				StepSound();
+				sound.StepSound();
             }
         }
+
 	}
 
 	private void UpdateIsGrounded()
@@ -182,7 +173,7 @@ public class Player : MonoBehaviour
 		UpdateIsGrounded();
 
 		if (IsGrounded)
-			helpAvailable = true;
+			help.SetAvailable();
 
 		switch (State)
         {
@@ -190,7 +181,7 @@ public class Player : MonoBehaviour
 				UpdateMove();
 				break;
 			case PlayerState.OfferingHelp:
-				UpdateHelp();
+				help.UpdateHelp(manager);
 				break;
 			case PlayerState.Boost:
 				UpdateBoost();
@@ -200,29 +191,10 @@ public class Player : MonoBehaviour
 		UpdateTrail();
 	}
 
-	/// <summary>
-	/// Mise à jour du personnage quand il est en état d'aide
-	/// </summary>
-	private void UpdateHelp()
-    {
-		foreach (Player otherPlayer in manager.Players)
-		{
-			if (otherPlayer.Equals(this))
-				continue;
-
-			if (Vector2.Distance(transform.position, otherPlayer.transform.position) <= helpRadius)
-			{
-				//otherPlayer.PullUp();
-				otherPlayer.HelpMe(this);
-				State = PlayerState.Moving;
-				helpTime = 0f;
-				helpAvailable = false;
-			}
-		}
-    }
+	
 
 	/// <summary>
-	/// Mise à jour du personnage quand il se déplace
+	/// Mise ï¿½ jour du personnage quand il se dï¿½place
 	/// </summary>
 	private void UpdateMove()
     {
@@ -231,13 +203,13 @@ public class Player : MonoBehaviour
 			body.velocity.y);
 
 		if ((IsGrounded && jump) // On est sur le sol et on saute
-			|| (timeSinceFall <= coyoteTime && jump) // On vient de quitter le sol et on saute (il faudrait vérifier que l'on ne vient pas de sauter !)
-			|| (IsGrounded && lastJumpInput <= preJumpTime)) // On vient d'atterir et on a appuyé sur saut pendant la chute
+			|| (timeSinceFall <= coyoteTime && jump) // On vient de quitter le sol et on saute (il faudrait vï¿½rifier que l'on ne vient pas de sauter !)
+			|| (IsGrounded && lastJumpInput <= preJumpTime)) // On vient d'atterir et on a appuyï¿½ sur saut pendant la chute
 		{
 			targetVelocity.y = jumpStrength;
 			IsGrounded = false;
 			//Debug.Log($"Coyote : {timeSinceFall}/{coyoteTime},\nPrejump : {lastJumpInput}/{preJumpTime}");
-			JumpSound();
+			sound.JumpSound();
 		}
 
 		body.velocity = targetVelocity;
@@ -254,8 +226,8 @@ public class Player : MonoBehaviour
 			return;
 		}
 
-		Vector2 targetVelocity = helpDirection * currentHelpStrength * helpStrength;
-		currentHelpStrength -= helpLoss;
+		Vector2 targetVelocity = helpDirection * currentHelpStrength * help.Strength;
+		currentHelpStrength -= help.Loss;
 
 		body.velocity = targetVelocity;
 		jump = false;
@@ -265,13 +237,10 @@ public class Player : MonoBehaviour
     {
 		if (wasGrounded && !IsGrounded)
         {
-			jumpTrail.Clear();
-			//jumpTrail.enabled = true;
-			jumpTrail.emitting = true;
+			fx.ResetJumpTrail();
 		} else if (!wasGrounded && IsGrounded)
         {
-			//jumpTrail.enabled = false;
-			jumpTrail.emitting = false;
+			fx.StopJumpTrail();
         }			
     }
 
@@ -293,44 +262,65 @@ public class Player : MonoBehaviour
 
 	public void InputHelp(InputAction.CallbackContext context)
 	{
-		if (context.performed && helpAvailable && helpTime >= helpCooldown)
+		if (context.performed && help.CanHelp)
 		{
-			helpOrienter.ResetDirection();
 			State = PlayerState.OfferingHelp;
-			HelpSound();
+			sound.HelpSound();
 		} else if (context.canceled)
         {
 			State = PlayerState.Moving;
         }
 	}
 
+	public void InputPush(InputAction.CallbackContext context)
+	{
+		if (context.performed && help.CanHelp)
+		{
+			help.HelpMod = 1f;
+			State = PlayerState.OfferingHelp;
+			sound.HelpSound();
+		}
+		else if (context.canceled)
+		{
+			State = PlayerState.Moving;
+		}
+	}
+
+	public void InputPull(InputAction.CallbackContext context)
+	{
+		if (context.performed && help.CanHelp)
+		{
+			help.HelpMod = -1f;
+			State = PlayerState.OfferingHelp;
+			sound.HelpSound();
+		}
+		else if (context.canceled)
+		{
+			State = PlayerState.Moving;
+		}
+	}
+
 	public void InputRespawn(InputAction.CallbackContext context)
     {
 		if (context.performed)
-			Respawn();
-	}
-
-	public void InputAim(InputAction.CallbackContext context)
-	{
-		Vector2 aimInput = context.ReadValue<Vector2>();
-		if (aimInput.magnitude == 0)
-			return;
-		
-		AimDirection = aimInput.normalized;
+		{
+			Debug.LogWarning("RELOADING");
+			SceneManager.LoadScene("SampleScene");
+			//Respawn();
+		}
 	}
 
 	// ACTIONS
 
-	/// <summary>
-	/// Similaire à <see cref="PullUp"/>, mais dans la direction vers laquelle vise le joueur aidant.
-	/// En plus de cette direction, on ajoute un peu de boost vers le haut !
-	/// </summary>
-	/// <param name="otherPlayer"></param>
-	public void HelpMe(Player otherPlayer)
+	public void PullMe(Player otherPlayer)
 	{
-		helpDirection =
-			(Vector3)otherPlayer.AimDirection.normalized * (1f - otherPlayer.helpVerticalPortion) // Visée
-			+ otherPlayer.transform.up * otherPlayer.helpVerticalPortion; // Poussée vers le haut
+		helpDirection = (otherPlayer.transform.position - transform.position).normalized;
+		ActivateBoost();
+	}
+
+	public void PushMe(Player otherPlayer)
+	{
+		helpDirection = (transform.position - otherPlayer.transform.position).normalized;
 		ActivateBoost();
 	}
 
@@ -347,14 +337,14 @@ public class Player : MonoBehaviour
 	{
 		currentHelpStrength = 1f;
 		State = PlayerState.Boost;
-		helpAvailable = true;
-		HelpedSound();
+		help.SetAvailable();
+		sound.HelpedSound();
 		DoesIgnoreOtherPlayers = true;
 	}
 
 	/// <summary>
-	/// Renvoie le joueur au dernier endroit "sûr" auquel il était. Si cet endroit n'est plus à l'écran il est téléporté au milieu de l'écran
-	/// Un jour faudrait faire ça plus proprement mais on va s'en contenter pour l'instant.
+	/// Renvoie le joueur au dernier endroit "sï¿½r" auquel il ï¿½tait. Si cet endroit n'est plus ï¿½ l'ï¿½cran il est tï¿½lï¿½portï¿½ au milieu de l'ï¿½cran
+	/// Un jour faudrait faire ï¿½a plus proprement mais on va s'en contenter pour l'instant.
 	/// </summary>
 	public void Respawn()
     {
@@ -363,9 +353,12 @@ public class Player : MonoBehaviour
 		if (screenSpawnLocation.x < 0 || screenSpawnLocation.y < 0
 				|| screenSpawnLocation.x > Camera.main.pixelWidth
 				|| screenSpawnLocation.y > Camera.main.pixelHeight)
-			transform.position = Camera.main.ScreenToWorldPoint(
-				new Vector3(Camera.main.pixelWidth / 2, spawnWorldLocation.y, 
-							Camera.main.pixelHeight / 2));
+		{
+			Vector3 newpos = Camera.main.ScreenToWorldPoint(
+				new Vector3(Camera.main.pixelWidth / 2, Camera.main.pixelHeight / 2, 0));
+			newpos.z = 0;
+			transform.position = newpos;
+		}
 		else
 			transform.position = spawnWorldLocation;
     }
@@ -380,17 +373,16 @@ public class Player : MonoBehaviour
 	/// <summary>
 	/// Utiliser directement <see cref="State"/>.
 	/// </summary>
-	/// <param name="value">Nouvelle valeur d'État</param>
+	/// <param name="value">Nouvelle valeur d'ï¿½tat</param>
 	private void SetPlayerState(PlayerState value)
     {
 		if (state == PlayerState.Moving && value == PlayerState.OfferingHelp)
         {
-			helpHighlight.SetActive(true);
+			fx.SetHelpActive(true);
         } else if (state == PlayerState.OfferingHelp && value == PlayerState.Moving)
         {
-			helpHighlight.SetActive(false);
+			fx.SetHelpActive(false);
 		}
-
 
 		state = value;
     }
@@ -422,42 +414,10 @@ public class Player : MonoBehaviour
 
 		manager.OnPlayerLeft(playerInput);
 	}
-
-	// SONS
-	public void StepSound()
-    {
-		FMODUnity.RuntimeManager.PlayOneShot("event:/walk");
-	}
-
-	public void JumpSound()
-    {
-		FMODUnity.RuntimeManager.PlayOneShot("event:/jump");
-	}
-
-	public void HelpSound()
-    {
-		FMODUnity.RuntimeManager.PlayOneShot("event:/capacity");
-	}
-
-	public void HelpedSound()
-    {
-		FMODUnity.RuntimeManager.PlayOneShot("event:/capacited");
-	}
-
-	public void LandSound()
-    {
-		Instantiate(ImpactParticlePrefab, new Vector3(transform.position.x, transform.position.y, 3), Quaternion.identity);
-		FMODUnity.RuntimeManager.PlayOneShot("event:/landing");
-	}
-
-	public void WallGrabSound()
-    {
-		FMODUnity.RuntimeManager.PlayOneShot("event:/wallgrab");
-	}
 }
 
 /// <summary>
-/// États possibles du joueur.
+/// ï¿½tats possibles du joueur.
 /// </summary>
 public enum PlayerState
 {

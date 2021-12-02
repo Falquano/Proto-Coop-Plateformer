@@ -9,6 +9,8 @@ public class KillPlayerOutsideCameraBounds : MonoBehaviour
 
     private float rangeOutsideCamera = 1f;
 
+    private bool appliFocus = true;
+
     private void Start()
     {
         playerManager = GameObject.Find("@Player Manager").GetComponent<PlayerManager>();
@@ -20,6 +22,9 @@ public class KillPlayerOutsideCameraBounds : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (!appliFocus)
+            return;
+
         foreach(Player player in playerManager.Players)
         {
             Vector3 screenpoint = mainCamera.WorldToScreenPoint(player.transform.position);
@@ -31,4 +36,14 @@ public class KillPlayerOutsideCameraBounds : MonoBehaviour
             }
         }
     }
+
+	private void OnApplicationPause(bool pause)
+	{
+        appliFocus = false;
+	}
+
+	private void OnApplicationFocus(bool focus)
+	{
+        appliFocus = true;
+	}
 }
