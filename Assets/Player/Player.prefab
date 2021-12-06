@@ -5087,7 +5087,7 @@ MonoBehaviour:
   body: {fileID: 5478215713898102289}
   coyoteTime: 0.1
   jumpBufferTime: 0.1
-  runSpeed: 800
+  runSpeed: 500
   jumpStrength: 16
   GroundCheckPositions:
   - {fileID: 5478215713375891558}
@@ -5144,7 +5144,7 @@ Rigidbody2D:
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 3
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: c4eb7c1a6e77f6f45b4411cdb6eaf4c7, type: 2}
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
