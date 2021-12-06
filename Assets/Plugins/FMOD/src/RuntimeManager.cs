@@ -1254,6 +1254,27 @@ retry:
             instance.release();
         }
 
+        public static void PlayOneShot(string path, string parameterName, float parameterValue, Vector3 position = new Vector3())
+        {
+            try
+            {
+                PlayOneShot(PathToGUID(path), parameterName, parameterValue, position);
+            }
+            catch (EventNotFoundException)
+            {
+                Debug.LogWarning("[FMOD] Event not found: " + path);
+            }
+        }
+
+        public static void PlayOneShot(FMOD.GUID guid, string parameterName, float parameterValue, Vector3 position = new Vector3())
+        {
+            var instance = CreateInstance(guid);
+            instance.set3DAttributes(RuntimeUtils.To3DAttributes(position));
+            instance.setParameterByName(parameterName, parameterValue);
+            instance.start();
+            instance.release();
+        }
+
         public static void PlayOneShotAttached(string path, GameObject gameObject)
         {
             try
@@ -1269,6 +1290,34 @@ retry:
         public static void PlayOneShotAttached(FMOD.GUID guid, GameObject gameObject)
         {
             var instance = CreateInstance(guid);
+            #if UNITY_PHYSICS_EXIST
+            AttachInstanceToGameObject(instance, gameObject.transform, gameObject.GetComponent<Rigidbody>());
+            #elif UNITY_PHYSICS2D_EXIST
+            AttachInstanceToGameObject(instance, gameObject.transform, gameObject.GetComponent<Rigidbody2D>());
+            #else
+            AttachInstanceToGameObject(instance, gameObject.transform);
+            #endif
+            instance.start();
+            instance.release();
+        }
+
+        public static void PlayOneShotAttached(string path, GameObject gameObject, string parameterName, float parameterValue, Vector3 position = new Vector3())
+        {
+            try
+            {
+                PlayOneShotAttached(PathToGUID(path), gameObject, parameterName, parameterValue, position);
+            }
+            catch (EventNotFoundException)
+            {
+                Debug.LogWarning("[FMOD] Event not found: " + path);
+            }
+        }
+
+        public static void PlayOneShotAttached(FMOD.GUID guid, GameObject gameObject, string parameterName, float parameterValue, Vector3 position = new Vector3())
+        {
+            var instance = CreateInstance(guid);
+            instance.set3DAttributes(RuntimeUtils.To3DAttributes(position));
+            instance.setParameterByName(parameterName, parameterValue);
             #if UNITY_PHYSICS_EXIST
             AttachInstanceToGameObject(instance, gameObject.transform, gameObject.GetComponent<Rigidbody>());
             #elif UNITY_PHYSICS2D_EXIST
