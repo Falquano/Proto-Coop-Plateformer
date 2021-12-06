@@ -12,25 +12,14 @@ public class Player : MonoBehaviour
 	[Header("Objects")]
 	[Space]
 	private Rigidbody2D body;
-	private static PlayerManager manager;
+	public static PlayerManager Manager { get; private set; }
+	public PlayerSoundEmitter Sound => sound;
 	[SerializeField] private PlayerSoundEmitter sound;
+	public PlayerFXEmitter FX => fx;
 	[SerializeField] private PlayerFXEmitter fx;
 	[SerializeField] private PlayerHelp help;
 	[SerializeField] private GameObject model;
-
-	[Header("Values")]
-	[Space]
-	[SerializeField] private float runSpeed = 40f;
-	[SerializeField] private float jumpStrength = 30f;
-	[SerializeField] private float preJumpTime = .1f;
-	[SerializeField] private float coyoteTime = .1f;
-
-	[Header("Ground Checks")]
-	[Space]
-	[SerializeField] private Transform[] GroundCheckPositions;
-	[SerializeField] private LayerMask groundLayer;
-	[SerializeField] private LayerMask playerLayer;
-	[SerializeField] private float groundCheckRadius = .03f;
+	[SerializeField] private ICharacterController2D characterController;
 
 	[Header("Sound")]
 	[Space]
@@ -38,27 +27,6 @@ public class Player : MonoBehaviour
 
 	private float stepTimer;
 
-	/// SAUT
-
-	/// <summary>
-	/// Indique si le personnage est sur le sol ou sur un autre joueur. 
-	/// Mise � jour fixe.
-	/// </summary>
-	public bool IsGrounded { private set; get; }
-	private Vector3 lastGroundedLocation;
-	private bool wasGrounded;
-	private bool wasWalking;
-	private float timeSinceFall = 1f;
-	private float lastJumpInput = 1f;
-
-
-	/// <summary>
-	/// Indique si le joueur est sur le sol et se d�place.
-	/// </summary>
-	public bool IsWalking => (Mathf.Abs(body.velocity.x) > .01f && IsGrounded);
-
-	private float horizontalMove = 0f;
-	private bool jump = false;
 	private Vector2 helpDirection;
 	private float currentHelpStrength = 0f;
 
@@ -67,7 +35,7 @@ public class Player : MonoBehaviour
 	private bool doesIgnoreOtherPlayers;
 	public bool DoesIgnoreOtherPlayers { get => doesIgnoreOtherPlayers; set => SetDoesIgnoreOtherPlayers(value); }
 	/// <summary>
-	/// L'�tat du joueur. Voir <see cref="PlayerState"/>.
+	/// L'État du joueur. Voir <see cref="PlayerState"/>.
 	/// </summary>
 	public PlayerState State { get => state; set => SetPlayerState(value); }
 
@@ -78,110 +46,34 @@ public class Player : MonoBehaviour
 		ID = nextID;
 		nextID++;
 
-		if (manager == null)
-			manager = GameObject.Find("@Player Manager").GetComponent<PlayerManager>();
+		if (Manager == null)
+			Manager = GameObject.Find("@Player Manager").GetComponent<PlayerManager>();
 
-		transform.position = manager.transform.position;
+		transform.position = Manager.transform.position;
 
 		body = GetComponent<Rigidbody2D>();
-		IsGrounded = true;
 		fx.SetHelpActive(false);
 		State = PlayerState.Moving;
 
 		SpriteRenderer spriteRenderer = model.GetComponent<SpriteRenderer>();
-		Color color = Color.HSVToRGB(manager.RequestHue(), .75f, .75f); // Nouvelle méthode, couleur unique !
+		Color color = Color.HSVToRGB(Manager.RequestHue(), .75f, .75f); // Nouvelle méthode, couleur unique !
 		spriteRenderer.color = color;
 		color.a = .2f;
 		fx.SetHelpColor(color);
-
-		lastGroundedLocation = transform.position;
-	}
-
-    private void Update()
-	{
-		UpdateIsGrounded();
-
-		if (IsGrounded && !wasGrounded)
-		{
-			fx.InstantiateImpactParticle();
-			sound.LandSound();
-		}
-
-		lastJumpInput += Time.deltaTime;
-
-		//Debug.Log(IsWalking);
-		if (wasWalking && !IsWalking)
-		{
-			fx.StopWalkParticle();
-		}
-		else if (!wasWalking && IsWalking)
-		{
-			fx.StartWalkParticle();
-		}
-		wasWalking = IsWalking;
-
-		if (IsWalking)
-        {
-			stepTimer += Time.deltaTime;
-			if (stepTimer >= stepTime)
-            {
-				stepTimer = 0f;
-				sound.StepSound();
-            }
-        }
-
-	}
-
-	private void UpdateIsGrounded()
-    {
-		wasGrounded = IsGrounded;
-		IsGrounded = false;
-		foreach (Transform transform in GroundCheckPositions)
-		{
-			if (Physics2D.OverlapCircle(transform.position, groundCheckRadius, groundLayer))
-			{
-				IsGrounded = true;
-				timeSinceFall = 0;
-			}
-			else
-			{
-				Collider2D[] results = new Collider2D[manager.Count];
-				Physics2D.OverlapCircle(transform.position, groundCheckRadius, new ContactFilter2D() { layerMask = playerLayer }, results);
-				if (results.Length <= 0)
-					break;
-
-				foreach (Collider2D collider in results)
-				{
-					if (collider == null)
-						continue;
-
-					if (!collider.GetComponent<Player>().Equals(this))
-					{
-						IsGrounded = true;
-						break;
-					}
-				}
-			}
-		}
-		if (IsGrounded)
-			lastGroundedLocation = transform.position;
 	}
 
     void FixedUpdate()
 	{
-		timeSinceFall += Time.fixedDeltaTime;
-		UpdateIsGrounded();
-
-		if (IsGrounded)
+		if (characterController.IsGrounded)
 			help.SetAvailable();
 
 		switch (State)
         {
 			case PlayerState.Moving:
-				UpdateMove();
+				characterController.UpdateMove();
 				break;
 			case PlayerState.OfferingHelp:
-				help.UpdateHelp(manager);
+				help.UpdateHelp(Manager);
 				break;
 			case PlayerState.Boost:
 				UpdateBoost();
@@ -191,33 +83,20 @@ public class Player : MonoBehaviour
 		UpdateTrail();
 	}
 
-	
-
-	/// <summary>
-	/// Mise � jour du personnage quand il se d�place
-	/// </summary>
-	private void UpdateMove()
+    private void Update()
     {
-		Vector2 targetVelocity = new Vector2(
-			horizontalMove * Time.fixedDeltaTime * runSpeed,
-			body.velocity.y);
-
-		if ((IsGrounded && jump) // On est sur le sol et on saute
-			|| (timeSinceFall <= coyoteTime && jump) // On vient de quitter le sol et on saute (il faudrait v�rifier que l'on ne vient pas de sauter !)
-			|| (IsGrounded && lastJumpInput <= preJumpTime)) // On vient d'atterir et on a appuy� sur saut pendant la chute
+		if (characterController.IsWalking)
 		{
-			targetVelocity.y = jumpStrength;
-			IsGrounded = false;
-			//Debug.Log($"Coyote : {timeSinceFall}/{coyoteTime},\nPrejump : {lastJumpInput}/{preJumpTime}");
-			sound.JumpSound();
+			stepTimer += Time.deltaTime;
+			if (stepTimer >= stepTime)
+			{
+				stepTimer = 0f;
+				Sound.StepSound();
+			}
 		}
-
-		body.velocity = targetVelocity;
-
-		jump = false;
 	}
 
-	private void UpdateBoost()
+    private void UpdateBoost()
 	{
 		if (currentHelpStrength <= .01f)
 		{
@@ -230,15 +109,15 @@ public class Player : MonoBehaviour
 		currentHelpStrength -= help.Loss;
 
 		body.velocity = targetVelocity;
-		jump = false;
+		//characterController.CanJump = false;
 	}
 
 	private void UpdateTrail()
     {
-		if (wasGrounded && !IsGrounded)
+		if (characterController.WasGrounded && !characterController.IsGrounded)
         {
 			fx.ResetJumpTrail();
-		} else if (!wasGrounded && IsGrounded)
+		} else if (!characterController.WasGrounded && characterController.IsGrounded)
         {
 			fx.StopJumpTrail();
         }			
@@ -248,15 +127,14 @@ public class Player : MonoBehaviour
 
     public void InputHorizontalMovement(InputAction.CallbackContext context)
 	{
-		horizontalMove = context.ReadValue<float>() * runSpeed;
+		characterController.HorizontalMovement = context.ReadValue<float>();
 	}
 
 	public void InputJump(InputAction.CallbackContext context)
 	{
 		if (context.performed && State != PlayerState.OfferingHelp)
 		{
-			jump = true;
-			lastJumpInput = 0;
+			characterController.Jump();
 		}
 	}
 
@@ -343,12 +221,12 @@ public class Player : MonoBehaviour
 	}
 
 	/// <summary>
-	/// Renvoie le joueur au dernier endroit "s�r" auquel il �tait. Si cet endroit n'est plus � l'�cran il est t�l�port� au milieu de l'�cran
-	/// Un jour faudrait faire �a plus proprement mais on va s'en contenter pour l'instant.
+	/// Renvoie le joueur au dernier endroit "sûr" auquel il était. Si cet endroit n'est plus à l'écran il est téléporté au milieu de l'écran
+	/// Un jour faudrait faire ça plus proprement mais on va s'en contenter pour l'instant.
 	/// </summary>
 	public void Respawn()
     {
-		Vector3 spawnWorldLocation = lastGroundedLocation + Vector3.up;
+		Vector3 spawnWorldLocation = characterController.LastGroundedLocation + Vector3.up;
 		Vector3 screenSpawnLocation = Camera.main.WorldToScreenPoint(spawnWorldLocation);
 		if (screenSpawnLocation.x < 0 || screenSpawnLocation.y < 0
 				|| screenSpawnLocation.x > Camera.main.pixelWidth
@@ -363,17 +241,11 @@ public class Player : MonoBehaviour
 			transform.position = spawnWorldLocation;
     }
 
-    private void OnDrawGizmosSelected()
-    {
-		// Dessine les ground checks
-		foreach (Transform t in GroundCheckPositions)
-			Gizmos.DrawSphere(t.position, groundCheckRadius);
-    }
 
 	/// <summary>
 	/// Utiliser directement <see cref="State"/>.
 	/// </summary>
-	/// <param name="value">Nouvelle valeur d'�tat</param>
+	/// <param name="value">Nouvelle valeur d'état</param>
 	private void SetPlayerState(PlayerState value)
     {
 		if (state == PlayerState.Moving && value == PlayerState.OfferingHelp)
@@ -392,9 +264,10 @@ public class Player : MonoBehaviour
 		doesIgnoreOtherPlayers = value;
 		IgnoreOtherPlayers(value);
     }
+
 	private void IgnoreOtherPlayers(bool ignore = true)
 	{
-		foreach (Player player in manager.Players)
+		foreach (Player player in Manager.Players)
 		{
 			Physics2D.IgnoreCollision(this.GetComponent<Collider2D>(), player.GetComponent<Collider2D>(), ignore);
 		}
@@ -410,14 +283,14 @@ public class Player : MonoBehaviour
 		SpriteRenderer spriteRenderer = GetComponent<SpriteRenderer>();
 		float h;
 		Color.RGBToHSV(spriteRenderer.color, out h, out _, out _);
-		manager.AddAvailableHue(h);
+		Manager.AddAvailableHue(h);
 
-		manager.OnPlayerLeft(playerInput);
+		Manager.OnPlayerLeft(playerInput);
 	}
 }
 
 /// <summary>
-/// �tats possibles du joueur.
+/// États possibles du joueur.
 /// </summary>
 public enum PlayerState
 {
