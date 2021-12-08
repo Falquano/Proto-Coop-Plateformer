@@ -28,6 +28,11 @@ public class BetterCharacterController2D : ICharacterController2D
     [SerializeField] private LayerMask playerLayer;
     [SerializeField] private float groundCheckRadius = .03f;
 
+    [Header("Wall Collision Detection")]
+    [SerializeField] private Transform[] WallCheckPositions;
+    [SerializeField] private LayerMask wallLayer;
+    [SerializeField] private float wallCheckRadius = .03f;
+
 
 
 
@@ -101,4 +106,12 @@ public class BetterCharacterController2D : ICharacterController2D
             else
             coyoteTimeLeft = -1;
     }
+
+
+    private void OnDrawGizmosSelected()
+	{
+		// Dessine les ground checks
+		foreach (Transform t in GroundCheckPositions)
+			Gizmos.DrawSphere(t.position, groundCheckRadius);
+	}
 }
