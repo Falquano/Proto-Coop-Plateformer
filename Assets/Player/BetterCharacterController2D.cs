@@ -58,12 +58,6 @@ public class BetterCharacterController2D : ICharacterController2D
 
     void UpdateJump()
     {
-        // Debug.Log(IsGrounded);
-        Debug.Log(jumpBufferTimeLeft);
-        // Debug.Log(coyoteTimeLeft);
-
-
-
         //Update coyoteTimeLeft and jumpBufferTimeLeft if they are in use
         if (!IsGrounded && coyoteTimeLeft >= 0)
             coyoteTimeLeft -= Time.deltaTime;
