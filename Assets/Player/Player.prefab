@@ -4876,6 +4876,7 @@ GameObject:
   - component: {fileID: 5478215713898102295}
   - component: {fileID: 5478215713898102293}
   - component: {fileID: 7869166897254784966}
+  - component: {fileID: 5312405302352882318}
   - component: {fileID: 6071091946422848239}
   - component: {fileID: 6375719382510468886}
   - component: {fileID: 2694868286265927042}
@@ -5051,7 +5052,7 @@ MonoBehaviour:
   fx: {fileID: 6375719382510468886}
   help: {fileID: 7869166897254784966}
   model: {fileID: 9138074447473001644}
-  characterController: {fileID: 6071091946422848239}
+  characterController: {fileID: 5312405302352882318}
   stepTime: 0.3
 --- !u!114 &7869166897254784966
 MonoBehaviour:
@@ -5072,6 +5073,38 @@ MonoBehaviour:
   baseHelpRadius: 4.2
   helpRadiusDecay: 0.33
   helpRadiusModRecoveryPerSecond: 0.15
+--- !u!114 &5312405302352882318
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5478215713898102318}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 728a8a3246657624e9972d3b22e94576, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  body: {fileID: 5478215713898102289}
+  coyoteTime: 1
+  jumpBufferTime: 0.1
+  jumpForce: 15
+  horizontalJumpForce: 0.5
+  groundHorizontalSpeed: 10
+  maxHorizontalSpeed: 7
+  canMoveInTheAir: 1
+  airHorizontalSpeed: 4
+  GroundCheckPositions:
+  - {fileID: 5478215713375891558}
+  - {fileID: 5478215714746086251}
+  - {fileID: 5478215713402439819}
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 1
+  playerLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  groundCheckRadius: 0.03
 --- !u!114 &6071091946422848239
 MonoBehaviour:
   m_ObjectHideFlags: 0
