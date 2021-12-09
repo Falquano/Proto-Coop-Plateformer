@@ -5268,14 +5268,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   body: {fileID: 5478215713898102289}
-  coyoteTime: 1
+  coyoteTime: 0.1
   jumpBufferTime: 0.1
   jumpForce: 15
   horizontalJumpForce: 0.5
-  groundHorizontalSpeed: 1000
+  groundHorizontalSpeed: 1500
   maxHorizontalSpeed: 10
   canMoveInTheAir: 1
-  airHorizontalSpeed: 700
+  airHorizontalSpeed: 1000
   GroundCheckPositions:
   - {fileID: 5478215713375891558}
   - {fileID: 5478215714746086251}
