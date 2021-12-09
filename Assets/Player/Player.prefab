@@ -5272,10 +5272,10 @@ MonoBehaviour:
   jumpBufferTime: 0.1
   jumpForce: 15
   horizontalJumpForce: 0.5
-  groundHorizontalSpeed: 10
-  maxHorizontalSpeed: 7
+  groundHorizontalSpeed: 1000
+  maxHorizontalSpeed: 10
   canMoveInTheAir: 1
-  airHorizontalSpeed: 4
+  airHorizontalSpeed: 700
   GroundCheckPositions:
   - {fileID: 5478215713375891558}
   - {fileID: 5478215714746086251}
@@ -5287,6 +5287,11 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 0
   groundCheckRadius: 0.03
+  WallCheckPositions: []
+  wallLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  wallCheckRadius: 0.03
 --- !u!114 &6071091946422848239
 MonoBehaviour:
   m_ObjectHideFlags: 0

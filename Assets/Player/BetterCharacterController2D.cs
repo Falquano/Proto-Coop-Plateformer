@@ -86,7 +86,9 @@ public class BetterCharacterController2D : ICharacterController2D
     public override void UpdateMove()
     {
         if ((IsGrounded || (!IsGrounded && canMoveInTheAir)) && (((body.velocity.x>0)?body.velocity.x:-body.velocity.x) < maxHorizontalSpeed))
-            body.AddForce(new Vector2(HorizontalMovement * (IsGrounded ? groundHorizontalSpeed : airHorizontalSpeed), 0));
+            body.AddForce(new Vector2(HorizontalMovement * (IsGrounded ? groundHorizontalSpeed : airHorizontalSpeed), 0)* Time.deltaTime, ForceMode2D.Force);
+
+            Debug.Log(HorizontalMovement * (IsGrounded ? groundHorizontalSpeed : airHorizontalSpeed)* Time.deltaTime);
     }
 
     void UpdateIsGrounded()
