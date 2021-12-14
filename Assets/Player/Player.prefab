@@ -5268,10 +5268,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   body: {fileID: 5478215713898102289}
-  coyoteTime: 0.1
-  jumpBufferTime: 0.1
+  coyoteTime: 10
+  jumpBufferTime: 10
   jumpForce: 15
   horizontalJumpForce: 0.5
+  coyoteTimeLeft: -1
   groundHorizontalSpeed: 1500
   isUsingMaxHorizontalSpeed: 1
   maxHorizontalSpeed: 10

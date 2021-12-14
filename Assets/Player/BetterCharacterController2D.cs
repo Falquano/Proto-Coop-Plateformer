@@ -9,7 +9,7 @@ public class BetterCharacterController2D : ICharacterController2D
     [Header("Jump")]
     [SerializeField] float jumpForce;
     [SerializeField] float horizontalJumpForce;
-    private float coyoteTimeLeft = -1;
+    [SerializeField] private float coyoteTimeLeft = -1;
     private float jumpBufferTimeLeft = -1;
 
     [Header("Movement")]
@@ -60,7 +60,6 @@ public class BetterCharacterController2D : ICharacterController2D
 
     public override void Jump()
     {
-        Debug.Log("Hey");
         jumpBufferTimeLeft = jumpBufferTime;
     }
 
