@@ -14,6 +14,7 @@ public class BetterCharacterController2D : ICharacterController2D
 
     [Header("Movement")]
     [SerializeField] float groundHorizontalSpeed;
+    [SerializeField] bool isUsingMaxHorizontalSpeed = false;
     [SerializeField] float maxHorizontalSpeed;
 
     [Header("Air Movement")]
@@ -86,12 +87,13 @@ public class BetterCharacterController2D : ICharacterController2D
     }
 
     public override void UpdateMove()
-    {           
+    {
 
-        if ((IsGrounded || (!IsGrounded && canMoveInTheAir)))
+        if (IsGrounded || (!IsGrounded && canMoveInTheAir))
             body.AddForce(new Vector2(HorizontalMovement * (IsGrounded ? groundHorizontalSpeed : airHorizontalSpeed), 0) * Time.deltaTime, ForceMode2D.Force);
         //CLAMP
-        body.velocity = new Vector2(Mathf.Clamp(body.velocity.x,-maxHorizontalSpeed, maxHorizontalSpeed), body.velocity.y);
+        if (isUsingMaxHorizontalSpeed)
+            body.velocity = new Vector2(Mathf.Clamp(body.velocity.x, -maxHorizontalSpeed, maxHorizontalSpeed), body.velocity.y);
 
 
         // Debug.Log(HorizontalMovement * (IsGrounded ? groundHorizontalSpeed : airHorizontalSpeed)* Time.deltaTime);
@@ -114,7 +116,7 @@ public class BetterCharacterController2D : ICharacterController2D
         else
             coyoteTimeLeft = -1;
 
-        if(!previousGrounded && IsGrounded && HorizontalMovement == 0 && cancelWhenGrounded)
+        if (!previousGrounded && IsGrounded && HorizontalMovement == 0 && cancelWhenGrounded)
             body.velocity = new Vector2(0, body.velocity.y);
     }
 
