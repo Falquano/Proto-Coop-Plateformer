@@ -33,6 +33,8 @@ public class BetterCharacterController2D : ICharacterController2D
     [SerializeField] private LayerMask wallLayer;
     [SerializeField] private float wallCheckRadius = .03f;
 
+    [Header("Velocity cancels")]
+    [SerializeField] private bool cancelWhenGrounded = false;
 
 
 
@@ -72,7 +74,7 @@ public class BetterCharacterController2D : ICharacterController2D
 
         if ((coyoteTimeLeft >= 0 || IsGrounded) && jumpBufferTimeLeft >= 0)
         {
-            if(coyoteTimeLeft>=0)
+            if (coyoteTimeLeft >= 0)
                 body.velocity = new Vector2(body.velocity.x, 0);
 
             body.AddForce(new Vector2(HorizontalMovement * horizontalJumpForce, jumpForce), ForceMode2D.Impulse); //Jump
@@ -84,11 +86,15 @@ public class BetterCharacterController2D : ICharacterController2D
     }
 
     public override void UpdateMove()
-    {
-        if ((IsGrounded || (!IsGrounded && canMoveInTheAir)) && (((body.velocity.x>0)?body.velocity.x:-body.velocity.x) < maxHorizontalSpeed))
-            body.AddForce(new Vector2(HorizontalMovement * (IsGrounded ? groundHorizontalSpeed : airHorizontalSpeed), 0)* Time.deltaTime, ForceMode2D.Force);
+    {           
 
-            Debug.Log(HorizontalMovement * (IsGrounded ? groundHorizontalSpeed : airHorizontalSpeed)* Time.deltaTime);
+        if ((IsGrounded || (!IsGrounded && canMoveInTheAir)))
+            body.AddForce(new Vector2(HorizontalMovement * (IsGrounded ? groundHorizontalSpeed : airHorizontalSpeed), 0) * Time.deltaTime, ForceMode2D.Force);
+        //CLAMP
+        body.velocity = new Vector2(Mathf.Clamp(body.velocity.x,-maxHorizontalSpeed, maxHorizontalSpeed), body.velocity.y);
+
+
+        // Debug.Log(HorizontalMovement * (IsGrounded ? groundHorizontalSpeed : airHorizontalSpeed)* Time.deltaTime);
     }
 
     void UpdateIsGrounded()
@@ -103,17 +109,20 @@ public class BetterCharacterController2D : ICharacterController2D
             }
         }
 
-        if(previousGrounded == true && IsGrounded == false)
+        if (previousGrounded == true && IsGrounded == false)
             coyoteTimeLeft = coyoteTime;
-            else
+        else
             coyoteTimeLeft = -1;
+
+        if(!previousGrounded && IsGrounded && HorizontalMovement == 0 && cancelWhenGrounded)
+            body.velocity = new Vector2(0, body.velocity.y);
     }
 
 
     private void OnDrawGizmosSelected()
-	{
-		// Dessine les ground checks
-		foreach (Transform t in GroundCheckPositions)
-			Gizmos.DrawSphere(t.position, groundCheckRadius);
-	}
+    {
+        // Dessine les ground checks
+        foreach (Transform t in GroundCheckPositions)
+            Gizmos.DrawSphere(t.position, groundCheckRadius);
+    }
 }
