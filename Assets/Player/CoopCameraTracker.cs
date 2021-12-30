@@ -45,7 +45,7 @@ public class CoopCameraTracker : MonoBehaviour
 
     private void UpdateFollowPlayerOne()
     {
-        // Pas très propre, faudrait pouvoir choisir le joueur. #TODO
+        // Pas trï¿½s propre, faudrait pouvoir choisir le joueur. #TODO
         transform.position = new Vector3(players.Players[0].transform.position.x, players.Players[0].transform.position.y, zOffset);
     }
 
