@@ -5424,6 +5424,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bodyAnimator: {fileID: 7357187177566092824}
   faceAnimator: {fileID: 8486579715097211069}
+  OnLandFinished: {fileID: 8332470496850888778}
 --- !u!50 &5478215713898102289
 Rigidbody2D:
   serializedVersion: 4
@@ -5814,6 +5815,7 @@ GameObject:
   - component: {fileID: 2360121546202372096}
   - component: {fileID: 8648543363115895181}
   - component: {fileID: 7357187177566092824}
+  - component: {fileID: 8332470496850888778}
   m_Layer: 3
   m_Name: PlayerModel
   m_TagString: Untagged
@@ -5906,3 +5908,15 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &8332470496850888778
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9138074447473001644}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2d248631eca1bf74b909363819f118f5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
