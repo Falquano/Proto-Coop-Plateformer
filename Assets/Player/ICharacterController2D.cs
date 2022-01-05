@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public abstract class ICharacterController2D : MonoBehaviour
 {
@@ -24,6 +25,17 @@ public abstract class ICharacterController2D : MonoBehaviour
     public bool WasGrounded { get; protected set; }
     [SerializeField] protected float coyoteTime = .1f;
     [SerializeField] protected float jumpBufferTime = .1f;
+
+    /// <summary>
+    /// Événement invoqué au début d'un saut.
+    /// </summary>
+    public UnityEvent OnJump { get; private set; }
+
+    public ICharacterController2D()
+    {
+        OnJump = new UnityEvent();
+    }
+
 
     // Il faut aussi s'occuper des ground checks
 
