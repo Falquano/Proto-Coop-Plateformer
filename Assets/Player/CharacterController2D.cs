@@ -78,7 +78,7 @@ public class CharacterController2D : ICharacterController2D
 			Physics2D.OverlapBox(transform.position, new Vector2(.90f, 1f), 0, new ContactFilter2D() { layerMask = playerLayer }, results);
 			foreach (Collider2D collider in results)
 			{
-				if (collider == null)
+				if (collider == null || collider.GetComponent<Player>() == null)
 					continue;
 
 				if (!collider.GetComponent<Player>().Equals(player))

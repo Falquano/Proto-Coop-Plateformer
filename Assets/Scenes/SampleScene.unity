@@ -519,6 +519,10 @@ PrefabInstance:
       propertyPath: boundaries
       value: 
       objectReference: {fileID: 904293537}
+    - target: {fileID: 9223372036854775807, guid: 97d7336a1484ca34aa510edee4227bc3, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 97d7336a1484ca34aa510edee4227bc3, type: 3}
 --- !u!61 &904293537
@@ -572,7 +576,7 @@ GameObject:
   m_Component:
   - component: {fileID: 926668071}
   - component: {fileID: 904293537}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Placeholder for referenced BoxCollider2D in Prefab instance (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
