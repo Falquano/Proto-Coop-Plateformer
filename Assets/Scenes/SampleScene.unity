@@ -375,22 +375,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9039a328969b8ee4fab83f8a3451db37, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cameraMode: 0
-  coopCameraMode: 2
-  target: {fileID: 0}
-  mainTarget: {fileID: 0}
-  coopTarget: {x: 0, y: 0, z: 0}
-  mainPlayerFocus: 0
-  players: {fileID: 0}
-  cameraBoundaries: {fileID: 904293537}
-  offsetPosition: {x: 0, y: 0, z: -20}
-  camSmoothTime: 1
-  camMaxSpeed: 10
-  fixPlayerX: 0
-  fixPlayerY: 0
-  fixPlayerXOnlyWhenOOB: 0
-  fixPlayerYOnlyWhenOOB: 0
-  maxDegreesDelta: 5
 --- !u!50 &519420036
 Rigidbody2D:
   serializedVersion: 4
@@ -473,11 +457,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3911645366632303704, guid: 97d7336a1484ca34aa510edee4227bc3, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 5.2
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3911645366632303704, guid: 97d7336a1484ca34aa510edee4227bc3, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 14.7
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3911645366632303704, guid: 97d7336a1484ca34aa510edee4227bc3, type: 3}
       propertyPath: m_LocalPosition.z
@@ -537,16 +521,78 @@ PrefabInstance:
       objectReference: {fileID: 904293537}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 97d7336a1484ca34aa510edee4227bc3, type: 3}
---- !u!61 &904293537 stripped
+--- !u!61 &904293537
 BoxCollider2D:
+  m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 3911645366632303707, guid: 97d7336a1484ca34aa510edee4227bc3, type: 3}
   m_PrefabInstance: {fileID: 608315600}
   m_PrefabAsset: {fileID: 0}
---- !u!4 &904293538 stripped
+  m_GameObject: {fileID: 926668070}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 58.26, y: 29}
+  m_EdgeRadius: 0
+--- !u!4 &904293538
 Transform:
+  m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 3911645366632303704, guid: 97d7336a1484ca34aa510edee4227bc3, type: 3}
   m_PrefabInstance: {fileID: 608315600}
   m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1992161962}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: -0.087625295}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 926668071}
+  m_Father: {fileID: 590948818}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &926668070
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 9223372036854775807, guid: 97d7336a1484ca34aa510edee4227bc3, type: 3}
+  m_PrefabInstance: {fileID: 608315600}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 926668071}
+  - component: {fileID: 904293537}
+  m_Layer: 0
+  m_Name: Placeholder for referenced BoxCollider2D in Prefab instance (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &926668071
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 9223372036854775806, guid: 97d7336a1484ca34aa510edee4227bc3, type: 3}
+  m_PrefabInstance: {fileID: 608315600}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 926668070}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 904293538}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1505989990
 GameObject:
   m_ObjectHideFlags: 0
@@ -1405,6 +1451,22 @@ MonoBehaviour:
   m_MaximumFOV: 60
   m_MinimumOrthoSize: 16
   m_MaximumOrthoSize: 5000
+--- !u!1 &1992161962
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 3911645366632303710, guid: 97d7336a1484ca34aa510edee4227bc3, type: 3}
+  m_PrefabInstance: {fileID: 608315600}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 904293538}
+  m_Layer: 6
+  m_Name: CamBoundary
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &2034361888
 GameObject:
   m_ObjectHideFlags: 0

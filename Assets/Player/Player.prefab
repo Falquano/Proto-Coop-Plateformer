@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3784829204717261269}
   - component: {fileID: 8960756328138258602}
   - component: {fileID: 455651035191843285}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: StepParticle
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -4813,7 +4813,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2367590125717633375}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Wall Check (6)
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -4843,7 +4843,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6801453338678768297}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Ground Checkers
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4876,7 +4876,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7173182130553404101}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Wall Check (4)
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -4906,7 +4906,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6371636744503285592}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Wall Check (3)
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -4936,7 +4936,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1886733098343411827}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Wall Check (2)
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -4966,7 +4966,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7833606793718990366}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Wall Check (5)
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -4996,7 +4996,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5478215713375891558}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Ground Check (1)
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -5026,7 +5026,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5478215713402439819}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Ground Check (2)
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -5059,13 +5059,13 @@ GameObject:
   - component: {fileID: 5478215713898102295}
   - component: {fileID: 5478215713898102293}
   - component: {fileID: 7869166897254784966}
-  - component: {fileID: 5312405302352882318}
   - component: {fileID: 6071091946422848239}
   - component: {fileID: 6375719382510468886}
   - component: {fileID: 2694868286265927042}
+  - component: {fileID: 8707017243973070237}
   - component: {fileID: 5478215713898102289}
   - component: {fileID: 5478215713898102288}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -5234,7 +5234,8 @@ MonoBehaviour:
   fx: {fileID: 6375719382510468886}
   help: {fileID: 7869166897254784966}
   model: {fileID: 9138074447473001644}
-  characterController: {fileID: 5312405302352882318}
+  characterController: {fileID: 6071091946422848239}
+  animator: {fileID: 8707017243973070237}
   stepTime: 0.3
 --- !u!114 &7869166897254784966
 MonoBehaviour:
@@ -5255,36 +5256,6 @@ MonoBehaviour:
   baseHelpRadius: 4.2
   helpRadiusDecay: 0.33
   helpRadiusModRecoveryPerSecond: 0.15
---- !u!114 &5312405302352882318
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5478215713898102318}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 728a8a3246657624e9972d3b22e94576, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  body: {fileID: 5478215713898102289}
-  coyoteTime: 10
-  jumpBufferTime: 10
-  jumpForce: 15
-  horizontalJumpForce: 0.5
-  coyoteTimeLeft: -1
-  groundHorizontalSpeed: 1500
-  isUsingMaxHorizontalSpeed: 1
-  maxHorizontalSpeed: 10
-  canMoveInTheAir: 1
-  airHorizontalSpeed: 1500
-  isGroundedMinValue: 0.3
-  WallCheckPositions: []
-  wallLayer:
-    serializedVersion: 2
-    m_Bits: 0
-  wallCheckRadius: 0.3
-  cancelWhenGrounded: 1
 --- !u!114 &6071091946422848239
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5302,16 +5273,12 @@ MonoBehaviour:
   jumpBufferTime: 0.1
   runSpeed: 500
   jumpStrength: 16
-  GroundCheckPositions:
-  - {fileID: 5478215713375891558}
-  - {fileID: 5478215714746086251}
-  - {fileID: 5478215713402439819}
   groundLayer:
     serializedVersion: 2
     m_Bits: 1
   playerLayer:
     serializedVersion: 2
-    m_Bits: 64
+    m_Bits: 8
   groundCheckRadius: 0.03
 --- !u!114 &6375719382510468886
 MonoBehaviour:
@@ -5341,6 +5308,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb1f24809830248448e1c1d74fb65f31, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &8707017243973070237
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5478215713898102318}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 16d2611f1fe89d34d8b27936a6fdb0a5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bodyAnimator: {fileID: 7357187177566092824}
 --- !u!50 &5478215713898102289
 Rigidbody2D:
   serializedVersion: 4
@@ -5397,7 +5377,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5478215714746086251}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Ground Check (3)
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -5427,7 +5407,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3357546921517047928}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Wall Checkers
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5465,7 +5445,7 @@ GameObject:
   - component: {fileID: 7526047492544466456}
   - component: {fileID: 6197859226634991890}
   - component: {fileID: 9026444031555321122}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: HelpRadius
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -5561,7 +5541,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7709064011883804371}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Wall Check (1)
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -5592,7 +5572,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4951836116173246200}
   - component: {fileID: 5372543180767162905}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Trail
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -5730,8 +5710,8 @@ GameObject:
   m_Component:
   - component: {fileID: 2360121546202372096}
   - component: {fileID: 8648543363115895181}
-  - component: {fileID: 5665985799363916605}
-  m_Layer: 0
+  - component: {fileID: 7357187177566092824}
+  m_Layer: 3
   m_Name: PlayerModel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5746,7 +5726,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9138074447473001644}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.0698, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 5478215713898102290}
@@ -5803,7 +5783,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!95 &5665985799363916605
+--- !u!95 &7357187177566092824
 Animator:
   serializedVersion: 3
   m_ObjectHideFlags: 0
@@ -5813,7 +5793,7 @@ Animator:
   m_GameObject: {fileID: 9138074447473001644}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 463993c98253b7f47803d1d9ba294412, type: 2}
+  m_Controller: {fileID: 9100000, guid: ac9527ab1e9616f4aa9d1cdffd7c57e8, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0

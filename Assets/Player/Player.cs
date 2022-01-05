@@ -20,6 +20,7 @@ public class Player : MonoBehaviour
 	[SerializeField] private PlayerHelp help;
 	[SerializeField] private GameObject model;
 	[SerializeField] private ICharacterController2D characterController;
+	[SerializeField] private PlayerAnimator animator;
 
 	[Header("Sound")]
 	[Space]
