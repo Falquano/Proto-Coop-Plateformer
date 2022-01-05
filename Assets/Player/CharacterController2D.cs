@@ -13,7 +13,6 @@ public class CharacterController2D : ICharacterController2D
 
 	[Header("Ground Checks")]
 	[Space]
-	[SerializeField] private Transform[] GroundCheckPositions;
 	[SerializeField] private LayerMask groundLayer;
 	[SerializeField] private LayerMask playerLayer;
 	[SerializeField] private float groundCheckRadius = .03f;
@@ -22,6 +21,11 @@ public class CharacterController2D : ICharacterController2D
 	private float timeSinceFall = 1f;
 	private float lastJumpInput = 1f;
 	private bool jump = false;
+
+	public CharacterController2D() : base()
+    {
+
+    }
 
 	private void Start()
 	{
@@ -56,39 +60,35 @@ public class CharacterController2D : ICharacterController2D
 	{
 		jump = true;
 		lastJumpInput = 0;
+		OnJump.Invoke();
 	}
 
 	public void UpdateIsGrounded()
 	{
 		WasGrounded = IsGrounded;
 		IsGrounded = false;
-		foreach (Transform transform in GroundCheckPositions)
+		if (Physics2D.OverlapBox(transform.position, new Vector2(.90f, 1f), 0, groundLayer))
 		{
-			if (Physics2D.OverlapCircle(transform.position, groundCheckRadius, groundLayer))
+			IsGrounded = true;
+			timeSinceFall = 0;
+		}
+		else
+		{
+			Collider2D[] results = new Collider2D[Player.Manager.Count];
+			Physics2D.OverlapBox(transform.position, new Vector2(.90f, 1f), 0, new ContactFilter2D() { layerMask = playerLayer }, results);
+			foreach (Collider2D collider in results)
 			{
-				IsGrounded = true;
-				timeSinceFall = 0;
-			}
-			else
-			{
-				Collider2D[] results = new Collider2D[Player.Manager.Count];
-				Physics2D.OverlapCircle(transform.position, groundCheckRadius, new ContactFilter2D() { layerMask = playerLayer }, results);
-				if (results.Length <= 0)
-					break;
+				if (collider == null)
+					continue;
 
-				foreach (Collider2D collider in results)
+				if (!collider.GetComponent<Player>().Equals(player))
 				{
-					if (collider == null)
-						continue;
-
-					if (!collider.GetComponent<Player>().Equals(player))
-					{
-						IsGrounded = true;
-						break;
-					}
+					IsGrounded = true;
+					break;
 				}
 			}
 		}
+
 		if (IsGrounded)
 			LastGroundedLocation = transform.position;
 	}
@@ -130,7 +130,7 @@ public class CharacterController2D : ICharacterController2D
 	private void OnDrawGizmosSelected()
 	{
 		// Dessine les ground checks
-		foreach (Transform t in GroundCheckPositions)
-			Gizmos.DrawSphere(t.position, groundCheckRadius);
+		/*foreach (Transform t in GroundCheckPositions)
+			Gizmos.DrawSphere(t.position, groundCheckRadius);*/
 	}
 }
