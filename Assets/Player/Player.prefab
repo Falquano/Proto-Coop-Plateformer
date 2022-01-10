@@ -5374,14 +5374,14 @@ MonoBehaviour:
   body: {fileID: 5478215713898102289}
   coyoteTime: 10
   jumpBufferTime: 0.1
-  jumpForce: 15
+  jumpForce: 16
   horizontalJumpForce: 0.5
   coyoteTimeLeft: 1
-  groundHorizontalSpeed: 1000
+  groundHorizontalSpeed: 1500
   isUsingMaxHorizontalSpeed: 1
   maxHorizontalSpeed: 10
   canMoveInTheAir: 1
-  airHorizontalSpeed: 100
+  airHorizontalSpeed: 1500
   isGroundedMinValue: 0.3
   cancelWhenGrounded: 1
   cancelGroundedAndNoInput: 1
