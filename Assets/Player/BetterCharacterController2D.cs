@@ -34,6 +34,9 @@ public class BetterCharacterController2D : ICharacterController2D
 
     [Header("Velocity cancels")]
     [SerializeField] private bool cancelWhenGrounded = false;
+    [SerializeField] private bool cancelGroundedAndNoInput = false;
+    [SerializeField] private bool cancelGroundedAndInvertedInput = true;
+    float previousHorizontalMovement;
 
 
 
@@ -50,6 +53,8 @@ public class BetterCharacterController2D : ICharacterController2D
 
         //Update jump
         UpdateJump();
+
+        previousHorizontalMovement = HorizontalMovement;
     }
 
     public override void Jump()
@@ -66,6 +71,7 @@ public class BetterCharacterController2D : ICharacterController2D
 
         if (jumpBufferTimeLeft >= 0)
             jumpBufferTimeLeft -= Time.deltaTime;
+
         Debug.Log($"Coyote : {coyoteTimeLeft} \n Buffer : {jumpBufferTimeLeft} \n IsGrounded : {IsGrounded}");
         if ((coyoteTimeLeft >= 0 || IsGrounded) && jumpBufferTimeLeft >= 0 && !jumped)
         {
@@ -82,6 +88,11 @@ public class BetterCharacterController2D : ICharacterController2D
 
     public override void UpdateMove()
     {
+
+        if (((((previousHorizontalMovement>0 && HorizontalMovement<0) ||(previousHorizontalMovement<0 && HorizontalMovement>0)) && cancelGroundedAndInvertedInput) || (HorizontalMovement == 0 && cancelGroundedAndNoInput )) && IsGrounded)
+        {
+            body.velocity = new Vector2(0, body.velocity.y);
+        }
 
         if (IsGrounded || (!IsGrounded && canMoveInTheAir))
             body.AddForce(new Vector2(HorizontalMovement * (IsGrounded ? groundHorizontalSpeed : airHorizontalSpeed), 0) * Time.deltaTime, ForceMode2D.Force);
@@ -104,7 +115,7 @@ public class BetterCharacterController2D : ICharacterController2D
             if (ContactPoint.normal.normalized.y > isGroundedMinValue)
                 IsGrounded = true;
 
-            Debug.DrawLine(transform.position, new Vector2(transform.position.x, transform.position.y) - (ContactPoint.point - new Vector2(transform.position.x, transform.position.y)).normalized, Color.red, 0.5f);
+            Debug.DrawLine(transform.position, new Vector2(transform.position.x, transform.position.y) - (ContactPoint.point - new Vector2(transform.position.x, transform.position.y)).normalized, (ContactPoint.normal.normalized.y > isGroundedMinValue)?Color.green:Color.red, 0.5f);
         }
 
         if (previousGrounded == true && IsGrounded == false && !jumped)
