@@ -72,7 +72,7 @@ public class BetterCharacterController2D : ICharacterController2D
         if (jumpBufferTimeLeft >= 0)
             jumpBufferTimeLeft -= Time.deltaTime;
 
-        Debug.Log($"Coyote : {coyoteTimeLeft} \n Buffer : {jumpBufferTimeLeft} \n IsGrounded : {IsGrounded}");
+        //Debug.Log($"Coyote : {coyoteTimeLeft} \n Buffer : {jumpBufferTimeLeft} \n IsGrounded : {IsGrounded}");
         if ((coyoteTimeLeft >= 0 || IsGrounded) && jumpBufferTimeLeft >= 0 && !jumped)
         {
             if (coyoteTimeLeft >= 0)
