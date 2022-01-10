@@ -9,8 +9,9 @@ public class PlayerManager : MonoBehaviour
     private List<Player> players;
     public Player[] Players => players.ToArray();
 
-    [SerializeField] 
-    private Camera mainCamera;
+    public List<Player> Winners = new List<Player>();
+    [SerializeField] private int winnersThisRound = 1;
+    [SerializeField] private AutoLevel autoLevel;
 
     public int Count => players.Count;
 
@@ -76,4 +77,36 @@ public class PlayerManager : MonoBehaviour
         players.Remove(playerInput.GetComponent<Player>());
         Destroy(playerInput.gameObject);
     }
+
+    public void NewRound()
+	{
+        // On respawn les gagnants, on supprime le perdant ! (on le met au goulag ?)
+        foreach (Player player in Winners)
+		{
+            RespawnNewRound(player);
+		}
+
+        Winners = new List<Player>();
+	}
+
+    public void RespawnNewRound(Player player)
+	{
+        player.gameObject.SetActive(true);
+	}
+
+    public void Win(Player player)
+	{
+        Winners.Add(player);
+        player.gameObject.SetActive(false);
+        
+        if (Winners.Count >= winnersThisRound)
+		{
+            EndRound();
+		}
+	}
+
+    public void EndRound()
+	{
+        autoLevel.NewRound();
+	}
 }

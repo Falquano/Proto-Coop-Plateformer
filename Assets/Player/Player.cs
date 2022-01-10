@@ -288,6 +288,11 @@ public class Player : MonoBehaviour
 
 		Manager.OnPlayerLeft(playerInput);
 	}
+
+	public void Win()
+	{
+		Manager.Win(this);
+	}
 }
 
 /// <summary>
