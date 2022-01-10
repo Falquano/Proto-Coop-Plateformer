@@ -7,6 +7,8 @@ public class CamBoundaries : MonoBehaviour
     [SerializeField] GameObject cam;
     SmoothFollow smFl;
     public Collider2D boundaries;
+    [SerializeField] bool dontSetIfCamScroll;
+    [SerializeField] bool dontSetIfNotCamera;
 
     void Start()
     {
@@ -22,6 +24,7 @@ public class CamBoundaries : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        smFl.setCamBoundaries(boundaries);
+        if(((smFl.cameraMode != SmoothFollow.CameraMode.AutoScroll && dontSetIfCamScroll) || !dontSetIfCamScroll) && ((other.gameObject == cam && dontSetIfNotCamera) || !dontSetIfNotCamera))
+            smFl.setCamBoundaries(boundaries);
     }
 }
