@@ -39,9 +39,9 @@ public class AutoLevel : MonoBehaviour
 
     private void SwitchToNewPattern()
 	{
-        Destroy(currentPattern);
+        Destroy(currentPattern.gameObject);
 
-        // On prend un nouveau GoesTo !
+        GoesTo = ExitFlag.RandomExitDirection(ComesFrom);
 
         currentPattern = Instantiate(SelectPattern(GoesTo), grid).GetComponent<Pattern>();
         currentPattern.NewRound(GoesTo);
@@ -52,4 +52,24 @@ public class AutoLevel : MonoBehaviour
 	{
         return patternProvider.Find(entrance);
 	}
+
+    public Exit Entrance() 
+    {
+        foreach (Exit exit in currentPattern.Exits)
+		{
+            if (exit.Direction == ComesFrom)
+                return exit;
+		}
+        throw new System.Exception("Oskour il n'y a pas d'entrée !");
+    }
+
+    public Exit Exit()
+    {
+        foreach (Exit exit in currentPattern.Exits)
+        {
+            if (exit.Direction == ComesFrom)
+                return exit;
+        }
+        throw new System.Exception("Oskour il n'y a pas de sortie !");
+    }
 }

@@ -123,6 +123,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   direction: 8
+  spawnPointOffset: {x: -1.5, y: 0, z: 0}
   spriteRenderer: {fileID: 2867568102273189583}
 --- !u!1 &2567788779412917676
 GameObject:
@@ -247,6 +248,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   direction: 4
+  spawnPointOffset: {x: 1.5, y: 0, z: 0}
   spriteRenderer: {fileID: 6515851487292345323}
 --- !u!1 &4725736636815086860
 GameObject:
@@ -1606,6 +1608,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   direction: 1
+  spawnPointOffset: {x: 0, y: -1.5, z: 0}
   spriteRenderer: {fileID: 1168305132573049690}
 --- !u!1 &8724996015847853840
 GameObject:
@@ -1730,4 +1733,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   direction: 2
+  spawnPointOffset: {x: 0, y: 1.5, z: 0}
   spriteRenderer: {fileID: 5343947508514779752}

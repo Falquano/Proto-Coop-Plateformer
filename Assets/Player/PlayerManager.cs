@@ -91,13 +91,15 @@ public class PlayerManager : MonoBehaviour
 
     public void RespawnNewRound(Player player)
 	{
-        player.gameObject.SetActive(true);
+        //player.gameObject.SetActive(true);
+        player.WakeUp(autoLevel.Entrance().SpawnPoint);
 	}
 
     public void Win(Player player)
 	{
         Winners.Add(player);
-        player.gameObject.SetActive(false);
+        //player.gameObject.SetActive(false);
+        player.Hybernate();
         
         if (Winners.Count >= winnersThisRound)
 		{

@@ -11,6 +11,7 @@ public class Pattern : MonoBehaviour
 	public ExitFlags ExitDirections => exitDirections;
 	
 	[SerializeField] private Exit[] exits;
+	public Exit[] Exits => exits;
 
 	public bool CanComeFrom(ExitFlags entrance)
 	{
@@ -67,4 +68,20 @@ public static class ExitFlag
 			_ => ExitFlags.None
 		};
 	}
+
+	/// <summary>
+	/// Similaire à <see cref="RandomExitDirection"/>, mais ne renvoie jamais l'exception donnée en paramètre.
+	/// </summary>
+	/// <param name="exception">Exception, ne sera jamais renvoyé (normalement)</param>
+	/// <returns></returns>
+	public static ExitFlags RandomExitDirection(ExitFlags exception)
+	{
+		ExitFlags exit = ExitFlags.None;
+		do
+		{
+			exit = RandomExitDirection();
+		} while (exit == ExitFlags.None || exception.HasFlag(exit));
+
+		return exit;
+	}	
 }

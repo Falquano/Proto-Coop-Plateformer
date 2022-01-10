@@ -301,9 +301,9 @@ public class Player : MonoBehaviour
 		State = PlayerState.Sleeping;	
 	}
 
-	public void WakeUp(Transform spawnpoint)
+	public void WakeUp(Vector3 spawnpoint)
 	{
-		transform.position = spawnpoint.position;
+		transform.position = spawnpoint;
 		body.bodyType = RigidbodyType2D.Dynamic;
 		State = PlayerState.Moving;
 	}

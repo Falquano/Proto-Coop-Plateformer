@@ -9,6 +9,8 @@ public class Exit : MonoBehaviour
 
 	private bool isExit;
 
+	[SerializeField] private Vector3 spawnPointOffset = Vector3.zero;
+
 	[SerializeField] private SpriteRenderer spriteRenderer;
 
 	private void Start()
@@ -36,5 +38,13 @@ public class Exit : MonoBehaviour
 
 		Player player = collision.gameObject.GetComponent<Player>();
 		player.Win();
+	}
+
+	public Vector3 SpawnPoint => transform.position + spawnPointOffset;
+
+	private void OnDrawGizmosSelected()
+	{
+		Gizmos.color = Color.magenta;
+		Gizmos.DrawWireSphere(SpawnPoint, .333f);
 	}
 }
