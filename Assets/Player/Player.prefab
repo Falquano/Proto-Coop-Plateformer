@@ -4977,7 +4977,7 @@ SpriteRenderer:
   m_Size: {x: 1, y: 1}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!95 &8486579715097211069
@@ -5161,6 +5161,7 @@ GameObject:
   - component: {fileID: 5478215713898102295}
   - component: {fileID: 5478215713898102293}
   - component: {fileID: 7869166897254784966}
+  - component: {fileID: 5218539970189129574}
   - component: {fileID: 6071091946422848239}
   - component: {fileID: 6375719382510468886}
   - component: {fileID: 2694868286265927042}
@@ -5336,7 +5337,7 @@ MonoBehaviour:
   fx: {fileID: 6375719382510468886}
   help: {fileID: 7869166897254784966}
   model: {fileID: 9138074447473001644}
-  characterController: {fileID: 6071091946422848239}
+  characterController: {fileID: 5218539970189129574}
   animator: {fileID: 8707017243973070237}
   stepTime: 0.3
 --- !u!114 &7869166897254784966
@@ -5358,7 +5359,7 @@ MonoBehaviour:
   baseHelpRadius: 4.2
   helpRadiusDecay: 0.33
   helpRadiusModRecoveryPerSecond: 0.15
---- !u!114 &6071091946422848239
+--- !u!114 &5218539970189129574
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -5366,6 +5367,33 @@ MonoBehaviour:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5478215713898102318}
   m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 728a8a3246657624e9972d3b22e94576, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  body: {fileID: 5478215713898102289}
+  coyoteTime: 10
+  jumpBufferTime: 0.1
+  jumpForce: 16
+  horizontalJumpForce: 0.5
+  coyoteTimeLeft: 1
+  groundHorizontalSpeed: 1500
+  isUsingMaxHorizontalSpeed: 1
+  maxHorizontalSpeed: 10
+  canMoveInTheAir: 1
+  airHorizontalSpeed: 1500
+  isGroundedMinValue: 0.3
+  cancelWhenGrounded: 1
+  cancelGroundedAndNoInput: 1
+  cancelGroundedAndInvertedInput: 1
+--- !u!114 &6071091946422848239
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5478215713898102318}
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 13d0f855afe6f984c8e1d6f9526a1675, type: 3}
   m_Name: 
@@ -5419,12 +5447,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 5478215713898102318}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 16d2611f1fe89d34d8b27936a6fdb0a5, type: 3}
+  m_Script: {fileID: 11500000, guid: da00ca8b80eacfe4b9ee89252713124c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   bodyAnimator: {fileID: 7357187177566092824}
   faceAnimator: {fileID: 8486579715097211069}
-  OnLandFinished: {fileID: 8332470496850888778}
+  OnLandFinished: {fileID: 0}
+  Face: 0
+  faceCount: 6
 --- !u!50 &5478215713898102289
 Rigidbody2D:
   serializedVersion: 4
@@ -5441,7 +5471,7 @@ Rigidbody2D:
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 3
-  m_Material: {fileID: 6200000, guid: c4eb7c1a6e77f6f45b4411cdb6eaf4c7, type: 2}
+  m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 1
@@ -5815,7 +5845,6 @@ GameObject:
   - component: {fileID: 2360121546202372096}
   - component: {fileID: 8648543363115895181}
   - component: {fileID: 7357187177566092824}
-  - component: {fileID: 8332470496850888778}
   m_Layer: 3
   m_Name: PlayerModel
   m_TagString: Untagged
@@ -5899,7 +5928,7 @@ Animator:
   m_GameObject: {fileID: 9138074447473001644}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: ac9527ab1e9616f4aa9d1cdffd7c57e8, type: 2}
+  m_Controller: {fileID: 9100000, guid: 76232a2ef3a09ca46b2d2f26dc8f506f, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -5908,15 +5937,3 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &8332470496850888778
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9138074447473001644}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2d248631eca1bf74b909363819f118f5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
