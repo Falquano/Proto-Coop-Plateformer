@@ -252,7 +252,7 @@ GameObject:
   - component: {fileID: 519420035}
   - component: {fileID: 519420036}
   - component: {fileID: 519420037}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: Main Camera
   m_TagString: MainCamera
   m_Icon: {fileID: 0}
@@ -372,9 +372,25 @@ MonoBehaviour:
   m_GameObject: {fileID: 519420028}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9039a328969b8ee4fab83f8a3451db37, type: 3}
+  m_Script: {fileID: 11500000, guid: 5a2c3fc1c42857840a39b157815f5ca6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cameraMode: 0
+  coopCameraMode: 0
+  target: {fileID: 0}
+  mainTarget: {fileID: 0}
+  coopTarget: {x: 0, y: 0, z: 0}
+  mainPlayerFocus: 0
+  players: {fileID: 0}
+  cameraBoundaries: {fileID: 1114702697}
+  offsetPosition: {x: 0, y: 0, z: -20}
+  camSmoothTime: 1
+  camMaxSpeed: 10
+  fixPlayerX: 0
+  fixPlayerY: 0
+  fixPlayerXOnlyWhenOOB: 0
+  fixPlayerYOnlyWhenOOB: 0
+  maxDegreesDelta: 5
 --- !u!50 &519420036
 Rigidbody2D:
   serializedVersion: 4
@@ -444,6 +460,11 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!61 &1114702697 stripped
+BoxCollider2D:
+  m_CorrespondingSourceObject: {fileID: 3911645366632303707, guid: 53349e5fe50bd5d4897e94e4c36b8861, type: 3}
+  m_PrefabInstance: {fileID: 1305307443}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1305307443
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -457,11 +478,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3911645366632303704, guid: 53349e5fe50bd5d4897e94e4c36b8861, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -65.89925
+      value: 5.5
       objectReference: {fileID: 0}
     - target: {fileID: 3911645366632303704, guid: 53349e5fe50bd5d4897e94e4c36b8861, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -12.116256
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 3911645366632303704, guid: 53349e5fe50bd5d4897e94e4c36b8861, type: 3}
       propertyPath: m_LocalPosition.z
@@ -499,6 +520,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: CamBoundary
       objectReference: {fileID: 0}
+    - target: {fileID: 6962448463444628071, guid: 53349e5fe50bd5d4897e94e4c36b8861, type: 3}
+      propertyPath: cam
+      value: 
+      objectReference: {fileID: 519420028}
     - target: {fileID: 6962448463444628071, guid: 53349e5fe50bd5d4897e94e4c36b8861, type: 3}
       propertyPath: dontSetIfCamScroll
       value: 1
@@ -1296,7 +1321,7 @@ GameObject:
   - component: {fileID: 1690968428}
   - component: {fileID: 1690968429}
   - component: {fileID: 1690968430}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: cm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
