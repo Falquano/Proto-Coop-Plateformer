@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3911645366632303704}
   - component: {fileID: 3911645366632303707}
   - component: {fileID: 6962448463444628071}
-  m_Layer: 7
+  m_Layer: 6
   m_Name: CamBoundary
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -72,3 +72,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cam: {fileID: 0}
   boundaries: {fileID: 0}
+  dontSetIfCamScroll: 0
+  dontSetIfNotCamera: 0

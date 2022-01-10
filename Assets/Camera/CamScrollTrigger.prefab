@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 8767343206358284084}
   - component: {fileID: 8767343206358284087}
   - component: {fileID: 6441578451509064537}
-  m_Layer: 7
+  m_Layer: 6
   m_Name: CamScrollTrigger
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -67,8 +67,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 8767343206358284082}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f47d4b1e9acc9244797208f59dd2e750, type: 3}
+  m_Script: {fileID: 11500000, guid: 914b77f84aa2e8b45833a32615be3888, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   cam: {fileID: 0}
+  timeToNextTarget: 0
   nextTarget: {fileID: 0}
+  onlyCameraCanTrigger: 0
