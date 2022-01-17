@@ -136,7 +136,9 @@ public class SmoothFollow : MonoBehaviour
         {
             average += player.transform.position;
         }
-        return average / players.Count;
+        average /= players.Count;
+        average.z = offsetPosition.z;
+        return average;
     }
 
     void UpdateCameraFollow()

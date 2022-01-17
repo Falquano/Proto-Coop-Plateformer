@@ -9,6 +9,8 @@ public class CamScrollTrigger : MonoBehaviour
     public GameObject nextTarget;
     SmoothFollow smFl;
 
+    [SerializeField] bool onlyCameraCanTrigger;
+
     void Start()
     {
         smFl = cam.GetComponent<SmoothFollow>();
@@ -23,6 +25,7 @@ public class CamScrollTrigger : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        smFl.setCamScroll(nextTarget, timeToNextTarget);
+        if ((onlyCameraCanTrigger && other.gameObject == cam) || !onlyCameraCanTrigger)
+            smFl.setCamScroll(nextTarget, timeToNextTarget);
     }
 }

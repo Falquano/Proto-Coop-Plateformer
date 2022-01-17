@@ -288,6 +288,25 @@ public class Player : MonoBehaviour
 
 		Manager.OnPlayerLeft(playerInput);
 	}
+
+	public void Win()
+	{
+		Manager.Win(this);
+	}
+
+	public void Hybernate()
+	{
+		transform.position = new Vector3(10000, 10000, 10000);
+		body.bodyType = RigidbodyType2D.Static;
+		State = PlayerState.Sleeping;	
+	}
+
+	public void WakeUp(Vector3 spawnpoint)
+	{
+		transform.position = spawnpoint;
+		body.bodyType = RigidbodyType2D.Dynamic;
+		State = PlayerState.Moving;
+	}
 }
 
 /// <summary>
@@ -297,5 +316,6 @@ public enum PlayerState
 {
 	Moving,
 	OfferingHelp,
-	Boost
+	Boost,
+	Sleeping
 }

@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3911645366632303704}
   - component: {fileID: 3911645366632303707}
   - component: {fileID: 6962448463444628071}
-  m_Layer: 7
+  m_Layer: 6
   m_Name: CamBoundary
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -67,8 +67,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 3911645366632303710}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4be6a57edaab05e4783e95d5e71acf08, type: 3}
+  m_Script: {fileID: 11500000, guid: 9d846b3c191dacc45b10b2cff61f781b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   cam: {fileID: 0}
   boundaries: {fileID: 0}
+  dontSetIfCamScroll: 0
+  dontSetIfNotCamera: 0
