@@ -61,6 +61,8 @@ public class Player : MonoBehaviour
 		spriteRenderer.color = color;
 		color.a = .2f;
 		fx.SetHelpColor(color);
+
+		characterController.OnLand.AddListener(OnLand);
 	}
 
     void FixedUpdate()
@@ -306,6 +308,14 @@ public class Player : MonoBehaviour
 		transform.position = spawnpoint;
 		body.bodyType = RigidbodyType2D.Dynamic;
 		State = PlayerState.Moving;
+	}
+
+	// EVENTS
+	public void OnLand()
+	{
+		Debug.Log("LAND");
+		FX.InstantiateImpactParticle();
+		Sound.LandSound();
 	}
 }
 

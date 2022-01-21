@@ -47,7 +47,6 @@ public class BetterCharacterController2D : ICharacterController2D
 
     private void Update()
     {
-
         //Update movement
         UpdateMove();
 
@@ -55,16 +54,22 @@ public class BetterCharacterController2D : ICharacterController2D
         UpdateJump();
 
         previousHorizontalMovement = HorizontalMovement;
+
+        // ça peut être bougé, faut juste que ce soit mis à jour quelque part -V
+        if (IsGrounded && !WasGrounded)
+        {
+            OnLand.Invoke();
+        }
     }
 
     public override void Jump()
     {
         jumpBufferTimeLeft = jumpBufferTime;
+        OnJump.Invoke(); // j'ai du rajouter ça -V
     }
 
     void UpdateJump()
     {
-        
         //Update coyoteTimeLeft and jumpBufferTimeLeft if they are in use
         if (!IsGrounded && coyoteTimeLeft >= 0)
             coyoteTimeLeft -= Time.deltaTime;
@@ -87,8 +92,7 @@ public class BetterCharacterController2D : ICharacterController2D
     }
 
     public override void UpdateMove()
-    {
-
+    { 
         if (((((previousHorizontalMovement>0 && HorizontalMovement<0) ||(previousHorizontalMovement<0 && HorizontalMovement>0)) && cancelGroundedAndInvertedInput) || (HorizontalMovement == 0 && cancelGroundedAndNoInput )) && IsGrounded)
         {
             body.velocity = new Vector2(0, body.velocity.y);
@@ -106,7 +110,7 @@ public class BetterCharacterController2D : ICharacterController2D
 
     void OnCollisionStay2D(Collision2D other)
     {
-        bool previousGrounded = IsGrounded;
+        WasGrounded = IsGrounded;
         IsGrounded = false;
 
         /* Debug only */
@@ -118,7 +122,7 @@ public class BetterCharacterController2D : ICharacterController2D
             Debug.DrawLine(transform.position, new Vector2(transform.position.x, transform.position.y) - (ContactPoint.point - new Vector2(transform.position.x, transform.position.y)).normalized, (ContactPoint.normal.normalized.y > isGroundedMinValue)?Color.green:Color.red, 0.5f);
         }
 
-        if (previousGrounded == true && IsGrounded == false && !jumped)
+        if (WasGrounded == true && IsGrounded == false && !jumped)
             coyoteTimeLeft = coyoteTime;
         else
         {
@@ -128,7 +132,7 @@ public class BetterCharacterController2D : ICharacterController2D
         if(IsGrounded)
             jumped = false;
 
-        if (!previousGrounded && IsGrounded && HorizontalMovement == 0 && cancelWhenGrounded)
+        if (!WasGrounded && IsGrounded && HorizontalMovement == 0 && cancelWhenGrounded)
             body.velocity = new Vector2(0, body.velocity.y);
     }
     void OnCollisionExit2D(Collision2D other)
