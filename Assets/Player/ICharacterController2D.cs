@@ -30,10 +30,15 @@ public abstract class ICharacterController2D : MonoBehaviour
     /// Événement invoqué au début d'un saut.
     /// </summary>
     public UnityEvent OnJump { get; private set; }
+    /// <summary>
+    /// Événement invoqué quand le joueur atteri.
+    /// </summary>
+    public UnityEvent OnLand { get; private set; }
 
     public ICharacterController2D()
     {
         OnJump = new UnityEvent();
+        OnLand = new UnityEvent();
     }
 
 

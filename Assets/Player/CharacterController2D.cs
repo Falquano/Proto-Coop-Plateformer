@@ -58,6 +58,7 @@ public class CharacterController2D : ICharacterController2D
 
 	public override void Jump()
 	{
+		Debug.Log("Jump should invoke now !");
 		jump = true;
 		lastJumpInput = 0;
 		OnJump.Invoke();
@@ -65,7 +66,6 @@ public class CharacterController2D : ICharacterController2D
 
 	public void UpdateIsGrounded()
 	{
-		WasGrounded = IsGrounded;
 		IsGrounded = false;
 		if (Physics2D.OverlapBox(transform.position, new Vector2(.90f, 1f), 0, groundLayer))
 		{
