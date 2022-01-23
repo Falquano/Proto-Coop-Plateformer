@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.02.00">
+	<object class="AudioFile" id="{babe7e7f-40f6-41a1-8f75-2e318dffdefa}">
+		<property name="assetPath">
+			<value>Robots, Movement, Sci-Fi, Motor, Servo Movements 15 SND32403 8.wav</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>96</value>
+		</property>
+		<property name="channelCount">
+			<value>2</value>
+		</property>
+		<property name="length">
+			<value>0.53473958333333338</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{e373284c-fc12-4502-9131-cf062ca39ce5}</destination>
+		</relationship>
+	</object>
+</objects>

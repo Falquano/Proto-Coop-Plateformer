@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.02.00">
+	<object class="AudioFile" id="{fef4505e-55cb-445b-ad7e-9b3e78f5d6d0}">
+		<property name="assetPath">
+			<value>bipent.wav</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>44.0999985</value>
+		</property>
+		<property name="channelCount">
+			<value>2</value>
+		</property>
+		<property name="length">
+			<value>0.68950113378684807</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{e373284c-fc12-4502-9131-cf062ca39ce5}</destination>
+		</relationship>
+	</object>
+</objects>
