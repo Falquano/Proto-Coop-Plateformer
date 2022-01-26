@@ -7,6 +7,7 @@ public class PlayerManager : MonoBehaviour
 {
     private PlayerInputManager manager;
     private List<Player> players;
+    private Player king;
     public Player[] Players => players.ToArray();
 
     public List<Player> Winners = new List<Player>();
@@ -111,4 +112,23 @@ public class PlayerManager : MonoBehaviour
 	{
         autoLevel.NewRound();
 	}
+
+    public void ShatterCrown()
+    {
+        if (king == null)
+            return;
+
+        king.SetCrown(false);
+        king = null;
+        // Il faut respawn une nouvelle couronne maintenant !
+    }
+
+    public void SetKing(Player player)
+    {
+        if (king != null)
+            ShatterCrown();
+
+        king = player;
+        king.SetCrown(true);
+    }
 }
