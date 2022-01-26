@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlayerAnimator : MonoBehaviour
 {
     [SerializeField] private Animator bodyAnimator;
-    [SerializeField] private Animator faceAnimator;
+    //[SerializeField] private Animator faceAnimator;
     [SerializeField] private LittleEventInvoker OnLandFinished;
     private ICharacterController2D characterController;
     private Rigidbody2D rigidBody;
@@ -19,13 +19,13 @@ public class PlayerAnimator : MonoBehaviour
 
         if (bodyAnimator == null)
             throw new System.Exception("Il faut un animateur de corps pour le prefab joueur.");
-        if (faceAnimator == null)
-            throw new System.Exception("Il faut un animateur de visage pour le prefab joueur.");
+        /*if (faceAnimator == null)
+            throw new System.Exception("Il faut un animateur de visage pour le prefab joueur.");*/
         characterController = GetComponent<ICharacterController2D>();
         rigidBody = GetComponent<Rigidbody2D>();
 
         characterController.OnJump.AddListener(OnJump);
-        OnLandFinished.Event.AddListener(FinishedLanding);
+        //OnLandFinished.Event.AddListener(FinishedLanding);
     }
 
     
@@ -34,7 +34,7 @@ public class PlayerAnimator : MonoBehaviour
         bodyAnimator.SetFloat("HorizontalSpeed", rigidBody.velocity.x);
         bodyAnimator.SetBool("InAir", !characterController.IsGrounded);
 
-        faceAnimator.SetFloat("HorizontalSpeed", Mathf.Abs(rigidBody.velocity.x));
+        /*faceAnimator.SetFloat("HorizontalSpeed", Mathf.Abs(rigidBody.velocity.x));
         faceAnimator.SetBool("Grounded", characterController.IsGrounded);
 
         if (rigidBody.velocity.x > 0.05f) // Flip visage
@@ -43,17 +43,17 @@ public class PlayerAnimator : MonoBehaviour
         } else
         {
             faceAnimator.transform.localScale = Vector3.one;
-        }
+        }*/
     }
 
     void OnJump()
     {
         bodyAnimator.SetTrigger("Jump");
-        faceAnimator.SetBool("FinishedLanding", false);
+        //faceAnimator.SetBool("FinishedLanding", false);
     }
 
-    void FinishedLanding()
+    /*void FinishedLanding()
     {
         faceAnimator.SetBool("FinishedLanding", true);
-    }
+    }*/
 }

@@ -28,7 +28,7 @@ public class PlayerManager : MonoBehaviour
         availableHues = CreateHueList();
 
         manager.JoinPlayer(Count + 1, Count + 1, "Keyboard 1", pairWithDevice: Keyboard.current);
-        //manager.JoinPlayer(Count + 1, Count + 1, "Keyboard 2", pairWithDevice: Keyboard.current);
+        manager.JoinPlayer(Count + 1, Count + 1, "Keyboard 2", pairWithDevice: Keyboard.current);
         
         manager.EnableJoining();
     }

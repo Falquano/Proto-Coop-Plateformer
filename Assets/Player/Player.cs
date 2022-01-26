@@ -21,6 +21,7 @@ public class Player : MonoBehaviour
 	[SerializeField] private GameObject model;
 	[SerializeField] private ICharacterController2D characterController;
 	[SerializeField] private PlayerAnimator animator;
+	[SerializeField] private GameObject crown;
 
 	[Header("Sound")]
 	[Space]
@@ -309,6 +310,11 @@ public class Player : MonoBehaviour
 		body.bodyType = RigidbodyType2D.Dynamic;
 		State = PlayerState.Moving;
 	}
+
+	public void SetCrown(bool value)
+    {
+		crown.SetActive(value);
+    }
 
 	// EVENTS
 	public void OnLand()
