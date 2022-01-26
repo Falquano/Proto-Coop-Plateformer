@@ -63,6 +63,8 @@ public class Player : MonoBehaviour
 		color.a = .2f;
 		fx.SetHelpColor(color);
 
+		SetCrown(false);
+
 		characterController.OnLand.AddListener(OnLand);
 	}
 

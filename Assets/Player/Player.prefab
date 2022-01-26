@@ -5110,7 +5110,7 @@ MonoBehaviour:
   model: {fileID: 9138074447473001644}
   characterController: {fileID: 5218539970189129574}
   animator: {fileID: 8707017243973070237}
-  crown: {fileID: 0}
+  crown: {fileID: 8436896029188979214}
   stepTime: 0.3
 --- !u!114 &5478215713898102295
 MonoBehaviour:
