@@ -55,17 +55,16 @@ public class BetterCharacterController2D : ICharacterController2D
 
         previousHorizontalMovement = HorizontalMovement;
 
-        // ça peut être bougé, faut juste que ce soit mis à jour quelque part -V
-        if (IsGrounded && !WasGrounded)
-        {
-            OnLand.Invoke();
-        }
+        // if (IsGrounded && !WasGrounded)
+        // {
+            
+        // }
     }
 
     public override void Jump()
     {
         jumpBufferTimeLeft = jumpBufferTime;
-        OnJump.Invoke(); // j'ai du rajouter ça -V
+        OnJump.Invoke(); // j'ai du rajouter ï¿½a -V
     }
 
     void UpdateJump()
@@ -112,8 +111,8 @@ public class BetterCharacterController2D : ICharacterController2D
     {
         WasGrounded = IsGrounded;
         IsGrounded = false;
-
-        /* Debug only */
+        
+        /* Debug */
         foreach (ContactPoint2D ContactPoint in other.contacts)
         {
             if (ContactPoint.normal.normalized.y > isGroundedMinValue)
@@ -121,6 +120,7 @@ public class BetterCharacterController2D : ICharacterController2D
 
             Debug.DrawLine(transform.position, new Vector2(transform.position.x, transform.position.y) - (ContactPoint.point - new Vector2(transform.position.x, transform.position.y)).normalized, (ContactPoint.normal.normalized.y > isGroundedMinValue)?Color.green:Color.red, 0.5f);
         }
+        /* End debug */
 
         if (WasGrounded == true && IsGrounded == false && !jumped)
             coyoteTimeLeft = coyoteTime;
@@ -134,6 +134,9 @@ public class BetterCharacterController2D : ICharacterController2D
 
         if (!WasGrounded && IsGrounded && HorizontalMovement == 0 && cancelWhenGrounded)
             body.velocity = new Vector2(0, body.velocity.y);
+            
+        if (!WasGrounded && IsGrounded)
+            OnLand.Invoke();
     }
     void OnCollisionExit2D(Collision2D other)
     {

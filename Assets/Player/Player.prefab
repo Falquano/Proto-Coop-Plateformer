@@ -5280,7 +5280,7 @@ MonoBehaviour:
   maxHorizontalSpeed: 10
   canMoveInTheAir: 1
   airHorizontalSpeed: 1500
-  isGroundedMinValue: 0.3
+  isGroundedMinValue: 0.1
   cancelWhenGrounded: 1
   cancelGroundedAndNoInput: 1
   cancelGroundedAndInvertedInput: 1
