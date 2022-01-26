@@ -36,6 +36,8 @@ public class BetterCharacterController2D : ICharacterController2D
     [SerializeField] private bool cancelWhenGrounded = false;
     [SerializeField] private bool cancelGroundedAndNoInput = false;
     [SerializeField] private bool cancelGroundedAndInvertedInput = true;
+    [SerializeField] private bool cancelAirborneAndNoInput = false;
+    [SerializeField] private bool cancelAirborneAndInvertedInput = true;
     float previousHorizontalMovement;
 
 
@@ -92,7 +94,8 @@ public class BetterCharacterController2D : ICharacterController2D
 
     public override void UpdateMove()
     { 
-        if (((((previousHorizontalMovement>0 && HorizontalMovement<0) ||(previousHorizontalMovement<0 && HorizontalMovement>0)) && cancelGroundedAndInvertedInput) || (HorizontalMovement == 0 && cancelGroundedAndNoInput )) && IsGrounded)
+        //CANCEL IF INVERTED MVMNT // IF 0 MVMNT // AIRBORNE/GROUNDED
+        if ((((((previousHorizontalMovement>0 && HorizontalMovement<0) ||(previousHorizontalMovement<0 && HorizontalMovement>0)) && cancelGroundedAndInvertedInput) || (HorizontalMovement == 0 && cancelGroundedAndNoInput )) && IsGrounded) || (((((previousHorizontalMovement>0 && HorizontalMovement<0) ||(previousHorizontalMovement<0 && HorizontalMovement>0)) && cancelAirborneAndInvertedInput) || (HorizontalMovement == 0 && cancelAirborneAndNoInput )) && !IsGrounded))
         {
             body.velocity = new Vector2(0, body.velocity.y);
         }
@@ -111,7 +114,7 @@ public class BetterCharacterController2D : ICharacterController2D
     {
         WasGrounded = IsGrounded;
         IsGrounded = false;
-        
+
         /* Debug */
         foreach (ContactPoint2D ContactPoint in other.contacts)
         {

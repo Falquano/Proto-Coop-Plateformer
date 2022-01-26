@@ -5284,6 +5284,8 @@ MonoBehaviour:
   cancelWhenGrounded: 1
   cancelGroundedAndNoInput: 1
   cancelGroundedAndInvertedInput: 1
+  cancelAirborneAndNoInput: 1
+  cancelAirborneAndInvertedInput: 1
 --- !u!114 &6375719382510468886
 MonoBehaviour:
   m_ObjectHideFlags: 0
