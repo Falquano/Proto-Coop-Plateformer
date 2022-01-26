@@ -5272,7 +5272,7 @@ MonoBehaviour:
   body: {fileID: 5478215713898102289}
   coyoteTime: 10
   jumpBufferTime: 0.1
-  jumpForce: 16
+  jumpForce: 17
   horizontalJumpForce: 0.5
   coyoteTimeLeft: 1
   groundHorizontalSpeed: 1500
