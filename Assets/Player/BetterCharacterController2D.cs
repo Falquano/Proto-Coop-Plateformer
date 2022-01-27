@@ -49,6 +49,9 @@ public class BetterCharacterController2D : ICharacterController2D
     [Header("Wall Grab")]
     [SerializeField] bool wallGrab = true;
     [SerializeField] bool slideIfPlayerIsOnTop = true;
+    [SerializeField] float topDetectionMinValue = 0.3f;
+    bool isPlayerOnTop = true;
+    bool wasPlayerOnTop = true;
     [SerializeField] float timeBeforeWallGrabStopInSeconds = 3f;
     float currentTimeBeforeWallGrabStop = -1;
     
@@ -141,7 +144,7 @@ public class BetterCharacterController2D : ICharacterController2D
             body.velocity = new Vector2(Mathf.Clamp(body.velocity.x, -maxHorizontalSpeed, maxHorizontalSpeed), body.velocity.y);
 
         //WALL GRAB SETUP
-        if(!IsOnWall)
+        if(!IsOnWall || isPlayerOnTop)
             currentTimeBeforeWallGrabStop = -1;
         
         //WALL GRAB START
@@ -176,6 +179,10 @@ public class BetterCharacterController2D : ICharacterController2D
         WasOnWall = IsOnWall;
         IsOnWall = false;
 
+        //PLAYER ON TOP
+        wasPlayerOnTop = isPlayerOnTop;
+        isPlayerOnTop = false;
+
         foreach (ContactPoint2D ContactPoint in contacts)
         {
             //GROUND
@@ -186,6 +193,11 @@ public class BetterCharacterController2D : ICharacterController2D
             {
                 IsOnWall = true;
                 wallDirection = (ContactPoint.point.x > transform.position.x) ? WallDirection.Right : WallDirection.Left;
+            }
+            //OTHER PLAYER ON TOP
+            if(ContactPoint.normal.y < -topDetectionMinValue && ContactPoint.rigidbody.gameObject.tag == gameObject.tag) //If other player is on top
+            {
+                isPlayerOnTop = true;
             }
 
             Debug.DrawLine(transform.position, new Vector2(transform.position.x, transform.position.y) - (ContactPoint.point - new Vector2(transform.position.x, transform.position.y)).normalized, (ContactPoint.normal.normalized.y > isGroundedMinValue) ? Color.green : Color.red, 0.5f);
