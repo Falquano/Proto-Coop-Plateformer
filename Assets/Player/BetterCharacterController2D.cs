@@ -34,7 +34,7 @@ public class BetterCharacterController2D : ICharacterController2D
     [SerializeField] float wallJumpForce;
     [SerializeField] float horizontalWallJumpForce;
 
-    [SerializeField] WallDirection wallDirection;
+    WallDirection wallDirection;
 
     enum WallDirection {
         Left,
