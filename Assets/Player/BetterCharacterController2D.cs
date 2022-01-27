@@ -93,10 +93,10 @@ public class BetterCharacterController2D : ICharacterController2D
                 body.velocity = new Vector2(body.velocity.x, 0);
 
             body.AddForce(new Vector2(HorizontalMovement * horizontalJumpForce, jumpForce), ForceMode2D.Impulse); //Jump
+            OnJump.Invoke();
             jumped = true;
             coyoteTimeLeft = -1; //Set it under 0 so no mistake is made
             jumpBufferTimeLeft = -1;
-            IsGrounded = false;
         }else if(!IsGrounded && jumpBufferTimeLeft >= 0 && !jumped && IsOnWall){
             if(cancelWhenWallJump)
                 body.velocity = Vector2.zero;
@@ -105,7 +105,6 @@ public class BetterCharacterController2D : ICharacterController2D
             jumped = true;
             coyoteTimeLeft = -1; //Set it under 0 so no mistake is made
             jumpBufferTimeLeft = -1;
-            IsGrounded = false;
         }
     }
 
@@ -155,8 +154,8 @@ public class BetterCharacterController2D : ICharacterController2D
             Debug.DrawLine(transform.position, new Vector2(transform.position.x, transform.position.y) - (ContactPoint.point - new Vector2(transform.position.x, transform.position.y)).normalized, (ContactPoint.normal.normalized.y > isGroundedMinValue) ? Color.green : Color.red, 0.5f);
         }
 
-        Debug.Log(gameObject.name);
-        Debug.Log(IsGrounded);
+        // Debug.Log(gameObject.name);
+        // Debug.Log(IsGrounded);
 
         if (WasGrounded == true && IsGrounded == false && !jumped)
             coyoteTimeLeft = coyoteTime;
@@ -169,8 +168,6 @@ public class BetterCharacterController2D : ICharacterController2D
         if (!WasGrounded && IsGrounded)
             OnLand.Invoke();
 
-        if(WasGrounded && !IsGrounded)
-            OnJump.Invoke();
 
         if (IsGrounded || IsOnWall)
             jumped = false;
