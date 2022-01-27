@@ -35,11 +35,21 @@ public class BetterCharacterController2D : ICharacterController2D
     [SerializeField] float horizontalWallJumpForce;
 
     WallDirection wallDirection;
-
-    enum WallDirection {
+    enum WallDirection
+    {
         Left,
         Right
     }
+
+    [Header("Strong Collisions")] //WIP
+    [SerializeField] bool useStrongCollisions;
+    [SerializeField] float minForceStrongCollision = 4f;
+
+    [Header("Wall Grab")]
+    [SerializeField] bool wallGrab = true;
+    [SerializeField] bool slideIfPlayerIsOnTop = true;
+    [SerializeField] float timeBeforeWallGrabStopInSeconds = 3f;
+    float currentTimeBeforeWallGrabStop = -1;
 
     [Header("Velocity cancels")]
     [SerializeField] private bool cancelWhenGrounded = false;
@@ -59,6 +69,10 @@ public class BetterCharacterController2D : ICharacterController2D
 
     private void Update()
     {
+        List<ContactPoint2D> other = new List<ContactPoint2D>();
+        gameObject.GetComponent<Collider2D>().GetContacts(other);
+        UpdateCollisions(other);
+        
         //Update movement
         UpdateMove();
 
@@ -66,10 +80,8 @@ public class BetterCharacterController2D : ICharacterController2D
         UpdateJump();
 
         previousHorizontalMovement = HorizontalMovement;
-        List<ContactPoint2D> other = new List<ContactPoint2D>();
-        gameObject.GetComponent<Collider2D>().GetContacts(other);
-        UpdateCollisions(other);
         
+
     }
 
     public override void Jump()
@@ -97,11 +109,13 @@ public class BetterCharacterController2D : ICharacterController2D
             jumped = true;
             coyoteTimeLeft = -1; //Set it under 0 so no mistake is made
             jumpBufferTimeLeft = -1;
-        }else if(!IsGrounded && jumpBufferTimeLeft >= 0 && !jumped && IsOnWall){
-            if(cancelWhenWallJump)
+        }
+        else if (!IsGrounded && jumpBufferTimeLeft >= 0 && !jumped && IsOnWall)
+        {
+            if (cancelWhenWallJump)
                 body.velocity = Vector2.zero;
 
-            body.AddForce(new Vector2(((wallDirection == WallDirection.Left)?1:-1)*horizontalWallJumpForce, wallJumpForce), ForceMode2D.Impulse);
+            body.AddForce(new Vector2(((wallDirection == WallDirection.Left) ? 1 : -1) * horizontalWallJumpForce, wallJumpForce), ForceMode2D.Impulse);
             jumped = true;
             coyoteTimeLeft = -1; //Set it under 0 so no mistake is made
             jumpBufferTimeLeft = -1;
@@ -110,6 +124,9 @@ public class BetterCharacterController2D : ICharacterController2D
 
     public override void UpdateMove()
     {
+        currentTimeBeforeWallGrabStop-=Time.deltaTime;
+
+
         //CANCEL IF INVERTED MVMNT // IF 0 MVMNT // AIRBORNE/GROUNDED
         if ((((((previousHorizontalMovement > 0 && HorizontalMovement < 0) || (previousHorizontalMovement < 0 && HorizontalMovement > 0)) && cancelGroundedAndInvertedInput) || (HorizontalMovement == 0 && cancelGroundedAndNoInput)) && IsGrounded) || (((((previousHorizontalMovement > 0 && HorizontalMovement < 0) || (previousHorizontalMovement < 0 && HorizontalMovement > 0)) && cancelAirborneAndInvertedInput) || (HorizontalMovement == 0 && cancelAirborneAndNoInput)) && !IsGrounded))
         {
@@ -122,8 +139,20 @@ public class BetterCharacterController2D : ICharacterController2D
         if (isUsingMaxHorizontalSpeed)
             body.velocity = new Vector2(Mathf.Clamp(body.velocity.x, -maxHorizontalSpeed, maxHorizontalSpeed), body.velocity.y);
 
+        //WALL GRAB START
+        if(body.velocity.y<0 && IsOnWall && wallGrab && !WasOnWall)
+        {
+            currentTimeBeforeWallGrabStop = timeBeforeWallGrabStopInSeconds;
+        }
+
         //WALL GRAB
-        if(body.velocity.y < 0 && IsOnWall && slowDownOnWalls)
+        if(body.velocity.y <= 0 && IsOnWall && wallGrab && currentTimeBeforeWallGrabStop>=0)
+        {
+            body.velocity = new Vector2(body.velocity.x, 0);
+        }
+
+        //WALL SLIDE
+        if (body.velocity.y < 0 && IsOnWall && slowDownOnWalls && currentTimeBeforeWallGrabStop<0)
         {
             body.velocity = new Vector2(body.velocity.x, Mathf.Clamp(body.velocity.y, slowDownOnWallsMaxSpeed, 0f));
         }
@@ -148,7 +177,7 @@ public class BetterCharacterController2D : ICharacterController2D
             if (Mathf.Abs(ContactPoint.normal.y) < isWallMinValue)
             {
                 IsOnWall = true;
-                wallDirection = (ContactPoint.point.x > transform.position.x)?WallDirection.Right:WallDirection.Left;
+                wallDirection = (ContactPoint.point.x > transform.position.x) ? WallDirection.Right : WallDirection.Left;
             }
 
             Debug.DrawLine(transform.position, new Vector2(transform.position.x, transform.position.y) - (ContactPoint.point - new Vector2(transform.position.x, transform.position.y)).normalized, (ContactPoint.normal.normalized.y > isGroundedMinValue) ? Color.green : Color.red, 0.5f);
@@ -164,7 +193,7 @@ public class BetterCharacterController2D : ICharacterController2D
         {
             coyoteTimeLeft = -1;
         }
-        
+
         if (!WasGrounded && IsGrounded)
             OnLand.Invoke();
 
@@ -175,7 +204,7 @@ public class BetterCharacterController2D : ICharacterController2D
         if (!WasGrounded && IsGrounded && HorizontalMovement == 0 && cancelWhenGrounded)
             body.velocity = new Vector2(0, body.velocity.y);
 
-        
+
 
     }
 }

@@ -325,6 +325,33 @@ public class Player : MonoBehaviour
 		FX.InstantiateImpactParticle();
 		Sound.LandSound();
 	}
+
+	// public void OnStrongImpact()
+	// {
+	// 	FX.InstantiateImpactParticle();
+	// 	Sound.LandSound();
+	// }
+
+	// public void OnWallGrabEnter()
+	// {
+
+	// }
+
+	// public void OnWallGrabExit()
+	// {
+
+	// }
+
+	// public void OnWallGrabExitJump()
+	// {
+
+	// }
+
+	// public void OnWallGrabStay()
+	// {
+
+	// }
+
 }
 
 /// <summary>
