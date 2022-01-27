@@ -181,9 +181,4 @@ public class BetterCharacterController2D : ICharacterController2D
         
 
     }
-    void OnCollisionExit2D(Collision2D other)
-    {
-        IsGrounded = false;
-        IsOnWall = false;
-    }
 }
