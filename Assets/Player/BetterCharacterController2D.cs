@@ -22,15 +22,24 @@ public class BetterCharacterController2D : ICharacterController2D
     public bool canMoveInTheAir;
     [SerializeField] float airHorizontalSpeed;
 
-
-
     [Header("Ground Collision Detection")]
     [SerializeField] float isGroundedMinValue;
 
-    // [Header("Wall Collision Detection")]
-    // [SerializeField] private Transform[] WallCheckPositions;
-    // [SerializeField] private LayerMask wallLayer;
-    // [SerializeField] private float wallCheckRadius = .03f;
+    [Header("Wall Collision Detection")]
+    [SerializeField] float isWallMinValue = 0.3f;
+    [SerializeField] bool slowDownOnWalls = true;
+    [SerializeField] float slowDownOnWallsMaxSpeed = 0f;
+
+    [Header("Wall Jump")]
+    [SerializeField] float wallJumpForce;
+    [SerializeField] float horizontalWallJumpForce;
+
+    [SerializeField] WallDirection wallDirection;
+
+    enum WallDirection {
+        Left,
+        Right
+    }
 
     [Header("Velocity cancels")]
     [SerializeField] private bool cancelWhenGrounded = false;
@@ -38,6 +47,7 @@ public class BetterCharacterController2D : ICharacterController2D
     [SerializeField] private bool cancelGroundedAndInvertedInput = true;
     [SerializeField] private bool cancelAirborneAndNoInput = false;
     [SerializeField] private bool cancelAirborneAndInvertedInput = true;
+    [SerializeField] private bool cancelWhenWallJump = true;
     float previousHorizontalMovement;
 
 
@@ -57,16 +67,11 @@ public class BetterCharacterController2D : ICharacterController2D
 
         previousHorizontalMovement = HorizontalMovement;
 
-        // if (IsGrounded && !WasGrounded)
-        // {
-            
-        // }
     }
 
     public override void Jump()
     {
         jumpBufferTimeLeft = jumpBufferTime;
-        OnJump.Invoke(); // j'ai du rajouter �a -V
     }
 
     void UpdateJump()
@@ -83,8 +88,18 @@ public class BetterCharacterController2D : ICharacterController2D
         {
             if (coyoteTimeLeft >= 0)
                 body.velocity = new Vector2(body.velocity.x, 0);
-            
+
             body.AddForce(new Vector2(HorizontalMovement * horizontalJumpForce, jumpForce), ForceMode2D.Impulse); //Jump
+            OnJump.Invoke();
+            jumped = true;
+            coyoteTimeLeft = -1; //Set it under 0 so no mistake is made
+            jumpBufferTimeLeft = -1;
+            IsGrounded = false;
+        }else if(!IsGrounded && jumpBufferTimeLeft >= 0 && !jumped && IsOnWall){
+            if(cancelWhenWallJump)
+                body.velocity = Vector2.zero;
+
+            body.AddForce(new Vector2(((wallDirection == WallDirection.Left)?1:-1)*horizontalWallJumpForce, wallJumpForce), ForceMode2D.Impulse);
             jumped = true;
             coyoteTimeLeft = -1; //Set it under 0 so no mistake is made
             jumpBufferTimeLeft = -1;
@@ -93,9 +108,9 @@ public class BetterCharacterController2D : ICharacterController2D
     }
 
     public override void UpdateMove()
-    { 
+    {
         //CANCEL IF INVERTED MVMNT // IF 0 MVMNT // AIRBORNE/GROUNDED
-        if ((((((previousHorizontalMovement>0 && HorizontalMovement<0) ||(previousHorizontalMovement<0 && HorizontalMovement>0)) && cancelGroundedAndInvertedInput) || (HorizontalMovement == 0 && cancelGroundedAndNoInput )) && IsGrounded) || (((((previousHorizontalMovement>0 && HorizontalMovement<0) ||(previousHorizontalMovement<0 && HorizontalMovement>0)) && cancelAirborneAndInvertedInput) || (HorizontalMovement == 0 && cancelAirborneAndNoInput )) && !IsGrounded))
+        if ((((((previousHorizontalMovement > 0 && HorizontalMovement < 0) || (previousHorizontalMovement < 0 && HorizontalMovement > 0)) && cancelGroundedAndInvertedInput) || (HorizontalMovement == 0 && cancelGroundedAndNoInput)) && IsGrounded) || (((((previousHorizontalMovement > 0 && HorizontalMovement < 0) || (previousHorizontalMovement < 0 && HorizontalMovement > 0)) && cancelAirborneAndInvertedInput) || (HorizontalMovement == 0 && cancelAirborneAndNoInput)) && !IsGrounded))
         {
             body.velocity = new Vector2(0, body.velocity.y);
         }
@@ -106,43 +121,72 @@ public class BetterCharacterController2D : ICharacterController2D
         if (isUsingMaxHorizontalSpeed)
             body.velocity = new Vector2(Mathf.Clamp(body.velocity.x, -maxHorizontalSpeed, maxHorizontalSpeed), body.velocity.y);
 
-
-        // Debug.Log(HorizontalMovement * (IsGrounded ? groundHorizontalSpeed : airHorizontalSpeed)* Time.deltaTime);
+        //WALL GRAB
+        if(body.velocity.y < 0 && IsOnWall && slowDownOnWalls)
+        {
+            body.velocity = new Vector2(body.velocity.x, Mathf.Clamp(body.velocity.y, slowDownOnWallsMaxSpeed, 0f));
+        }
     }
 
     void OnCollisionStay2D(Collision2D other)
     {
+        // GROUNDED
         WasGrounded = IsGrounded;
         IsGrounded = false;
 
-        /* Debug */
+        //WALL
+        WasOnWall = IsOnWall;
+        IsOnWall = false;
+
         foreach (ContactPoint2D ContactPoint in other.contacts)
         {
+            //GROUND
             if (ContactPoint.normal.normalized.y > isGroundedMinValue)
                 IsGrounded = true;
+            //WALLS
+            if (Mathf.Abs(ContactPoint.normal.y) < isWallMinValue)
+            {
+                IsOnWall = true;
+                wallDirection = (ContactPoint.point.x > transform.position.x)?WallDirection.Right:WallDirection.Left;
+            }
 
-            Debug.DrawLine(transform.position, new Vector2(transform.position.x, transform.position.y) - (ContactPoint.point - new Vector2(transform.position.x, transform.position.y)).normalized, (ContactPoint.normal.normalized.y > isGroundedMinValue)?Color.green:Color.red, 0.5f);
+            Debug.DrawLine(transform.position, new Vector2(transform.position.x, transform.position.y) - (ContactPoint.point - new Vector2(transform.position.x, transform.position.y)).normalized, (ContactPoint.normal.normalized.y > isGroundedMinValue) ? Color.green : Color.red, 0.5f);
         }
-        /* End debug */
 
         if (WasGrounded == true && IsGrounded == false && !jumped)
             coyoteTimeLeft = coyoteTime;
+
         else
         {
             coyoteTimeLeft = -1;
         }
-            
-        if(IsGrounded)
+
+        if (IsGrounded || IsOnWall)
             jumped = false;
 
         if (!WasGrounded && IsGrounded && HorizontalMovement == 0 && cancelWhenGrounded)
             body.velocity = new Vector2(0, body.velocity.y);
-            
+
         if (!WasGrounded && IsGrounded)
             OnLand.Invoke();
+
+
+        
+        foreach (ContactPoint2D ContactPoint in other.contacts)
+        {
+            
+                
+
+            
+
+            
+        }
+
+
     }
     void OnCollisionExit2D(Collision2D other)
     {
         IsGrounded = false;
+        IsOnWall = false;
     }
 }

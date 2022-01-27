@@ -52,4 +52,14 @@ public abstract class ICharacterController2D : MonoBehaviour
 	public abstract void UpdateMove();
     public Vector3 LastGroundedLocation { get; protected set; }
     public abstract void Jump();
+
+
+    /// <summary>
+    /// Indique si le personnage est sur un mur ou non.
+    /// </summary>
+    public bool IsOnWall { get; protected set; }
+    /// <summary>
+    /// Indique si le joueur était sur un mur ou non lors de la dernière frame.
+    /// </summary>
+    public bool WasOnWall { get; protected set; }
 }
