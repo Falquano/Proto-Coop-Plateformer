@@ -170,19 +170,6 @@ public class BetterCharacterController2D : ICharacterController2D
         if (!WasGrounded && IsGrounded)
             OnLand.Invoke();
 
-
-        
-        foreach (ContactPoint2D ContactPoint in other.contacts)
-        {
-            
-                
-
-            
-
-            
-        }
-
-
     }
     void OnCollisionExit2D(Collision2D other)
     {
