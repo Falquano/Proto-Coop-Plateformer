@@ -4,9 +4,11 @@ using UnityEngine;
 
 public class PlayerFXEmitter : MonoBehaviour
 {
-
+	[SerializeField] Player player;
+	[SerializeField] BetterCharacterController2D characterController2D;
 	[SerializeField] private GameObject helpHighlight;
 	[SerializeField] private ParticleSystem walkParticle;
+	
 	[SerializeField] private TrailRenderer jumpTrail;
 	[SerializeField] private GameObject ImpactParticlePrefab;
 
@@ -50,4 +52,30 @@ public class PlayerFXEmitter : MonoBehaviour
     {
 		helpHighlight.GetComponent<SpriteRenderer>().color = color;
     }
+
+	/// <summary>
+	/// Start is called on the frame when a script is enabled just before
+	/// any of the Update methods is called the first time.
+	/// </summary>
+	void Start()
+	{
+		player = GetComponent<Player>();
+		characterController2D = GetComponent<BetterCharacterController2D>();
+	}
+	private bool wasWalking;
+	/// <summary>
+	/// Update is called every frame, if the MonoBehaviour is enabled.
+	/// </summary>
+	void Update()
+	{
+		if (wasWalking && !characterController2D.IsWalking)
+		{
+			player.FX.StopWalkParticle();
+		}
+		else if (!wasWalking && characterController2D.IsWalking)
+		{
+			player.FX.StartWalkParticle();
+		}
+		wasWalking = characterController2D.IsWalking;
+	}
 }
