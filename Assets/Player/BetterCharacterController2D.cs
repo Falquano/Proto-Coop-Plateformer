@@ -21,6 +21,7 @@ public class BetterCharacterController2D : ICharacterController2D
     [Header("Air Movement")]
     public bool canMoveInTheAir;
     [SerializeField] float airHorizontalSpeed;
+    bool wasGoingDown = true;
 
     [Header("Ground Collision Detection")]
     [SerializeField] float isGroundedMinValue;
@@ -50,6 +51,7 @@ public class BetterCharacterController2D : ICharacterController2D
     [SerializeField] bool slideIfPlayerIsOnTop = true;
     [SerializeField] float timeBeforeWallGrabStopInSeconds = 3f;
     float currentTimeBeforeWallGrabStop = -1;
+    
 
     [Header("Velocity cancels")]
     [SerializeField] private bool cancelWhenGrounded = false;
@@ -72,7 +74,7 @@ public class BetterCharacterController2D : ICharacterController2D
         List<ContactPoint2D> other = new List<ContactPoint2D>();
         gameObject.GetComponent<Collider2D>().GetContacts(other);
         UpdateCollisions(other);
-        
+
         //Update movement
         UpdateMove();
 
@@ -80,8 +82,6 @@ public class BetterCharacterController2D : ICharacterController2D
         UpdateJump();
 
         previousHorizontalMovement = HorizontalMovement;
-        
-
     }
 
     public override void Jump()
@@ -120,6 +120,7 @@ public class BetterCharacterController2D : ICharacterController2D
             coyoteTimeLeft = -1; //Set it under 0 so no mistake is made
             jumpBufferTimeLeft = -1;
         }
+
     }
 
     public override void UpdateMove()
@@ -139,8 +140,12 @@ public class BetterCharacterController2D : ICharacterController2D
         if (isUsingMaxHorizontalSpeed)
             body.velocity = new Vector2(Mathf.Clamp(body.velocity.x, -maxHorizontalSpeed, maxHorizontalSpeed), body.velocity.y);
 
+        //WALL GRAB SETUP
+        if(!IsOnWall)
+            currentTimeBeforeWallGrabStop = -1;
+        
         //WALL GRAB START
-        if(body.velocity.y<0 && IsOnWall && wallGrab && !WasOnWall)
+        if(body.velocity.y<0 && IsOnWall && wallGrab && (!WasOnWall || !wasGoingDown))
         {
             currentTimeBeforeWallGrabStop = timeBeforeWallGrabStopInSeconds;
         }
@@ -156,6 +161,9 @@ public class BetterCharacterController2D : ICharacterController2D
         {
             body.velocity = new Vector2(body.velocity.x, Mathf.Clamp(body.velocity.y, slowDownOnWallsMaxSpeed, 0f));
         }
+
+
+        wasGoingDown = (body.velocity.y <= 0);
     }
 
     void UpdateCollisions(List<ContactPoint2D> contacts)
