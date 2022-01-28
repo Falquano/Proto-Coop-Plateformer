@@ -35,10 +35,19 @@ public abstract class ICharacterController2D : MonoBehaviour
     /// </summary>
     public UnityEvent OnLand { get; private set; }
 
+    /// <summary>
+    /// Événement invoqué quand le joueur collisionne avec un mur ou un autre joueur
+    /// Paramètre 1 : Force de la collision (float)
+    /// Paramètre 2 : Type de collision (<see cref="CollisionType"/>
+    /// Paramètre 3 : Collision forcée (si le joueur a été boosté)
+    /// </summary>
+    public CollisionEvent OnCollision { get; private set; }
+
     public ICharacterController2D()
     {
         OnJump = new UnityEvent();
         OnLand = new UnityEvent();
+        OnCollision = new CollisionEvent();
     }
 
 
@@ -62,4 +71,16 @@ public abstract class ICharacterController2D : MonoBehaviour
     /// Indique si le joueur était sur un mur ou non lors de la dernière frame.
     /// </summary>
     public bool WasOnWall { get; protected set; }
+}
+
+public enum CollisionType
+{
+    Wall,
+    Player,
+    Other
+}
+
+[System.Serializable]
+public class CollisionEvent : UnityEvent<float, CollisionType, bool>
+{
 }
