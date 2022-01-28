@@ -43,8 +43,6 @@ public class CharacterController2D : ICharacterController2D
 	{
 		lastJumpInput += Time.deltaTime;
 		timeSinceFall += Time.deltaTime;
-
-		//Debug.Log(IsWalking);
 		if (wasWalking && !IsWalking)
 		{
 			player.FX.StopWalkParticle();

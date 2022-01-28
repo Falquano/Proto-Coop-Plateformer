@@ -5251,7 +5251,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   FX: {fileID: 6375719382510468886}
-  helpStrength: 20
+  helpStrength: 25
   helpLoss: 0.035
   helpCooldown: 0.1
   baseHelpRadius: 4.2
@@ -5286,7 +5286,12 @@ MonoBehaviour:
   slowDownOnWallsMaxSpeed: -4
   wallJumpForce: 17
   horizontalWallJumpForce: 17
-  wallDirection: 0
+  useStrongCollisions: 0
+  minForceStrongCollision: 4
+  wallGrab: 1
+  slideIfPlayerIsOnTop: 1
+  topDetectionMinValue: 0.3
+  timeBeforeWallGrabStopInSeconds: 3
   cancelWhenGrounded: 1
   cancelGroundedAndNoInput: 1
   cancelGroundedAndInvertedInput: 1
@@ -5305,6 +5310,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c8a84d1b6ea13c469867f61633afbac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  player: {fileID: 0}
+  characterController2D: {fileID: 0}
   helpHighlight: {fileID: 6605336123091220826}
   walkParticle: {fileID: 8960756328138258602}
   jumpTrail: {fileID: 5372543180767162905}
