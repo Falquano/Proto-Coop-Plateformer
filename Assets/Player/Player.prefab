@@ -5270,8 +5270,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   body: {fileID: 5478215713898102289}
-  coyoteTime: 10
-  jumpBufferTime: 0.1
+  coyoteTime: 0.1
+  jumpBufferTime: 0.2
   jumpForce: 17
   horizontalJumpForce: 0.5
   coyoteTimeLeft: 1
