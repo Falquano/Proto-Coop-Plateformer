@@ -10124,6 +10124,15 @@ MonoBehaviour:
   cancelFastFall: 1
   canFastFall: 1
   fastFallDownwardForce: 17
+  isCrowned: 0
+  crownTag: Crown
+  crownGroundSpeedMultiplier: 2
+  crownAirSpeedMultiplier: 2
+  crownMaxSpeedMultiplier: 2
+  crownJumpMultiplier: 2
+  crownHorizontalJumpMultiplier: 2
+  crownWallJumpMultiplier: 2
+  crownHorizontalWallJumpMultiplier: 2
 --- !u!114 &6375719382510468886
 MonoBehaviour:
   m_ObjectHideFlags: 0
