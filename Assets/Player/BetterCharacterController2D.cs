@@ -107,8 +107,7 @@ public class BetterCharacterController2D : ICharacterController2D
 
         if (jumpBufferTimeLeft >= 0)
             jumpBufferTimeLeft -= Time.deltaTime;
-
-        //Debug.Log($"Coyote : {coyoteTimeLeft} \n Buffer : {jumpBufferTimeLeft} \n IsGrounded : {IsGrounded}");
+            
         if ((coyoteTimeLeft >= 0 || IsGrounded) && jumpBufferTimeLeft >= 0 && !jumped)
         {
             if (coyoteTimeLeft >= 0)
@@ -222,10 +221,6 @@ public class BetterCharacterController2D : ICharacterController2D
             Debug.DrawLine(transform.position, new Vector2(transform.position.x, transform.position.y) - (ContactPoint.point - new Vector2(transform.position.x, transform.position.y)).normalized, (ContactPoint.normal.normalized.y > isGroundedMinValue) ? Color.green : Color.red, 0.5f);
         }
 
-        // Debug.Log(WasGrounded && !IsGrounded && !jumped);
-        // Debug.Log(!jumped);
-
-
         if (!WasGrounded && IsGrounded)
             OnLand.Invoke();
 
@@ -239,7 +234,6 @@ public class BetterCharacterController2D : ICharacterController2D
         if (WasGrounded && !IsGrounded && !jumped)
         {
             coyoteTimeLeft = coyoteTime;
-            Debug.Log("Yay");
         }
 
     }
