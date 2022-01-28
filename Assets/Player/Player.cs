@@ -54,7 +54,7 @@ public class Player : MonoBehaviour
 		transform.position = Manager.transform.position;
 
 		body = GetComponent<Rigidbody2D>();
-		fx.SetHelpActive(false);
+		fx.SetHelpActive(false, help.HelpMod);
 		State = PlayerState.Moving;
 
 		SpriteRenderer spriteRenderer = model.GetComponent<SpriteRenderer>();
@@ -256,10 +256,10 @@ public class Player : MonoBehaviour
     {
 		if (state == PlayerState.Moving && value == PlayerState.OfferingHelp)
         {
-			fx.SetHelpActive(true);
+			fx.SetHelpActive(true, help.HelpMod);
         } else if (state == PlayerState.OfferingHelp && value == PlayerState.Moving)
         {
-			fx.SetHelpActive(false);
+			fx.SetHelpActive(false, help.HelpMod);
 		}
 
 		state = value;

@@ -11,15 +11,35 @@ public class PlayerFXEmitter : MonoBehaviour
 	
 	[SerializeField] private TrailRenderer jumpTrail;
 	[SerializeField] private GameObject ImpactParticlePrefab;
+	[SerializeField] private ParticleSystem PushParticle;
+	[SerializeField] private ParticleSystem PullParticle;
 
 	public void UpdateHelpScale(float radius)
 	{
 		helpHighlight.transform.localScale = new Vector3(radius * 2, radius * 2, 1);
 	}
 
-	public void SetHelpActive(bool active)
+	public void SetHelpActive(bool active, float helpMod)
 	{
 		helpHighlight.SetActive(active);
+		
+		if (!active)
+        {
+			//PullParticlePrefab.SetActive(false);
+			PullParticle.Stop();
+			//PushParticlePrefab.SetActive(false);
+			PushParticle.Stop();
+		} else if (helpMod >= 0)
+        {
+			//PushParticlePrefab.SetActive(true);
+			PushParticle.gameObject.SetActive(true);
+			PushParticle.Play();
+        } else if (helpMod <= 0)
+        {
+			//PullParticlePrefab.SetActive(true);
+			PullParticle.gameObject.SetActive(true);
+			PullParticle.Play();
+        }
 	}
 
 	public void InstantiateImpactParticle()
@@ -52,6 +72,16 @@ public class PlayerFXEmitter : MonoBehaviour
     {
 		helpHighlight.GetComponent<SpriteRenderer>().color = color;
     }
+
+	public void InstantiatePushParticle()
+    {
+		Instantiate(PushParticle, transform.position, Quaternion.identity);
+	}
+
+	public void InstantiatePullParticle()
+	{
+		Instantiate(PullParticle, transform.position, Quaternion.identity);
+	}
 
 	/// <summary>
 	/// Start is called on the frame when a script is enabled just before
