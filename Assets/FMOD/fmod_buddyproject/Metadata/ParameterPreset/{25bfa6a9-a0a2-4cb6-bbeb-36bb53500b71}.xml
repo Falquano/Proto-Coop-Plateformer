@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.02.00">
+	<object class="ParameterPreset" id="{25bfa6a9-a0a2-4cb6-bbeb-36bb53500b71}">
+		<property name="name">
+			<value>kingPresence</value>
+		</property>
+		<relationship name="folder">
+			<destination>{8805bc95-e32b-4851-b810-388b0252fd18}</destination>
+		</relationship>
+		<relationship name="parameter">
+			<destination>{d07f2556-f0a6-41d2-bc85-97f38e3faa6b}</destination>
+		</relationship>
+	</object>
+	<object class="GameParameter" id="{d07f2556-f0a6-41d2-bc85-97f38e3faa6b}">
+		<property name="initialValue">
+			<value>0</value>
+		</property>
+	</object>
+</objects>
