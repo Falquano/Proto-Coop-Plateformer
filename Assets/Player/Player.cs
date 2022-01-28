@@ -194,6 +194,15 @@ public class Player : MonoBehaviour
 		}
 	}
 
+	public void InputFastFall(InputAction.CallbackContext context)
+	{
+		if(context.performed)
+		{
+			Debug.Log("FAST FALL");
+			characterController.FastFall();
+		}
+	}
+
 	// ACTIONS
 
 	public void PullMe(Player otherPlayer)

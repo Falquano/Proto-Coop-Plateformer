@@ -64,7 +64,15 @@ public class BetterCharacterController2D : ICharacterController2D
     [SerializeField] private bool cancelAirborneAndNoInput = false;
     [SerializeField] private bool cancelAirborneAndInvertedInput = true;
     [SerializeField] private bool cancelWhenWallJump = true;
+    [SerializeField] private bool cancelFastFall = true;
     float previousHorizontalMovement;
+
+    [Header("Fast fall")]
+    [SerializeField] bool canFastFall = true;
+    bool isFastFalling = false;
+    bool fastFallRegistered;
+    [SerializeField] float fastFallDownwardForce = 3f;
+
 
     /// <summary>
     /// Awake is called when the script instance is being loaded.
@@ -99,15 +107,26 @@ public class BetterCharacterController2D : ICharacterController2D
         jumpBufferTimeLeft = jumpBufferTime;
     }
 
+    public override void FastFall()
+    {
+        Debug.Log("Fast fall");
+        if (!IsGrounded)
+        {
+            fastFallRegistered = true;
+        }
+            
+    }
+
     void UpdateJump()
     {
+        
         //Update coyoteTimeLeft and jumpBufferTimeLeft if they are in use
         if (!IsGrounded && coyoteTimeLeft >= 0)
             coyoteTimeLeft -= Time.deltaTime;
 
         if (jumpBufferTimeLeft >= 0)
             jumpBufferTimeLeft -= Time.deltaTime;
-            
+
         if ((coyoteTimeLeft >= 0 || IsGrounded) && jumpBufferTimeLeft >= 0 && !jumped)
         {
             if (coyoteTimeLeft >= 0)
@@ -124,7 +143,7 @@ public class BetterCharacterController2D : ICharacterController2D
             if (cancelWhenWallJump)
                 body.velocity = Vector2.zero;
 
-            body.AddForce(new Vector2(((wallDirection == WallDirection.Left) ? 1 : -1) * horizontalWallJumpForce, wallJumpForce), ForceMode2D.Impulse);
+            body.AddForce(new Vector2(((wallDirection == WallDirection.Left) ? 1 : -1) * horizontalWallJumpForce, wallJumpForce), ForceMode2D.Impulse);  //Wall Jump
             jumped = true;
             coyoteTimeLeft = -1; //Set it under 0 so no mistake is made
             jumpBufferTimeLeft = -1;
@@ -134,6 +153,19 @@ public class BetterCharacterController2D : ICharacterController2D
 
     public override void UpdateMove()
     {
+        //FASTFALL
+        if(fastFallRegistered && !isFastFalling)
+        {
+            isFastFalling = true;
+            if(cancelFastFall)
+                body.velocity = new Vector2(body.velocity.x, 0);
+
+            body.AddForce(new Vector2(0, -fastFallDownwardForce),  ForceMode2D.Impulse);
+        }
+
+        fastFallRegistered = false;
+            
+
         var isDirWallSameAsControllerDir = (wallDirection == WallDirection.Left && HorizontalMovement < 0) || (wallDirection == WallDirection.Right && HorizontalMovement > 0);
 
         if (!(!isDirWallSameAsControllerDir && currentTimeBeforeWallGrabStop > 0 && IsOnWall))
@@ -159,13 +191,13 @@ public class BetterCharacterController2D : ICharacterController2D
             currentTimeBeforeWallGrabStop = -1;
 
         //WALL GRAB START
-        if ((body.velocity.y < 0 && IsOnWall && wallGrab && (!WasOnWall || !wasGoingDown)) && isDirWallSameAsControllerDir)
+        if ((body.velocity.y < 0 && IsOnWall && wallGrab && (!WasOnWall || !wasGoingDown)) && isDirWallSameAsControllerDir  && !IsGrounded)
         {
             currentTimeBeforeWallGrabStop = timeBeforeWallGrabStopInSeconds;
         }
 
         //WALL GRAB
-        if ((body.velocity.y <= 0.01 && IsOnWall && wallGrab && currentTimeBeforeWallGrabStop >= 0) && isDirWallSameAsControllerDir)
+        if ((body.velocity.y <= 0.01 && IsOnWall && wallGrab && currentTimeBeforeWallGrabStop >= 0) && isDirWallSameAsControllerDir && !IsGrounded)
         {
             //STOP VELOCITY
             body.velocity = new Vector2(body.velocity.x, 0);
@@ -178,7 +210,7 @@ public class BetterCharacterController2D : ICharacterController2D
         }
 
         //WALL SLIDE
-        if ((body.velocity.y < 0 && IsOnWall && slowDownOnWalls && currentTimeBeforeWallGrabStop < 0) && isDirWallSameAsControllerDir)
+        if ((body.velocity.y < 0 && IsOnWall && slowDownOnWalls && currentTimeBeforeWallGrabStop < 0) && isDirWallSameAsControllerDir  && !IsGrounded)
         {
             body.velocity = new Vector2(body.velocity.x, Mathf.Clamp(body.velocity.y, slowDownOnWallsMaxSpeed, 0f));
         }
@@ -222,11 +254,18 @@ public class BetterCharacterController2D : ICharacterController2D
         }
 
         if (!WasGrounded && IsGrounded)
+        {
             OnLand.Invoke();
+        }
+            
 
 
         if ((!WasGrounded && IsGrounded) || (!WasOnWall && IsOnWall))
+        {
             jumped = false;
+            isFastFalling = false;
+        }
+            
 
         if (!WasGrounded && IsGrounded && HorizontalMovement == 0 && cancelWhenGrounded)
             body.velocity = new Vector2(0, body.velocity.y);

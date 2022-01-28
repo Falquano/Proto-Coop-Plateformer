@@ -61,6 +61,7 @@ public abstract class ICharacterController2D : MonoBehaviour
 	public abstract void UpdateMove();
     public Vector3 LastGroundedLocation { get; protected set; }
     public abstract void Jump();
+    public abstract void FastFall();
 
 
     /// <summary>

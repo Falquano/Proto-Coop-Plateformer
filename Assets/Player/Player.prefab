@@ -5233,6 +5233,22 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 3802d88b-5ddd-45a5-be1b-d70a6103ba79
     m_ActionName: Player/Push[/Keyboard/e,/Keyboard/o]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 5478215713898102293}
+        m_TargetAssemblyTypeName: Player, Assembly-CSharp
+        m_MethodName: InputFastFall
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 2ad04895-669f-491e-9146-d66233236df1
+    m_ActionName: Player/Fast Fall[/Keyboard/s,/Keyboard/k]
   m_NeverAutoSwitchControlSchemes: 1
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
@@ -5298,6 +5314,9 @@ MonoBehaviour:
   cancelAirborneAndNoInput: 1
   cancelAirborneAndInvertedInput: 1
   cancelWhenWallJump: 1
+  cancelFastFall: 1
+  canFastFall: 1
+  fastFallDownwardForce: 17
 --- !u!114 &6375719382510468886
 MonoBehaviour:
   m_ObjectHideFlags: 0
