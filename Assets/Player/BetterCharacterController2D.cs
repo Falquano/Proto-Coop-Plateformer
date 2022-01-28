@@ -52,9 +52,10 @@ public class BetterCharacterController2D : ICharacterController2D
     [SerializeField] float topDetectionMinValue = 0.3f;
     bool isPlayerOnTop = true;
     bool wasPlayerOnTop = true;
+    float regularGravityScale = 0;
     [SerializeField] float timeBeforeWallGrabStopInSeconds = 3f;
     float currentTimeBeforeWallGrabStop = -1;
-    
+
 
     [Header("Velocity cancels")]
     [SerializeField] private bool cancelWhenGrounded = false;
@@ -65,11 +66,17 @@ public class BetterCharacterController2D : ICharacterController2D
     [SerializeField] private bool cancelWhenWallJump = true;
     float previousHorizontalMovement;
 
-
-
+    /// <summary>
+    /// Awake is called when the script instance is being loaded.
+    /// </summary>
+    void Awake()
+    {
+        regularGravityScale = body.gravityScale;
+    }
     private void Start()
     {
         player = GetComponent<Player>();
+        
     }
 
     private void Update()
@@ -128,7 +135,10 @@ public class BetterCharacterController2D : ICharacterController2D
 
     public override void UpdateMove()
     {
-        currentTimeBeforeWallGrabStop-=Time.deltaTime;
+        var isDirWallSameAsControllerDir = (wallDirection == WallDirection.Left && HorizontalMovement < 0) || (wallDirection == WallDirection.Right && HorizontalMovement > 0);
+        
+        if(!(!isDirWallSameAsControllerDir && currentTimeBeforeWallGrabStop>0 && IsOnWall))
+        currentTimeBeforeWallGrabStop -= Time.deltaTime;
 
 
         //CANCEL IF INVERTED MVMNT // IF 0 MVMNT // AIRBORNE/GROUNDED
@@ -143,24 +153,33 @@ public class BetterCharacterController2D : ICharacterController2D
         if (isUsingMaxHorizontalSpeed)
             body.velocity = new Vector2(Mathf.Clamp(body.velocity.x, -maxHorizontalSpeed, maxHorizontalSpeed), body.velocity.y);
 
-        //WALL GRAB SETUP
-        if(!IsOnWall || isPlayerOnTop)
-            currentTimeBeforeWallGrabStop = -1;
         
+
+        //WALL GRAB SETUP
+        if (!IsOnWall || isPlayerOnTop)
+            currentTimeBeforeWallGrabStop = -1;
+
         //WALL GRAB START
-        if(body.velocity.y<0 && IsOnWall && wallGrab && (!WasOnWall || !wasGoingDown))
+        if ((body.velocity.y < 0 && IsOnWall && wallGrab && (!WasOnWall || !wasGoingDown)) && isDirWallSameAsControllerDir)
         {
             currentTimeBeforeWallGrabStop = timeBeforeWallGrabStopInSeconds;
         }
 
         //WALL GRAB
-        if(body.velocity.y <= 0 && IsOnWall && wallGrab && currentTimeBeforeWallGrabStop>=0)
+        if ((body.velocity.y <= 0.01 && IsOnWall && wallGrab && currentTimeBeforeWallGrabStop >= 0) && isDirWallSameAsControllerDir)
         {
+            //STOP VELOCITY
             body.velocity = new Vector2(body.velocity.x, 0);
+            body.gravityScale = 0;
+            // body.AddForce(-Physics.gravity * body.mass);
+        }
+        else
+        {
+            body.gravityScale = regularGravityScale;
         }
 
         //WALL SLIDE
-        if (body.velocity.y < 0 && IsOnWall && slowDownOnWalls && currentTimeBeforeWallGrabStop<0)
+        if ((body.velocity.y < 0 && IsOnWall && slowDownOnWalls && currentTimeBeforeWallGrabStop < 0) && isDirWallSameAsControllerDir)
         {
             body.velocity = new Vector2(body.velocity.x, Mathf.Clamp(body.velocity.y, slowDownOnWallsMaxSpeed, 0f));
         }
@@ -195,7 +214,7 @@ public class BetterCharacterController2D : ICharacterController2D
                 wallDirection = (ContactPoint.point.x > transform.position.x) ? WallDirection.Right : WallDirection.Left;
             }
             //OTHER PLAYER ON TOP
-            if(ContactPoint.normal.y < -topDetectionMinValue && ContactPoint.rigidbody.gameObject.tag == gameObject.tag) //If other player is on top
+            if (ContactPoint.normal.y < -topDetectionMinValue && ContactPoint.rigidbody.gameObject.tag == gameObject.tag) //If other player is on top
             {
                 isPlayerOnTop = true;
             }
