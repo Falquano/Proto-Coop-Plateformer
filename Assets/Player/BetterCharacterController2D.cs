@@ -200,8 +200,11 @@ public class BetterCharacterController2D : ICharacterController2D
         fastFallRegistered = false;
 
         //FASTFALL CANCEL
-        if(isFastFalling && isOfferingState && cancelFastFallWhenOfferingHelp)
-        body.velocity = new Vector2(body.velocity.x, 0);
+        if(isFastFalling && isOfferingState && !wasOfferingState && cancelFastFallWhenOfferingHelp)
+        {
+            body.velocity = new Vector2(body.velocity.x, 0);
+            isFastFalling = false;
+        }
 
         var isDirWallSameAsControllerDir = (wallDirection == WallDirection.Left && HorizontalMovement < 0) || (wallDirection == WallDirection.Right && HorizontalMovement > 0);
 
