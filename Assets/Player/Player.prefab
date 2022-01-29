@@ -15439,7 +15439,7 @@ TrailRenderer:
       m_NumColorKeys: 2
       m_NumAlphaKeys: 2
     numCornerVertices: 2
-    numCapVertices: 5
+    numCapVertices: 2
     alignment: 0
     textureMode: 0
     shadowBias: 0.5
