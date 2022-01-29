@@ -17,6 +17,8 @@ public class BetterCharacterController2D : ICharacterController2D
     [SerializeField] float groundHorizontalSpeed;
     [SerializeField] bool isUsingMaxHorizontalSpeed = false;
     [SerializeField] float maxHorizontalSpeed;
+    [SerializeField] bool notUseMaxHorizontalSpeedIfOffering = true;
+    [SerializeField] bool disableMovementIfOffering = true;
 
     [Header("Air Movement")]
     public bool canMoveInTheAir;
@@ -218,10 +220,10 @@ public class BetterCharacterController2D : ICharacterController2D
             body.velocity = new Vector2(0, body.velocity.y);
         }
 
-        if (IsGrounded || (!IsGrounded && canMoveInTheAir))
+        if ((IsGrounded || (!IsGrounded && canMoveInTheAir)) && (!(disableMovementIfOffering) || !(disableMovementIfOffering && isOfferingState)))
             body.AddForce(new Vector2(HorizontalMovement * (IsGrounded ? groundHorizontalSpeed * (isCrowned ? crownGroundSpeedMultiplier : 1) : airHorizontalSpeed * (isCrowned ? crownAirSpeedMultiplier : 1)), 0) * Time.deltaTime, ForceMode2D.Force);
         //CLAMP
-        if (isUsingMaxHorizontalSpeed)
+        if (isUsingMaxHorizontalSpeed && (!(notUseMaxHorizontalSpeedIfOffering) || (notUseMaxHorizontalSpeedIfOffering && !isOfferingState)))
             body.velocity = new Vector2(Mathf.Clamp(body.velocity.x, -maxHorizontalSpeed * (isCrowned ? crownMaxSpeedMultiplier : 1), maxHorizontalSpeed * (isCrowned ? crownMaxSpeedMultiplier : 1)), body.velocity.y);
 
 
