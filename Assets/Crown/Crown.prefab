@@ -44,7 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 022b23b316b6b684aab27d4a2a060c6d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  radius: 1.5
+  radius: 0.75
   layer:
     serializedVersion: 2
     m_Bits: 8
