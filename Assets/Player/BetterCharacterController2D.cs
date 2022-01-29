@@ -253,17 +253,23 @@ public class BetterCharacterController2D : ICharacterController2D
         {
             //GROUND
             if (ContactPoint.normal.normalized.y > isGroundedMinValue)
+            {
                 IsGrounded = true;
+                OnCollision.Invoke(ContactPoint.normalImpulse,((ContactPoint.otherCollider.gameObject.tag == gameObject.tag) ? CollisionType.Player : CollisionType.Other),false);
+            }
             //WALLS
             if (Mathf.Abs(ContactPoint.normal.y) < isWallMinValue && ContactPoint.rigidbody.gameObject.tag != gameObject.tag)
             {
                 IsOnWall = true;
                 wallDirection = (ContactPoint.point.x > transform.position.x) ? WallDirection.Right : WallDirection.Left;
+
+                OnCollision.Invoke(ContactPoint.normalImpulse,CollisionType.Wall,false);
             }
             //OTHER PLAYER ON TOP
             if (ContactPoint.normal.y < -topDetectionMinValue && ContactPoint.rigidbody.gameObject.tag == gameObject.tag) //If other player is on top
             {
                 isPlayerOnTop = true;
+                OnCollision.Invoke(ContactPoint.normalImpulse,((ContactPoint.otherCollider.gameObject.tag == gameObject.tag) ? CollisionType.Player : CollisionType.Wall),false);
             }
 
             Debug.DrawLine(transform.position, new Vector2(transform.position.x, transform.position.y) - (ContactPoint.point - new Vector2(transform.position.x, transform.position.y)).normalized, (ContactPoint.normal.normalized.y > isGroundedMinValue) ? Color.green : Color.red, 0.5f);
@@ -291,5 +297,10 @@ public class BetterCharacterController2D : ICharacterController2D
             coyoteTimeLeft = coyoteTime;
         }
 
+    }
+
+
+    bool IsHelped(){
+        return (player.State == PlayerState.Boost);
     }
 }

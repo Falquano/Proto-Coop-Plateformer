@@ -49,7 +49,7 @@ public class CrownBehaviour : MonoBehaviour
     void Catch(BetterCharacterController2D BCC)
     {
         BCC.isCrowned = true;
-
+    
         Destroy(gameObject);
     }
 
