@@ -189,7 +189,7 @@ public class Player : MonoBehaviour
 		if (context.performed)
 		{
 			Debug.LogWarning("RELOADING");
-			SceneManager.LoadScene("SampleScene");
+			SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
 			//Respawn();
 		}
 	}
