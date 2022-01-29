@@ -74,7 +74,7 @@ public class BetterCharacterController2D : ICharacterController2D
     [SerializeField] float fastFallDownwardForce = 3f;
 
     [Header("Crown")]
-    [SerializeField] bool isCrowned = false;
+    [SerializeField] bool wasCrowned = false;
     [SerializeField] string crownTag = "Crown";
     [SerializeField] float crownGroundSpeedMultiplier = 1f;
     [SerializeField] float crownAirSpeedMultiplier = 1f;
@@ -99,6 +99,11 @@ public class BetterCharacterController2D : ICharacterController2D
 
     private void Update()
     {
+        if(wasCrowned != isCrowned)
+        {
+            Debug.Log(isCrowned?"Couronné":"A perdu la couronne");
+        }
+
         List<ContactPoint2D> other = new List<ContactPoint2D>();
         gameObject.GetComponent<Collider2D>().GetContacts(other);
         UpdateCollisions(other);
@@ -110,6 +115,7 @@ public class BetterCharacterController2D : ICharacterController2D
         UpdateJump();
 
         previousHorizontalMovement = HorizontalMovement;
+        wasCrowned = isCrowned;
     }
 
     public override void Jump()

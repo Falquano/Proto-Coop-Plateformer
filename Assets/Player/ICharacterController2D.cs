@@ -72,6 +72,7 @@ public abstract class ICharacterController2D : MonoBehaviour
     /// Indique si le joueur était sur un mur ou non lors de la dernière frame.
     /// </summary>
     public bool WasOnWall { get; protected set; }
+    public bool isCrowned { get; set;}
 }
 
 public enum CollisionType

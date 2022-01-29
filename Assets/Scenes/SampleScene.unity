@@ -475,11 +475,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5506491505778734368, guid: c23f052320493ce4f84c91a799959b85, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 25.91129
+      value: 8.98
       objectReference: {fileID: 0}
     - target: {fileID: 5506491505778734368, guid: c23f052320493ce4f84c91a799959b85, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 28.067797
+      value: 8.34
       objectReference: {fileID: 0}
     - target: {fileID: 5506491505778734368, guid: c23f052320493ce4f84c91a799959b85, type: 3}
       propertyPath: m_LocalPosition.z
@@ -512,6 +512,18 @@ PrefabInstance:
     - target: {fileID: 5506491505778734368, guid: c23f052320493ce4f84c91a799959b85, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5637197212468254965, guid: c23f052320493ce4f84c91a799959b85, type: 3}
+      propertyPath: m_IsTrigger
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6669329952530961593, guid: c23f052320493ce4f84c91a799959b85, type: 3}
+      propertyPath: m_BodyType
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6669329952530961593, guid: c23f052320493ce4f84c91a799959b85, type: 3}
+      propertyPath: m_CollisionDetection
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8020770581990964887, guid: c23f052320493ce4f84c91a799959b85, type: 3}
       propertyPath: m_Name
