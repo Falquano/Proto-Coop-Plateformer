@@ -59,12 +59,14 @@ public class BetterCharacterController2D : ICharacterController2D
 
     [Header("Velocity cancels")]
     [SerializeField] private bool cancelWhenGrounded = false;
+    [SerializeField] private bool noCancelWhenGroundedIfFastFall = true;
     [SerializeField] private bool cancelGroundedAndNoInput = false;
     [SerializeField] private bool cancelGroundedAndInvertedInput = true;
     [SerializeField] private bool cancelAirborneAndNoInput = false;
     [SerializeField] private bool cancelAirborneAndInvertedInput = true;
     [SerializeField] private bool cancelWhenWallJump = true;
     [SerializeField] private bool cancelFastFall = true;
+    [SerializeField] private bool cancelFastFallWhenOfferingHelp = true;
     float previousHorizontalMovement;
 
     [Header("Fast fall")]
@@ -72,6 +74,7 @@ public class BetterCharacterController2D : ICharacterController2D
     bool isFastFalling = false;
     bool fastFallRegistered;
     [SerializeField] float fastFallDownwardForce = 3f;
+    [SerializeField] float fastFallLateralForce = 0f;
 
     [Header("Crown")]
     [SerializeField] bool wasCrowned = false;
@@ -83,6 +86,16 @@ public class BetterCharacterController2D : ICharacterController2D
     [SerializeField] float crownHorizontalJumpMultiplier = 1f;
     [SerializeField] float crownWallJumpMultiplier = 1f;
     [SerializeField] float crownHorizontalWallJumpMultiplier = 1f;
+
+
+    //BOOST
+    bool isBoostState = false;
+    bool wasBoostState = false;
+    
+    //OFFERING
+    bool isOfferingState = false;
+    bool wasOfferingState = false;
+
 
     /// <summary>
     /// Awake is called when the script instance is being loaded.
@@ -99,9 +112,12 @@ public class BetterCharacterController2D : ICharacterController2D
 
     private void Update()
     {
-        if(wasCrowned != isCrowned)
+        isBoostState = (player.State == PlayerState.Boost);
+        isOfferingState = (player.State == PlayerState.OfferingHelp);
+
+        if (wasCrowned != isCrowned)
         {
-            Debug.Log(isCrowned?"Couronné":"A perdu la couronne");
+            Debug.Log(isCrowned ? "Couronné" : "A perdu la couronne");
         }
 
         List<ContactPoint2D> other = new List<ContactPoint2D>();
@@ -116,6 +132,8 @@ public class BetterCharacterController2D : ICharacterController2D
 
         previousHorizontalMovement = HorizontalMovement;
         wasCrowned = isCrowned;
+        wasBoostState = isBoostState;
+        wasOfferingState = isOfferingState;
     }
 
     public override void Jump()
@@ -164,11 +182,11 @@ public class BetterCharacterController2D : ICharacterController2D
             coyoteTimeLeft = -1; //Set it under 0 so no mistake is made
             jumpBufferTimeLeft = -1;
         }
-
     }
 
     public override void UpdateMove()
     {
+        
         //FASTFALL
         if (fastFallRegistered && !isFastFalling)
         {
@@ -176,11 +194,14 @@ public class BetterCharacterController2D : ICharacterController2D
             if (cancelFastFall)
                 body.velocity = new Vector2(body.velocity.x, 0);
 
-            body.AddForce(new Vector2(0, -fastFallDownwardForce), ForceMode2D.Impulse);
+            body.AddForce(new Vector2(HorizontalMovement * fastFallLateralForce, -fastFallDownwardForce), ForceMode2D.Impulse);
         }
 
         fastFallRegistered = false;
 
+        //FASTFALL CANCEL
+        if(isFastFalling && isOfferingState && cancelFastFallWhenOfferingHelp)
+        body.velocity = new Vector2(body.velocity.x, 0);
 
         var isDirWallSameAsControllerDir = (wallDirection == WallDirection.Left && HorizontalMovement < 0) || (wallDirection == WallDirection.Right && HorizontalMovement > 0);
 
@@ -255,7 +276,7 @@ public class BetterCharacterController2D : ICharacterController2D
             if (ContactPoint.normal.normalized.y > isGroundedMinValue)
             {
                 IsGrounded = true;
-                OnCollision.Invoke(impactStrength(ContactPoint),((ContactPoint.otherCollider.gameObject.tag == gameObject.tag) ? CollisionType.Player : CollisionType.Other),IsHelped());
+                OnCollision.Invoke(impactStrength(ContactPoint), ((ContactPoint.otherCollider.gameObject.tag == gameObject.tag) ? CollisionType.Player : CollisionType.Other), isBoostState);
             }
             //WALLS
             if (Mathf.Abs(ContactPoint.normal.y) < isWallMinValue && ContactPoint.rigidbody.gameObject.tag != gameObject.tag)
@@ -263,13 +284,13 @@ public class BetterCharacterController2D : ICharacterController2D
                 IsOnWall = true;
                 wallDirection = (ContactPoint.point.x > transform.position.x) ? WallDirection.Right : WallDirection.Left;
 
-                OnCollision.Invoke(impactStrength(ContactPoint),CollisionType.Wall,IsHelped());
+                OnCollision.Invoke(impactStrength(ContactPoint), CollisionType.Wall, isBoostState);
             }
             //OTHER PLAYER ON TOP
             if (ContactPoint.normal.y < -topDetectionMinValue && ContactPoint.rigidbody.gameObject.tag == gameObject.tag) //If other player is on top
             {
                 isPlayerOnTop = true;
-                OnCollision.Invoke(impactStrength(ContactPoint),((ContactPoint.otherCollider.gameObject.tag == gameObject.tag) ? CollisionType.Player : CollisionType.Wall),IsHelped());
+                OnCollision.Invoke(impactStrength(ContactPoint), ((ContactPoint.otherCollider.gameObject.tag == gameObject.tag) ? CollisionType.Player : CollisionType.Wall), isBoostState);
             }
 
             Debug.DrawLine(transform.position, new Vector2(transform.position.x, transform.position.y) - (ContactPoint.point - new Vector2(transform.position.x, transform.position.y)).normalized, (ContactPoint.normal.normalized.y > isGroundedMinValue) ? Color.green : Color.red, 0.5f);
@@ -280,7 +301,11 @@ public class BetterCharacterController2D : ICharacterController2D
             OnLand.Invoke();
         }
 
-
+        //GROUNDED CANCEL / CANCELED IF FAST FALLING (Allows jump cancelable dashes lol)
+        if ((!WasGrounded && IsGrounded && HorizontalMovement == 0 && cancelWhenGrounded) && ((!noCancelWhenGroundedIfFastFall) || !(noCancelWhenGroundedIfFastFall && isFastFalling)))
+        {
+            body.velocity = new Vector2(0, body.velocity.y);
+        }
 
         if ((!WasGrounded && IsGrounded) || (!WasOnWall && IsOnWall))
         {
@@ -291,8 +316,7 @@ public class BetterCharacterController2D : ICharacterController2D
         }
 
 
-        if (!WasGrounded && IsGrounded && HorizontalMovement == 0 && cancelWhenGrounded)
-            body.velocity = new Vector2(0, body.velocity.y);
+
 
         if (WasGrounded && !IsGrounded && !jumped)
         {
@@ -302,16 +326,12 @@ public class BetterCharacterController2D : ICharacterController2D
     }
 
 
-    bool IsHelped(){
-        Debug.Log(player.State == PlayerState.Boost);
-        return (player.State == PlayerState.Boost);
-    }
-
     float impactStrength(ContactPoint2D cp)
     {
-        if(cp.normalImpulse>0.01){
+        // if (cp.normalImpulse > 0.01)
+        // {
             // Debug.Log(cp.normalImpulse);
-        }
+        // }
         return cp.normalImpulse;
     }
 }
