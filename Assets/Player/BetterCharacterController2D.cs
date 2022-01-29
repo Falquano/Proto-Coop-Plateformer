@@ -255,7 +255,7 @@ public class BetterCharacterController2D : ICharacterController2D
             if (ContactPoint.normal.normalized.y > isGroundedMinValue)
             {
                 IsGrounded = true;
-                OnCollision.Invoke(ContactPoint.normalImpulse,((ContactPoint.otherCollider.gameObject.tag == gameObject.tag) ? CollisionType.Player : CollisionType.Other),false);
+                OnCollision.Invoke(impactStrength(ContactPoint),((ContactPoint.otherCollider.gameObject.tag == gameObject.tag) ? CollisionType.Player : CollisionType.Other),IsHelped());
             }
             //WALLS
             if (Mathf.Abs(ContactPoint.normal.y) < isWallMinValue && ContactPoint.rigidbody.gameObject.tag != gameObject.tag)
@@ -263,13 +263,13 @@ public class BetterCharacterController2D : ICharacterController2D
                 IsOnWall = true;
                 wallDirection = (ContactPoint.point.x > transform.position.x) ? WallDirection.Right : WallDirection.Left;
 
-                OnCollision.Invoke(ContactPoint.normalImpulse,CollisionType.Wall,false);
+                OnCollision.Invoke(impactStrength(ContactPoint),CollisionType.Wall,IsHelped());
             }
             //OTHER PLAYER ON TOP
             if (ContactPoint.normal.y < -topDetectionMinValue && ContactPoint.rigidbody.gameObject.tag == gameObject.tag) //If other player is on top
             {
                 isPlayerOnTop = true;
-                OnCollision.Invoke(ContactPoint.normalImpulse,((ContactPoint.otherCollider.gameObject.tag == gameObject.tag) ? CollisionType.Player : CollisionType.Wall),false);
+                OnCollision.Invoke(impactStrength(ContactPoint),((ContactPoint.otherCollider.gameObject.tag == gameObject.tag) ? CollisionType.Player : CollisionType.Wall),IsHelped());
             }
 
             Debug.DrawLine(transform.position, new Vector2(transform.position.x, transform.position.y) - (ContactPoint.point - new Vector2(transform.position.x, transform.position.y)).normalized, (ContactPoint.normal.normalized.y > isGroundedMinValue) ? Color.green : Color.red, 0.5f);
@@ -286,6 +286,8 @@ public class BetterCharacterController2D : ICharacterController2D
         {
             jumped = false;
             isFastFalling = false;
+
+            impactStrength(new ContactPoint2D());
         }
 
 
@@ -301,6 +303,15 @@ public class BetterCharacterController2D : ICharacterController2D
 
 
     bool IsHelped(){
+        Debug.Log(player.State == PlayerState.Boost);
         return (player.State == PlayerState.Boost);
+    }
+
+    float impactStrength(ContactPoint2D cp)
+    {
+        if(cp.normalImpulse>0.01){
+            // Debug.Log(cp.normalImpulse);
+        }
+        return cp.normalImpulse;
     }
 }
