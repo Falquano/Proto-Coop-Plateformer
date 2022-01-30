@@ -104,7 +104,7 @@ public class BetterCharacterController2D : ICharacterController2D
     //OFFERING
     bool isOfferingState = false;
     bool wasOfferingState = false;
-    float timeSinceLastOffering = 0f;
+    float timeSinceLastOffering = -1f;
 
 
     /// <summary>
@@ -125,9 +125,10 @@ public class BetterCharacterController2D : ICharacterController2D
         isBoostState = (player.State == PlayerState.Boost);
         isOfferingState = (player.State == PlayerState.OfferingHelp);
 
-        timeSinceLastOffering += Time.deltaTime;
+        timeSinceLastOffering -= Time.deltaTime;
+
         if (!wasOfferingState && isOfferingState)
-            timeSinceLastOffering = 0f;
+            timeSinceLastOffering = techableWindowTimeSinceLastOffering;
 
         if (wasCrowned != isCrowned)
         {
@@ -297,10 +298,9 @@ public class BetterCharacterController2D : ICharacterController2D
 
                 if (!WasGrounded && allowFallingStrongCollisions)
                 {
-                    hasAnalysed = true;
                     collisionAnalysis(ContactPoint, ((ContactPoint.otherCollider.gameObject.tag == gameObject.tag) ? CollisionType.Player : CollisionType.Other));
                 }
-
+                hasAnalysed = true; //Outside so it doesn't analyse ground unless it gets grounded
             }
             //WALLS
             if (Mathf.Abs(ContactPoint.normal.y) < isWallMinValue && ContactPoint.rigidbody.gameObject.tag != gameObject.tag)
@@ -322,8 +322,8 @@ public class BetterCharacterController2D : ICharacterController2D
                 if (!WasGrounded)
                 {
                     collisionAnalysis(ContactPoint, CollisionType.Player);
+                    hasAnalysed = true; 
                 }
-                hasAnalysed = true; //Outside so it doesn't analyse ground unless it get grounded
             }
 
             if (!hasAnalysed && isBoostState)
@@ -347,8 +347,6 @@ public class BetterCharacterController2D : ICharacterController2D
         {
             jumped = false;
             isFastFalling = false;
-
-            impactStrength(new ContactPoint2D());
         }
 
 
@@ -391,7 +389,7 @@ public class BetterCharacterController2D : ICharacterController2D
             return;
 
 
-        Debug.Log("STRONG COLLISION");
+        
 
         OnCollision.Invoke(impactStrength(contactPoint), ct, isBoostState);
         OnStrongCollision();
@@ -402,13 +400,12 @@ public class BetterCharacterController2D : ICharacterController2D
     void OnStrongCollision()
     {
         //Ignore strong collision on tech
-        if (timeSinceLastOffering <= techableWindowTimeSinceLastOffering || allowTech)
+        if (timeSinceLastOffering > 0 && allowTech)
         {
             if (cancelOnTech)
                 body.velocity = Vector2.zero;
             return;
         }
-
         isCrowned = false;
     }
 

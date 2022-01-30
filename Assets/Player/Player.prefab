@@ -10112,11 +10112,12 @@ MonoBehaviour:
   wallJumpForce: 17
   horizontalWallJumpForce: 34
   useStrongCollisions: 1
-  minForceStrongCollision: 20
+  minForceStrongCollision: 1
   boostOverrideAlwaysStrong: 0
   fastfallOverrideAlwaysNotStrong: 1
+  allowFallingStrongCollisions: 0
   allowTech: 1
-  techableWindowTimeSinceLastOffering: 0.1
+  techableWindowTimeSinceLastOffering: 0.3
   wallGrab: 1
   slideIfPlayerIsOnTop: 1
   topDetectionMinValue: 0.3
