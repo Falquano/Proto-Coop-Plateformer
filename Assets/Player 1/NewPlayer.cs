@@ -69,9 +69,7 @@ public class NewPlayer : MonoBehaviour
     public void RemovePlayer(PlayerInput playerInput)
     {
         SpriteRenderer spriteRenderer = GetComponent<SpriteRenderer>();
-        float h;
-        Color.RGBToHSV(spriteRenderer.color, out h, out _, out _);
-        manager.AddAvailableHue(h);
+        manager.AddAvailableHue(spriteRenderer.color);
 
         manager.OnPlayerLeft(playerInput);
     }

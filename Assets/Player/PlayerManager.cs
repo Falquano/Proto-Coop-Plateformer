@@ -17,7 +17,10 @@ public class PlayerManager : MonoBehaviour
     public int Count => players.Count;
 
     // COULEURS
-    private List<float> availableHues;
+    [SerializeField] private List<Color> availableHues;
+    [SerializeField] private bool dynamicHues = false;
+    [SerializeField] private float dynamicSaturation = .75f;
+    [SerializeField] private float dynamicValue = .75f;
 
 
     void Start()
@@ -26,7 +29,8 @@ public class PlayerManager : MonoBehaviour
 
         manager = GetComponent<PlayerInputManager>();
 
-        availableHues = CreateHueList();
+        if (dynamicHues) 
+            availableHues = CreateHueList();
 
         manager.JoinPlayer(Count + 1, Count + 1, "Keyboard 1", pairWithDevice: Keyboard.current);
         manager.JoinPlayer(Count + 1, Count + 1, "Keyboard 2", pairWithDevice: Keyboard.current);
@@ -34,35 +38,36 @@ public class PlayerManager : MonoBehaviour
         manager.EnableJoining();
     }
 
-    public List<float> CreateHueList()
+    public List<Color> CreateHueList()
     {
-        List<float> hues = new List<float>();
+        List<Color> hues = new List<Color>();
         int length = manager.maxPlayerCount;
 
         float offset = Random.Range(0f, 1f / (float)length);
 
         for (int i = 0; i < length; i++)
-            hues.Add(1f / (float)length * (float)i + offset);
+            hues.Add(Color.HSVToRGB(1f / (float)length * (float)i + offset, 
+                dynamicSaturation, dynamicValue));
 
         return hues;
     }
 
-    public float RequestHue()
+    public Color RequestColor()
     {
         if (availableHues.Count <= 0)
             throw new System.Exception("No more available hues !");
 
-        float hue = GetRandomAvailableHue();
+        Color hue = GetRandomAvailableHue();
         availableHues.Remove(hue);
         return hue;
     }
 
-    private float GetRandomAvailableHue()
+    private Color GetRandomAvailableHue()
     {
         return availableHues[Random.Range(0, availableHues.Count)];
     }
 
-    public void AddAvailableHue(float hue)
+    public void AddAvailableHue(Color hue)
     {
         availableHues.Add(hue);
     }

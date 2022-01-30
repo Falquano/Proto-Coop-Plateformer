@@ -58,7 +58,7 @@ public class Player : MonoBehaviour
 		State = PlayerState.Moving;
 
 		SpriteRenderer spriteRenderer = model.GetComponent<SpriteRenderer>();
-		Color color = Color.HSVToRGB(Manager.RequestHue(), .75f, .75f); // Nouvelle méthode, couleur unique !
+		Color color = Manager.RequestColor(); // Nouvelle méthode, couleur unique !
 		spriteRenderer.color = color;
 		color.a = .2f;
 		fx.SetHelpColor(color);
@@ -296,9 +296,7 @@ public class Player : MonoBehaviour
 	public void RemovePlayer(PlayerInput playerInput)
     {
 		SpriteRenderer spriteRenderer = GetComponent<SpriteRenderer>();
-		float h;
-		Color.RGBToHSV(spriteRenderer.color, out h, out _, out _);
-		Manager.AddAvailableHue(h);
+		Manager.AddAvailableHue(spriteRenderer.color);
 
 		Manager.OnPlayerLeft(playerInput);
 	}
