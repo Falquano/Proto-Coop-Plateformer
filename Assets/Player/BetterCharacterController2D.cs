@@ -47,6 +47,8 @@ public class BetterCharacterController2D : ICharacterController2D
     [Header("Strong Collisions")] //WIP
     [SerializeField] bool useStrongCollisions;
     [SerializeField] float minForceStrongCollision = 4f;
+    [SerializeField] bool boostOverrideAlwaysStrong = true;
+    [SerializeField] bool fastfallOverrideAlwaysNotStrong = true;
 
     [Header("Wall Grab")]
     [SerializeField] bool wallGrab = true;
@@ -93,7 +95,7 @@ public class BetterCharacterController2D : ICharacterController2D
     //BOOST
     bool isBoostState = false;
     bool wasBoostState = false;
-    
+
     //OFFERING
     bool isOfferingState = false;
     bool wasOfferingState = false;
@@ -188,7 +190,7 @@ public class BetterCharacterController2D : ICharacterController2D
 
     public override void UpdateMove()
     {
-        
+
         //FASTFALL
         if (fastFallRegistered && !isFastFalling)
         {
@@ -202,7 +204,7 @@ public class BetterCharacterController2D : ICharacterController2D
         fastFallRegistered = false;
 
         //FASTFALL CANCEL
-        if(isFastFalling && isOfferingState && !wasOfferingState && cancelFastFallWhenOfferingHelp)
+        if (isFastFalling && isOfferingState && !wasOfferingState && cancelFastFallWhenOfferingHelp)
         {
             body.velocity = new Vector2(body.velocity.x, 0);
             isFastFalling = false;
@@ -281,7 +283,8 @@ public class BetterCharacterController2D : ICharacterController2D
             if (ContactPoint.normal.normalized.y > isGroundedMinValue)
             {
                 IsGrounded = true;
-                OnCollision.Invoke(impactStrength(ContactPoint), ((ContactPoint.otherCollider.gameObject.tag == gameObject.tag) ? CollisionType.Player : CollisionType.Other), isBoostState);
+                if (!WasGrounded)
+                    collisionAnalysis(ContactPoint, ((ContactPoint.otherCollider.gameObject.tag == gameObject.tag) ? CollisionType.Player : CollisionType.Other));
             }
             //WALLS
             if (Mathf.Abs(ContactPoint.normal.y) < isWallMinValue && ContactPoint.rigidbody.gameObject.tag != gameObject.tag)
@@ -289,13 +292,15 @@ public class BetterCharacterController2D : ICharacterController2D
                 IsOnWall = true;
                 wallDirection = (ContactPoint.point.x > transform.position.x) ? WallDirection.Right : WallDirection.Left;
 
-                OnCollision.Invoke(impactStrength(ContactPoint), CollisionType.Wall, isBoostState);
+                if (!WasOnWall)
+                    collisionAnalysis(ContactPoint, CollisionType.Wall);
             }
             //OTHER PLAYER ON TOP
             if (ContactPoint.normal.y < -topDetectionMinValue && ContactPoint.rigidbody.gameObject.tag == gameObject.tag) //If other player is on top
             {
                 isPlayerOnTop = true;
-                OnCollision.Invoke(impactStrength(ContactPoint), ((ContactPoint.otherCollider.gameObject.tag == gameObject.tag) ? CollisionType.Player : CollisionType.Wall), isBoostState);
+                if (!WasGrounded && !WasOnWall)
+                    collisionAnalysis(ContactPoint, CollisionType.Player);
             }
 
             Debug.DrawLine(transform.position, new Vector2(transform.position.x, transform.position.y) - (ContactPoint.point - new Vector2(transform.position.x, transform.position.y)).normalized, (ContactPoint.normal.normalized.y > isGroundedMinValue) ? Color.green : Color.red, 0.5f);
@@ -333,10 +338,36 @@ public class BetterCharacterController2D : ICharacterController2D
 
     float impactStrength(ContactPoint2D cp)
     {
-        // if (cp.normalImpulse > 0.01)
-        // {
+        if (cp.normalImpulse > 0.01)
+        {
             // Debug.Log(cp.normalImpulse);
-        // }
+        }
         return cp.normalImpulse;
+    }
+
+    void collisionAnalysis(ContactPoint2D contactPoint, CollisionType ct)
+    {
+        if(!useStrongCollisions)
+            return;
+
+        if(fastfallOverrideAlwaysNotStrong && isFastFalling)
+            return;
+
+        if(isBoostState && boostOverrideAlwaysStrong)
+        {
+            OnCollision.Invoke(impactStrength(contactPoint), ct, isBoostState);
+            return;
+        }
+
+
+        if (!(impactStrength(contactPoint) > minForceStrongCollision))
+            return;
+
+        
+        Debug.Log("STRONG COLLISION");
+
+        OnCollision.Invoke(impactStrength(contactPoint), ct, isBoostState);
+
+        
     }
 }
