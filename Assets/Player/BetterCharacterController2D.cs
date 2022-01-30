@@ -48,6 +48,7 @@ public class BetterCharacterController2D : ICharacterController2D
     [SerializeField] bool useStrongCollisions;
     [SerializeField] float minForceStrongCollision = 4f;
     [SerializeField] bool boostOverrideAlwaysStrong = true;
+    [SerializeField] bool fastfallOverrideAlwaysNotStrong = true;
 
     [Header("Wall Grab")]
     [SerializeField] bool wallGrab = true;
@@ -349,6 +350,9 @@ public class BetterCharacterController2D : ICharacterController2D
         if(!useStrongCollisions)
             return;
 
+        if(fastfallOverrideAlwaysNotStrong && isFastFalling)
+            return;
+
         if(isBoostState && boostOverrideAlwaysStrong)
         {
             OnCollision.Invoke(impactStrength(contactPoint), ct, isBoostState);
@@ -361,7 +365,7 @@ public class BetterCharacterController2D : ICharacterController2D
 
         
         Debug.Log("STRONG COLLISION");
-        
+
         OnCollision.Invoke(impactStrength(contactPoint), ct, isBoostState);
 
         
