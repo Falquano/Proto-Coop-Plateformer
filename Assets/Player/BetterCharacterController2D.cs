@@ -49,6 +49,7 @@ public class BetterCharacterController2D : ICharacterController2D
     [SerializeField] float minForceStrongCollision = 4f;
     [SerializeField] bool boostOverrideAlwaysStrong = true;
     [SerializeField] bool fastfallOverrideAlwaysNotStrong = true;
+    [SerializeField] bool allowFallingStrongCollisions = false;
     [SerializeField] bool allowTech = true;
     [SerializeField] float techableWindowTimeSinceLastOffering = 0.1f;
 
@@ -294,7 +295,7 @@ public class BetterCharacterController2D : ICharacterController2D
             {
                 IsGrounded = true;
 
-                if (!WasGrounded)
+                if (!WasGrounded && allowFallingStrongCollisions)
                 {
                     hasAnalysed = true;
                     collisionAnalysis(ContactPoint, ((ContactPoint.otherCollider.gameObject.tag == gameObject.tag) ? CollisionType.Player : CollisionType.Other));
@@ -325,7 +326,7 @@ public class BetterCharacterController2D : ICharacterController2D
                 hasAnalysed = true; //Outside so it doesn't analyse ground unless it get grounded
             }
 
-            if (!hasAnalysed)
+            if (!hasAnalysed && isBoostState)
                 collisionAnalysis(ContactPoint, CollisionType.Other);
 
             Debug.DrawLine(transform.position, new Vector2(transform.position.x, transform.position.y) - (ContactPoint.point - new Vector2(transform.position.x, transform.position.y)).normalized, (ContactPoint.normal.normalized.y > isGroundedMinValue) ? Color.green : Color.red, 0.5f);
