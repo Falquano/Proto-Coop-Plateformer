@@ -330,7 +330,7 @@ public class Player : MonoBehaviour
 	// EVENTS
 	public void OnLand()
 	{
-		Debug.Log("LAND");
+		//Debug.Log("LAND");
 		FX.InstantiateImpactParticle();
 		Sound.LandSound();
 	}
