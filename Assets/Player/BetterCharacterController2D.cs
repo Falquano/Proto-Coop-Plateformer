@@ -281,7 +281,7 @@ public class BetterCharacterController2D : ICharacterController2D
             if (ContactPoint.normal.normalized.y > isGroundedMinValue)
             {
                 IsGrounded = true;
-                OnCollision.Invoke(impactStrength(ContactPoint), ((ContactPoint.otherCollider.gameObject.tag == gameObject.tag) ? CollisionType.Player : CollisionType.Other), isBoostState);
+                collisionAnalysis(ContactPoint, ((ContactPoint.otherCollider.gameObject.tag == gameObject.tag) ? CollisionType.Player : CollisionType.Other));
             }
             //WALLS
             if (Mathf.Abs(ContactPoint.normal.y) < isWallMinValue && ContactPoint.rigidbody.gameObject.tag != gameObject.tag)
@@ -289,13 +289,13 @@ public class BetterCharacterController2D : ICharacterController2D
                 IsOnWall = true;
                 wallDirection = (ContactPoint.point.x > transform.position.x) ? WallDirection.Right : WallDirection.Left;
 
-                OnCollision.Invoke(impactStrength(ContactPoint), CollisionType.Wall, isBoostState);
+                collisionAnalysis(ContactPoint, CollisionType.Wall);
             }
             //OTHER PLAYER ON TOP
             if (ContactPoint.normal.y < -topDetectionMinValue && ContactPoint.rigidbody.gameObject.tag == gameObject.tag) //If other player is on top
             {
                 isPlayerOnTop = true;
-                OnCollision.Invoke(impactStrength(ContactPoint), ((ContactPoint.otherCollider.gameObject.tag == gameObject.tag) ? CollisionType.Player : CollisionType.Wall), isBoostState);
+                collisionAnalysis(ContactPoint, CollisionType.Player);
             }
 
             Debug.DrawLine(transform.position, new Vector2(transform.position.x, transform.position.y) - (ContactPoint.point - new Vector2(transform.position.x, transform.position.y)).normalized, (ContactPoint.normal.normalized.y > isGroundedMinValue) ? Color.green : Color.red, 0.5f);
@@ -338,5 +338,11 @@ public class BetterCharacterController2D : ICharacterController2D
             // Debug.Log(cp.normalImpulse);
         // }
         return cp.normalImpulse;
+    }
+
+    void collisionAnalysis( ContactPoint2D contactPoint, CollisionType ct)
+    {
+        if(impactStrength(contactPoint) > minForceStrongCollision)
+            OnCollision.Invoke(impactStrength(contactPoint), ct, isBoostState);
     }
 }
