@@ -10116,6 +10116,7 @@ MonoBehaviour:
   boostOverrideAlwaysStrong: 0
   fastfallOverrideAlwaysNotStrong: 1
   allowFallingStrongCollisions: 0
+  loseCrownOnlyIfBoostedSC: 1
   allowTech: 1
   techableWindowTimeSinceLastOffering: 0.3
   wallGrab: 1
@@ -10132,6 +10133,7 @@ MonoBehaviour:
   cancelFastFall: 1
   cancelFastFallWhenOfferingHelp: 1
   cancelOnTech: 1
+  cancelOnStun: 1
   canFastFall: 1
   fastFallDownwardForce: 17
   fastFallLateralForce: 1
@@ -10144,6 +10146,8 @@ MonoBehaviour:
   crownHorizontalJumpMultiplier: 2
   crownWallJumpMultiplier: 2
   crownHorizontalWallJumpMultiplier: 2
+  stunTimeInSecond: 3
+  stunSpeedMultiplier: 0.7
 --- !u!114 &6375719382510468886
 MonoBehaviour:
   m_ObjectHideFlags: 0

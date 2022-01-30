@@ -38,7 +38,7 @@ public class PlayerHelp : MonoBehaviour
 	private void Update()
 	{
 		helpRadiusMod = Mathf.Clamp(helpRadiusMod + helpRadiusModRecoveryPerSecond * Time.deltaTime, 0f, 1f);
-		FX.UpdateHelpScale(helpRadius); // Mise à jour de la taille du cercle
+		FX.UpdateHelpScale(helpRadius); // Mise ï¿½ jour de la taille du cercle
 		helpTime += Time.deltaTime;
 	}
 

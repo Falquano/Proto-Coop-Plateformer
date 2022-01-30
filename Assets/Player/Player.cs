@@ -369,5 +369,6 @@ public enum PlayerState
 	Moving,
 	OfferingHelp,
 	Boost,
-	Sleeping
+	Sleeping,
+	Stun
 }

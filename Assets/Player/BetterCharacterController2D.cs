@@ -50,6 +50,7 @@ public class BetterCharacterController2D : ICharacterController2D
     [SerializeField] bool boostOverrideAlwaysStrong = true;
     [SerializeField] bool fastfallOverrideAlwaysNotStrong = true;
     [SerializeField] bool allowFallingStrongCollisions = false;
+    [SerializeField] bool loseCrownOnlyIfBoostedSC = true;
     [SerializeField] bool allowTech = true;
     [SerializeField] float techableWindowTimeSinceLastOffering = 0.1f;
 
@@ -75,6 +76,7 @@ public class BetterCharacterController2D : ICharacterController2D
     [SerializeField] private bool cancelFastFall = true;
     [SerializeField] private bool cancelFastFallWhenOfferingHelp = true;
     [SerializeField] private bool cancelOnTech = true;
+    [SerializeField] private bool cancelOnStun = true;
     float previousHorizontalMovement;
 
     [Header("Fast fall")]
@@ -95,6 +97,12 @@ public class BetterCharacterController2D : ICharacterController2D
     [SerializeField] float crownWallJumpMultiplier = 1f;
     [SerializeField] float crownHorizontalWallJumpMultiplier = 1f;
 
+    [Header("Stun")]
+    [SerializeField] float stunTimeInSecond;
+    [SerializeField] float stunSpeedMultiplier;
+    bool isStunned;
+    float stunTimeLeft = 0f;
+    
 
 
     //BOOST
@@ -143,7 +151,7 @@ public class BetterCharacterController2D : ICharacterController2D
         UpdateMove();
 
         //Update jump
-        UpdateJump();
+        if(!isStunned) UpdateJump();
 
         previousHorizontalMovement = HorizontalMovement;
         wasCrowned = isCrowned;
@@ -234,7 +242,7 @@ public class BetterCharacterController2D : ICharacterController2D
         }
 
         if ((IsGrounded || (!IsGrounded && canMoveInTheAir)) && (!(disableMovementIfOffering) || !(disableMovementIfOffering && isOfferingState)))
-            body.AddForce(new Vector2(HorizontalMovement * (IsGrounded ? groundHorizontalSpeed * (isCrowned ? crownGroundSpeedMultiplier : 1) : airHorizontalSpeed * (isCrowned ? crownAirSpeedMultiplier : 1)), 0) * Time.deltaTime, ForceMode2D.Force);
+            body.AddForce(new Vector2(HorizontalMovement * (IsGrounded ? groundHorizontalSpeed * (isCrowned ? crownGroundSpeedMultiplier : 1)  : airHorizontalSpeed * (isCrowned ? crownAirSpeedMultiplier : 1)) * (isStunned ? stunSpeedMultiplier : 1), 0) * Time.deltaTime, ForceMode2D.Force);
         //CLAMP
         if (isUsingMaxHorizontalSpeed && (!(notUseMaxHorizontalSpeedIfOffering) || (notUseMaxHorizontalSpeedIfOffering && !isOfferingState)))
             body.velocity = new Vector2(Mathf.Clamp(body.velocity.x, -maxHorizontalSpeed * (isCrowned ? crownMaxSpeedMultiplier : 1), maxHorizontalSpeed * (isCrowned ? crownMaxSpeedMultiplier : 1)), body.velocity.y);
@@ -257,7 +265,6 @@ public class BetterCharacterController2D : ICharacterController2D
             //STOP VELOCITY
             body.velocity = new Vector2(body.velocity.x, 0);
             body.gravityScale = 0;
-            // body.AddForce(-Physics.gravity * body.mass);
         }
         else
         {
@@ -322,7 +329,7 @@ public class BetterCharacterController2D : ICharacterController2D
                 if (!WasGrounded)
                 {
                     collisionAnalysis(ContactPoint, CollisionType.Player);
-                    hasAnalysed = true; 
+                    hasAnalysed = true;
                 }
             }
 
@@ -380,7 +387,7 @@ public class BetterCharacterController2D : ICharacterController2D
         if (isBoostState && boostOverrideAlwaysStrong)
         {
             OnCollision.Invoke(impactStrength(contactPoint), ct, isBoostState);
-            OnStrongCollision();
+            strongCollision();
             return;
         }
 
@@ -389,15 +396,18 @@ public class BetterCharacterController2D : ICharacterController2D
             return;
 
 
-        
-
         OnCollision.Invoke(impactStrength(contactPoint), ct, isBoostState);
-        OnStrongCollision();
+
+        if (loseCrownOnlyIfBoostedSC && !isBoostState)
+            return;
+
+
+        strongCollision();
 
     }
 
 
-    void OnStrongCollision()
+    void strongCollision()
     {
         //Ignore strong collision on tech
         if (timeSinceLastOffering > 0 && allowTech)
@@ -407,11 +417,23 @@ public class BetterCharacterController2D : ICharacterController2D
             return;
         }
         isCrowned = false;
+        player.SetCrown(false);
+        Stun(stunTimeInSecond);
     }
 
 
     void Stun(float timeInS)
     {
+        if (cancelOnStun)
+            body.velocity = Vector2.zero;
 
+        player.State = PlayerState.Stun;
+        stunTimeLeft = stunTimeInSecond;
+        Debug.Log("STUN");
+    }
+    void EndStun()
+    {
+        player.State = PlayerState.Moving;
+        Debug.Log("NO STUN");
     }
 }

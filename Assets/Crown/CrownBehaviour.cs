@@ -42,14 +42,14 @@ public class CrownBehaviour : MonoBehaviour
         }
 
 
-        Catch(currentCatcher.GetComponent<BetterCharacterController2D>());
+        Catch(currentCatcher);
 
     }
 
-    void Catch(BetterCharacterController2D BCC)
+    void Catch(GameObject C)
     {
-        BCC.isCrowned = true;
-    
+        C.GetComponent<BetterCharacterController2D>().isCrowned = true;
+        C.GetComponent<Player>().SetCrown(true);
         Destroy(gameObject);
     }
 
