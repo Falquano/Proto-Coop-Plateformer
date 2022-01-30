@@ -49,6 +49,8 @@ public class BetterCharacterController2D : ICharacterController2D
     [SerializeField] float minForceStrongCollision = 4f;
     [SerializeField] bool boostOverrideAlwaysStrong = true;
     [SerializeField] bool fastfallOverrideAlwaysNotStrong = true;
+    [SerializeField] bool allowTech = true;
+    [SerializeField] float techableWindowTimeSinceLastOffering = 0.1f;
 
     [Header("Wall Grab")]
     [SerializeField] bool wallGrab = true;
@@ -71,6 +73,7 @@ public class BetterCharacterController2D : ICharacterController2D
     [SerializeField] private bool cancelWhenWallJump = true;
     [SerializeField] private bool cancelFastFall = true;
     [SerializeField] private bool cancelFastFallWhenOfferingHelp = true;
+    [SerializeField] private bool cancelOnTech = true;
     float previousHorizontalMovement;
 
     [Header("Fast fall")]
@@ -92,6 +95,7 @@ public class BetterCharacterController2D : ICharacterController2D
     [SerializeField] float crownHorizontalWallJumpMultiplier = 1f;
 
 
+
     //BOOST
     bool isBoostState = false;
     bool wasBoostState = false;
@@ -99,6 +103,7 @@ public class BetterCharacterController2D : ICharacterController2D
     //OFFERING
     bool isOfferingState = false;
     bool wasOfferingState = false;
+    float timeSinceLastOffering = 0f;
 
 
     /// <summary>
@@ -118,6 +123,10 @@ public class BetterCharacterController2D : ICharacterController2D
     {
         isBoostState = (player.State == PlayerState.Boost);
         isOfferingState = (player.State == PlayerState.OfferingHelp);
+
+        timeSinceLastOffering += Time.deltaTime;
+        if (!wasOfferingState && isOfferingState)
+            timeSinceLastOffering = 0f;
 
         if (wasCrowned != isCrowned)
         {
@@ -279,12 +288,18 @@ public class BetterCharacterController2D : ICharacterController2D
 
         foreach (ContactPoint2D ContactPoint in contacts)
         {
+            bool hasAnalysed = false;
             //GROUND
             if (ContactPoint.normal.normalized.y > isGroundedMinValue)
             {
                 IsGrounded = true;
+
                 if (!WasGrounded)
+                {
+                    hasAnalysed = true;
                     collisionAnalysis(ContactPoint, ((ContactPoint.otherCollider.gameObject.tag == gameObject.tag) ? CollisionType.Player : CollisionType.Other));
+                }
+
             }
             //WALLS
             if (Mathf.Abs(ContactPoint.normal.y) < isWallMinValue && ContactPoint.rigidbody.gameObject.tag != gameObject.tag)
@@ -293,15 +308,25 @@ public class BetterCharacterController2D : ICharacterController2D
                 wallDirection = (ContactPoint.point.x > transform.position.x) ? WallDirection.Right : WallDirection.Left;
 
                 if (!WasOnWall)
+                {
+                    hasAnalysed = true;
                     collisionAnalysis(ContactPoint, CollisionType.Wall);
+                }
             }
             //OTHER PLAYER ON TOP
             if (ContactPoint.normal.y < -topDetectionMinValue && ContactPoint.rigidbody.gameObject.tag == gameObject.tag) //If other player is on top
             {
                 isPlayerOnTop = true;
-                if (!WasGrounded && !WasOnWall)
+
+                if (!WasGrounded)
+                {
                     collisionAnalysis(ContactPoint, CollisionType.Player);
+                }
+                hasAnalysed = true; //Outside so it doesn't analyse ground unless it get grounded
             }
+
+            if (!hasAnalysed)
+                collisionAnalysis(ContactPoint, CollisionType.Other);
 
             Debug.DrawLine(transform.position, new Vector2(transform.position.x, transform.position.y) - (ContactPoint.point - new Vector2(transform.position.x, transform.position.y)).normalized, (ContactPoint.normal.normalized.y > isGroundedMinValue) ? Color.green : Color.red, 0.5f);
         }
@@ -347,15 +372,16 @@ public class BetterCharacterController2D : ICharacterController2D
 
     void collisionAnalysis(ContactPoint2D contactPoint, CollisionType ct)
     {
-        if(!useStrongCollisions)
+        if (!useStrongCollisions)
             return;
 
-        if(fastfallOverrideAlwaysNotStrong && isFastFalling)
+        if (fastfallOverrideAlwaysNotStrong && isFastFalling)
             return;
 
-        if(isBoostState && boostOverrideAlwaysStrong)
+        if (isBoostState && boostOverrideAlwaysStrong)
         {
             OnCollision.Invoke(impactStrength(contactPoint), ct, isBoostState);
+            OnStrongCollision();
             return;
         }
 
@@ -363,11 +389,31 @@ public class BetterCharacterController2D : ICharacterController2D
         if (!(impactStrength(contactPoint) > minForceStrongCollision))
             return;
 
-        
+
         Debug.Log("STRONG COLLISION");
 
         OnCollision.Invoke(impactStrength(contactPoint), ct, isBoostState);
+        OnStrongCollision();
 
-        
+    }
+
+
+    void OnStrongCollision()
+    {
+        //Ignore strong collision on tech
+        if (timeSinceLastOffering <= techableWindowTimeSinceLastOffering || allowTech)
+        {
+            if (cancelOnTech)
+                body.velocity = Vector2.zero;
+            return;
+        }
+
+        isCrowned = false;
+    }
+
+
+    void Stun(float timeInS)
+    {
+
     }
 }

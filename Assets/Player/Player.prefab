@@ -10105,7 +10105,7 @@ MonoBehaviour:
   disableMovementIfOffering: 1
   canMoveInTheAir: 1
   airHorizontalSpeed: 1500
-  isGroundedMinValue: 0.1
+  isGroundedMinValue: 0.3
   isWallMinValue: 0.3
   slowDownOnWalls: 1
   slowDownOnWallsMaxSpeed: -4
@@ -10113,7 +10113,10 @@ MonoBehaviour:
   horizontalWallJumpForce: 34
   useStrongCollisions: 1
   minForceStrongCollision: 20
-  boostOverrideAlwaysStrong: 1
+  boostOverrideAlwaysStrong: 0
+  fastfallOverrideAlwaysNotStrong: 1
+  allowTech: 1
+  techableWindowTimeSinceLastOffering: 0.1
   wallGrab: 1
   slideIfPlayerIsOnTop: 1
   topDetectionMinValue: 0.3
@@ -10127,6 +10130,7 @@ MonoBehaviour:
   cancelWhenWallJump: 1
   cancelFastFall: 1
   cancelFastFallWhenOfferingHelp: 1
+  cancelOnTech: 1
   canFastFall: 1
   fastFallDownwardForce: 17
   fastFallLateralForce: 1
