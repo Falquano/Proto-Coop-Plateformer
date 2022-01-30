@@ -10108,7 +10108,7 @@ MonoBehaviour:
   slowDownOnWalls: 1
   slowDownOnWallsMaxSpeed: -4
   wallJumpForce: 17
-  horizontalWallJumpForce: 17
+  horizontalWallJumpForce: 34
   useStrongCollisions: 0
   minForceStrongCollision: 4
   wallGrab: 1
@@ -10116,6 +10116,7 @@ MonoBehaviour:
   topDetectionMinValue: 0.3
   timeBeforeWallGrabStopInSeconds: 3
   cancelWhenGrounded: 1
+  noCancelWhenGroundedIfFastFall: 1
   cancelGroundedAndNoInput: 1
   cancelGroundedAndInvertedInput: 1
   cancelAirborneAndNoInput: 1
@@ -10124,7 +10125,8 @@ MonoBehaviour:
   cancelFastFall: 1
   canFastFall: 1
   fastFallDownwardForce: 17
-  isCrowned: 0
+  fastFallLateralForce: 1
+  wasCrowned: 0
   crownTag: Crown
   crownGroundSpeedMultiplier: 2
   crownAirSpeedMultiplier: 2
