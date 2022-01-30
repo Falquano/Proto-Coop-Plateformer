@@ -1,3 +1,4 @@
+using Cinemachine;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -13,6 +14,8 @@ public class PlayerFXEmitter : MonoBehaviour
 	[SerializeField] private GameObject ImpactParticlePrefab;
 	[SerializeField] private ParticleSystem PushParticle;
 	[SerializeField] private ParticleSystem PullParticle;
+
+	[SerializeField] private bool onCollisionParticles = true;
 
 	public void UpdateHelpScale(float radius)
 	{
@@ -91,7 +94,10 @@ public class PlayerFXEmitter : MonoBehaviour
 	{
 		player = GetComponent<Player>();
 		characterController2D = GetComponent<BetterCharacterController2D>();
+
+		characterController2D.OnCollision.AddListener(OnCollision);
 	}
+
 	private bool wasWalking;
 	/// <summary>
 	/// Update is called every frame, if the MonoBehaviour is enabled.
@@ -107,5 +113,22 @@ public class PlayerFXEmitter : MonoBehaviour
 			player.FX.StartWalkParticle();
 		}
 		wasWalking = characterController2D.IsWalking;
+	}
+
+	void OnCollision(float force, CollisionType type, bool forced)
+    {
+		if (!onCollisionParticles)
+			return;
+
+		if (force <= .05f)
+			return;
+
+		float forcedMod = forced ? 2.5f : 1f;
+
+		// Envoyer des particules ici, mettre un nombre de particules en fonction de la force
+		ParticleSystem particleSystem = 
+			Instantiate(ImpactParticlePrefab, new Vector3(transform.position.x, transform.position.y, 3), Quaternion.identity)
+			.GetComponent<ParticleSystem>();
+		particleSystem.Emit((int) (force * 3f * forcedMod));
 	}
 }

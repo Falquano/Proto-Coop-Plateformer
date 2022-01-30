@@ -10101,6 +10101,8 @@ MonoBehaviour:
   groundHorizontalSpeed: 1500
   isUsingMaxHorizontalSpeed: 1
   maxHorizontalSpeed: 10
+  notUseMaxHorizontalSpeedIfOffering: 1
+  disableMovementIfOffering: 1
   canMoveInTheAir: 1
   airHorizontalSpeed: 1500
   isGroundedMinValue: 0.1
@@ -10123,6 +10125,7 @@ MonoBehaviour:
   cancelAirborneAndInvertedInput: 1
   cancelWhenWallJump: 1
   cancelFastFall: 1
+  cancelFastFallWhenOfferingHelp: 1
   canFastFall: 1
   fastFallDownwardForce: 17
   fastFallLateralForce: 1
@@ -10155,6 +10158,7 @@ MonoBehaviour:
   ImpactParticlePrefab: {fileID: 3880576406777092154, guid: 6862013d7416be34cb2a6f87a20a3379, type: 3}
   PushParticle: {fileID: 7712990121167260859}
   PullParticle: {fileID: 6658140291502188528}
+  onCollisionParticles: 0
 --- !u!114 &2694868286265927042
 MonoBehaviour:
   m_ObjectHideFlags: 0
