@@ -10111,8 +10111,8 @@ MonoBehaviour:
   slowDownOnWallsMaxSpeed: -4
   wallJumpForce: 17
   horizontalWallJumpForce: 34
-  useStrongCollisions: 0
-  minForceStrongCollision: 4
+  useStrongCollisions: 1
+  minForceStrongCollision: 30
   wallGrab: 1
   slideIfPlayerIsOnTop: 1
   topDetectionMinValue: 0.3
