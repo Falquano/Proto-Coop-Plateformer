@@ -32,6 +32,7 @@ public class BetterCharacterController2D : ICharacterController2D
     [SerializeField] float isWallMinValue = 0.3f;
     [SerializeField] bool slowDownOnWalls = true;
     [SerializeField] float slowDownOnWallsMaxSpeed = 0f;
+    [SerializeField] float slowDownOnWallsMaxSpeedPlayerOnTop = 0f;
 
     [Header("Wall Jump")]
     [SerializeField] float wallJumpForce;
@@ -88,7 +89,6 @@ public class BetterCharacterController2D : ICharacterController2D
 
     [Header("Crown")]
     [SerializeField] bool wasCrowned = false;
-    [SerializeField] string crownTag = "Crown";
     [SerializeField] float crownGroundSpeedMultiplier = 1f;
     [SerializeField] float crownAirSpeedMultiplier = 1f;
     [SerializeField] float crownMaxSpeedMultiplier = 1f;
@@ -215,7 +215,7 @@ public class BetterCharacterController2D : ICharacterController2D
     {
 
         //FASTFALL
-        if (fastFallRegistered && !isFastFalling)
+        if (fastFallRegistered && !isFastFalling && canFastFall)
         {
             isFastFalling = true;
             if (cancelFastFall)
@@ -254,7 +254,7 @@ public class BetterCharacterController2D : ICharacterController2D
 
 
         //WALL GRAB SETUP
-        if (!IsOnWall || isPlayerOnTop)
+        if (!IsOnWall || ((!slideIfPlayerIsOnTop)||(isPlayerOnTop && slideIfPlayerIsOnTop)))
             currentTimeBeforeWallGrabStop = -1;
 
         //WALL GRAB START
@@ -278,7 +278,7 @@ public class BetterCharacterController2D : ICharacterController2D
         //WALL SLIDE
         if ((body.velocity.y < 0 && IsOnWall && slowDownOnWalls && currentTimeBeforeWallGrabStop < 0) && isDirWallSameAsControllerDir && !IsGrounded)
         {
-            body.velocity = new Vector2(body.velocity.x, Mathf.Clamp(body.velocity.y, slowDownOnWallsMaxSpeed, 0f));
+            body.velocity = new Vector2(body.velocity.x, Mathf.Clamp(body.velocity.y, (isPlayerOnTop)?slowDownOnWallsMaxSpeedPlayerOnTop:slowDownOnWallsMaxSpeed, 0f));
         }
 
 

@@ -10094,7 +10094,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   body: {fileID: 5478215713898102289}
   coyoteTime: 0.1
-  jumpBufferTime: 0.1
+  jumpBufferTime: 0.3
   jumpForce: 17
   horizontalJumpForce: 0.5
   coyoteTimeLeft: 1
@@ -10109,6 +10109,7 @@ MonoBehaviour:
   isWallMinValue: 0.3
   slowDownOnWalls: 1
   slowDownOnWallsMaxSpeed: -4
+  slowDownOnWallsMaxSpeedPlayerOnTop: -6
   wallJumpForce: 17
   horizontalWallJumpForce: 34
   useStrongCollisions: 1
@@ -10119,10 +10120,10 @@ MonoBehaviour:
   loseCrownOnlyIfBoostedSC: 1
   allowTech: 1
   techableWindowTimeSinceLastOffering: 0.3
-  wallGrab: 1
+  wallGrab: 0
   slideIfPlayerIsOnTop: 1
   topDetectionMinValue: 0.3
-  timeBeforeWallGrabStopInSeconds: 3
+  timeBeforeWallGrabStopInSeconds: 0
   cancelWhenGrounded: 1
   noCancelWhenGroundedIfFastFall: 1
   cancelGroundedAndNoInput: 1
@@ -10138,7 +10139,6 @@ MonoBehaviour:
   fastFallDownwardForce: 17
   fastFallLateralForce: 1
   wasCrowned: 0
-  crownTag: Crown
   crownGroundSpeedMultiplier: 2
   crownAirSpeedMultiplier: 2
   crownMaxSpeedMultiplier: 2

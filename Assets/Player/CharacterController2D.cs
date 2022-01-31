@@ -15,7 +15,6 @@ public class CharacterController2D : ICharacterController2D
     [Space]
     [SerializeField] private LayerMask groundLayer;
     [SerializeField] private LayerMask playerLayer;
-    [SerializeField] private float groundCheckRadius = .03f;
 
     private bool wasWalking;
     private float timeSinceFall = 1f;
