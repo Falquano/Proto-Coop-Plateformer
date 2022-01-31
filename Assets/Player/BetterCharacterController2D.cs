@@ -434,12 +434,10 @@ public class BetterCharacterController2D : ICharacterController2D
         player.State = PlayerState.Stun;
         isStunned = true;
         stunTimeLeft = stunTimeInSecond;
-        Debug.Log("STUN");
     }
     void EndStun()
     {
         isStunned = false;
         player.State = PlayerState.Moving;
-        Debug.Log("NO STUN");
     }
 }
