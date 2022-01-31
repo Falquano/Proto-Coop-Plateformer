@@ -134,6 +134,10 @@ public class BetterCharacterController2D : ICharacterController2D
         isOfferingState = (player.State == PlayerState.OfferingHelp);
 
         timeSinceLastOffering -= Time.deltaTime;
+        stunTimeLeft -= Time.deltaTime;
+
+        if(stunTimeLeft <= 0 && isStunned)
+            EndStun();
 
         if (!wasOfferingState && isOfferingState)
             timeSinceLastOffering = techableWindowTimeSinceLastOffering;
@@ -418,21 +422,23 @@ public class BetterCharacterController2D : ICharacterController2D
         }
         isCrowned = false;
         player.SetCrown(false);
-        Stun(stunTimeInSecond);
+        Stun();
     }
 
 
-    void Stun(float timeInS)
+    void Stun()
     {
         if (cancelOnStun)
             body.velocity = Vector2.zero;
 
         player.State = PlayerState.Stun;
+        isStunned = true;
         stunTimeLeft = stunTimeInSecond;
         Debug.Log("STUN");
     }
     void EndStun()
     {
+        isStunned = false;
         player.State = PlayerState.Moving;
         Debug.Log("NO STUN");
     }
