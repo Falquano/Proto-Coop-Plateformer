@@ -10146,8 +10146,8 @@ MonoBehaviour:
   crownHorizontalJumpMultiplier: 2
   crownWallJumpMultiplier: 2
   crownHorizontalWallJumpMultiplier: 2
-  stunTimeInSecond: 3
-  stunSpeedMultiplier: 0.7
+  stunTimeInSecond: 1
+  stunSpeedMultiplier: 0.25
 --- !u!114 &6375719382510468886
 MonoBehaviour:
   m_ObjectHideFlags: 0
