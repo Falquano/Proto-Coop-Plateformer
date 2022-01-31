@@ -29,7 +29,7 @@ public class CrownBehaviour : MonoBehaviour
 
     void getCatcher(Collider2D[] cs2D)
     {
-        GameObject currentCatcher = new GameObject();
+        GameObject currentCatcher = null;
         float currMaxVelocity = 0;
         foreach (Collider2D c2D in cs2D)
         {
@@ -43,14 +43,14 @@ public class CrownBehaviour : MonoBehaviour
 
 
         Catch(currentCatcher);
-
     }
 
     void Catch(GameObject C)
     {
         C.GetComponent<BetterCharacterController2D>().isCrowned = true;
+        C.GetComponent<BetterCharacterController2D>().crownGO = gameObject;
         C.GetComponent<Player>().SetCrown(true);
-        Destroy(gameObject);
+        gameObject.SetActive(false);
     }
 
     /// <summary>

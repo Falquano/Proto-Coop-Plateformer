@@ -96,6 +96,7 @@ public class BetterCharacterController2D : ICharacterController2D
     [SerializeField] float crownWallJumpMultiplier = 1f;
     [SerializeField] float crownHorizontalWallJumpMultiplier = 1f;
     bool wasCrowned = false;
+    public GameObject crownGO {set;get;}
 
     [Header("Stun")]
     [SerializeField] float stunTimeInSecond;
@@ -413,6 +414,9 @@ public class BetterCharacterController2D : ICharacterController2D
 
     void strongCollision()
     {
+        isCrowned = false;
+        player.SetCrown(false);
+        Destroy(crownGO);
         //Ignore strong collision on tech
         if (timeSinceLastOffering > 0 && allowTech)
         {
@@ -420,8 +424,6 @@ public class BetterCharacterController2D : ICharacterController2D
                 body.velocity = Vector2.zero;
             return;
         }
-        isCrowned = false;
-        player.SetCrown(false);
         Stun();
     }
 

@@ -83,4 +83,22 @@ public class Spawner : MonoBehaviour
         if (sharedMaxInstances)
             sharedMaxInstancesReferer.RemoveInstance();
     }
+
+    public bool CanAddInstance()
+    {
+        bool CanAdd = true;
+        if (useMaxInstances && maximumInstancesAtOnce <= currentInstancesAtOnce)
+            CanAdd = false;
+        if (sharedMaxInstances && !sharedMaxInstancesReferer.CanAddInstance())
+            CanAdd = false;
+        return CanAdd;
+    }
+
+    public bool HasReachedMaxLocalInstances()
+    {
+        bool CanAdd = true;
+        if (useMaxInstances && maximumInstancesAtOnce <= currentInstancesAtOnce)
+            CanAdd = false;
+        return CanAdd;
+    }
 }
