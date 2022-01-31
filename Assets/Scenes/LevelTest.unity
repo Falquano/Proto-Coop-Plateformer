@@ -4525,7 +4525,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1819775414}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 23.082987, y: 22.20432, z: -85.89721}
+  m_LocalPosition: {x: 23.082987, y: 22.20432, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 879759975}
@@ -4572,7 +4572,7 @@ MonoBehaviour:
   - {fileID: 51517760}
   - {fileID: 1475027972}
   - {fileID: 1672810468}
-  lastspawn: {fileID: 0}
+  lastspawn: {fileID: 1672810468}
   spawnableRadius: 15
 --- !u!1 &1897842793
 GameObject:
