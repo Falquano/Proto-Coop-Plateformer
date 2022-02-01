@@ -4,7 +4,17 @@ using UnityEngine;
 
 public class PlayerSoundEmitter : MonoBehaviour
 {
-	public void StepSound()
+	private ICharacterController2D characterController;
+
+    private void Start()
+    {
+		characterController = GetComponent<ICharacterController2D>();
+
+		characterController.OnJump.AddListener(JumpSound);
+		characterController.OnLand.AddListener(LandSound);
+    }
+
+    public void StepSound()
 	{
 		FMODUnity.RuntimeManager.PlayOneShot("event:/walk");
 	}
