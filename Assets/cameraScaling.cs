@@ -23,7 +23,7 @@ public class cameraScaling : MonoBehaviour
 
         ppc.assetsPPU = (int) (Screen.width / tm.size.x * zoom);
 
-        Debug.Log((Screen.width > Screen.height) ? 1 : 2);
+        //Debug.Log((Screen.width > Screen.height) ? 1 : 2);
     }
 
 
