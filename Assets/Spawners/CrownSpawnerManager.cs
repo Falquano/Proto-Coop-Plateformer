@@ -30,6 +30,14 @@ public class CrownSpawnerManager : MonoBehaviour
             if (s == lastspawn)
                 s.activated = false;
         }
+    }
 
+    private void OnDrawGizmosSelected()
+    {
+        foreach (Spawner s in spawners)
+        {
+            Gizmos.color = Color.green;
+            Gizmos.DrawWireSphere(s.transform.position, spawnableRadius);
+        }
     }
 }
