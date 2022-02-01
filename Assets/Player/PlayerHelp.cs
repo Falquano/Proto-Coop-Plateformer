@@ -57,9 +57,9 @@ public class PlayerHelp : MonoBehaviour
                 //otherPlayer.PullUp();
                 //otherPlayer.HelpMe(this);
                 if (HelpMod >= 1f)
-                    otherPlayer.PushMe(player, (bcc.isCrowned)?Strength * crownHelpStrengthMultiplier:Strength);
+                    otherPlayer.PushMe(player, (bcc.IsCrowned)?Strength * crownHelpStrengthMultiplier:Strength);
                 else
-                    otherPlayer.PullMe(player, (bcc.isCrowned)?Strength * crownHelpStrengthMultiplier:Strength);
+                    otherPlayer.PullMe(player, (bcc.IsCrowned)?Strength * crownHelpStrengthMultiplier:Strength);
 
                 player.State = PlayerState.Moving;
                 helpTime = 0f;
