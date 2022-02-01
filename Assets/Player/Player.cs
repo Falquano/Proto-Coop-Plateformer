@@ -146,7 +146,7 @@ public class Player : MonoBehaviour
 
 	public void InputHelp(InputAction.CallbackContext context)
 	{
-		if (context.performed && help.CanHelp)
+		if (context.performed && help.CanHelp && State != PlayerState.Stun)
 		{
 			State = PlayerState.OfferingHelp;
 			sound.HelpSound();
@@ -158,7 +158,7 @@ public class Player : MonoBehaviour
 
 	public void InputPush(InputAction.CallbackContext context)
 	{
-		if (context.performed && help.CanHelp)
+		if (context.performed && help.CanHelp && State != PlayerState.Stun)
 		{
 			help.HelpMod = 1f;
 			State = PlayerState.OfferingHelp;
