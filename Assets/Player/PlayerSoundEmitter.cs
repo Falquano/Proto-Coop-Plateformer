@@ -37,11 +37,16 @@ public class PlayerSoundEmitter : MonoBehaviour
 
 	public void LandSound()
 	{
-		FMODUnity.RuntimeManager.PlayOneShot("event:/landing");
+		FMODUnity.RuntimeManager.PlayOneShot("event:/updated SD/betterLanding");
 	}
 
 	public void WallGrabSound()
 	{
 		FMODUnity.RuntimeManager.PlayOneShot("event:/wallgrab");
+	}
+
+	public void CrownHarvestSound()
+    {
+		FMODUnity.RuntimeManager.PlayOneShot("event:/updated SD/crownHarvest");
 	}
 }
