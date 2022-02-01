@@ -277,9 +277,9 @@ public class BetterCharacterController2D : ICharacterController2D
         {
             body.gravityScale = regularGravityScale;
         }
-
+        IsWallSliding = ((body.velocity.y < 0 && IsOnWall && slowDownOnWalls && currentTimeBeforeWallGrabStop < 0) && isDirWallSameAsControllerDir && !IsGrounded);
         //WALL SLIDE
-        if ((body.velocity.y < 0 && IsOnWall && slowDownOnWalls && currentTimeBeforeWallGrabStop < 0) && isDirWallSameAsControllerDir && !IsGrounded)
+        if (IsWallSliding)
         {
             body.velocity = new Vector2(body.velocity.x, Mathf.Clamp(body.velocity.y, (isPlayerOnTop) ? slowDownOnWallsMaxSpeedPlayerOnTop : slowDownOnWallsMaxSpeed, 0f));
         }
