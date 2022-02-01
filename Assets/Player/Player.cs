@@ -271,6 +271,9 @@ public class Player : MonoBehaviour
 			fx.SetHelpActive(false, help.HelpMod);
 		}
 
+		if (state == PlayerState.Boost && value != state)
+			DoesIgnoreOtherPlayers = false;
+
 		state = value;
     }
 
