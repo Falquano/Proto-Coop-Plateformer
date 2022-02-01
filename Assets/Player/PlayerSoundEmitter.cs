@@ -5,6 +5,8 @@ using UnityEngine;
 public class PlayerSoundEmitter : MonoBehaviour
 {
 	private ICharacterController2D characterController;
+	private bool wasCrowned = false;
+	private bool IsCrowned => characterController.IsCrowned;
 
     private void Start()
     {
@@ -12,6 +14,14 @@ public class PlayerSoundEmitter : MonoBehaviour
 
 		characterController.OnJump.AddListener(JumpSound);
 		characterController.OnLand.AddListener(LandSound);
+    }
+
+    private void Update()
+    {
+		if (wasCrowned == false && IsCrowned == true)
+			CrownHarvestSound();
+
+		wasCrowned = IsCrowned;
     }
 
     public void StepSound()
@@ -22,7 +32,6 @@ public class PlayerSoundEmitter : MonoBehaviour
 	public void JumpSound()
 	{
 		FMODUnity.RuntimeManager.PlayOneShot("event:/updated SD/betterJump");
-		Debug.Log("SautSon");
 	}
 
 	public void HelpSound()
@@ -43,10 +52,12 @@ public class PlayerSoundEmitter : MonoBehaviour
 	public void WallSlideSound()
 	{
 		FMODUnity.RuntimeManager.PlayOneShot("event:/updated SD/wallSlide");
+		Debug.Log("SCRRRRRRRRR");
 	}
 
 	public void CrownHarvestSound()
     {
 		FMODUnity.RuntimeManager.PlayOneShot("event:/updated SD/crownHarvest");
+		Debug.Log("Choppe ta couronne bg");
 	}
 }
