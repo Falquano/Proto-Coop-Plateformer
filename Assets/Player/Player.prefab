@@ -10138,15 +10138,14 @@ MonoBehaviour:
   canFastFall: 1
   fastFallDownwardForce: 17
   fastFallLateralForce: 1
-  wasCrowned: 0
-  crownGroundSpeedMultiplier: 2
-  crownAirSpeedMultiplier: 2
-  crownMaxSpeedMultiplier: 2
-  crownJumpMultiplier: 2
-  crownHorizontalJumpMultiplier: 2
-  crownWallJumpMultiplier: 2
-  crownHorizontalWallJumpMultiplier: 2
-  stunTimeInSecond: 1
+  crownGroundSpeedMultiplier: 1.5
+  crownAirSpeedMultiplier: 1.4
+  crownMaxSpeedMultiplier: 1.6
+  crownJumpMultiplier: 1.4
+  crownHorizontalJumpMultiplier: 1.4
+  crownWallJumpMultiplier: 1.4
+  crownHorizontalWallJumpMultiplier: 1.4
+  stunTimeInSecond: 0.6
   stunSpeedMultiplier: 0.25
 --- !u!114 &6375719382510468886
 MonoBehaviour:
