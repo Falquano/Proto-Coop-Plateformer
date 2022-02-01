@@ -8,7 +8,11 @@ public class PlayerSoundEmitter : MonoBehaviour
 	private bool wasCrowned = false;
 	private bool IsCrowned => characterController.IsCrowned;
 
-    private void Start()
+
+	[SerializeField] private float stepTime = .6f;
+	private float stepTimer;
+
+	private void Start()
     {
 		characterController = GetComponent<ICharacterController2D>();
 
@@ -22,7 +26,20 @@ public class PlayerSoundEmitter : MonoBehaviour
 			CrownHarvestSound();
 
 		wasCrowned = IsCrowned;
-    }
+
+		if (characterController.IsWalking)
+		{
+			stepTimer += Time.deltaTime;
+			if (stepTimer >= stepTime)
+			{
+				stepTimer = 0f;
+				if (characterController.IsGrounded)
+					StepSound();
+				else if (characterController.IsWallSliding)
+					WallSlideSound();
+			}
+		}
+	}
 
     public void StepSound()
 	{

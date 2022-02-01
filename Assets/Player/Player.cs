@@ -23,12 +23,6 @@ public class Player : MonoBehaviour
 	[SerializeField] private PlayerAnimator animator;
 	[SerializeField] private GameObject crown;
 
-	[Header("Sound")]
-	[Space]
-	[SerializeField] private float stepTime = .6f;
-
-	private float stepTimer;
-
 	private Vector2 helpDirection;
 	private float currentHelpStrength = 0f;
 
@@ -88,19 +82,6 @@ public class Player : MonoBehaviour
         }
 
 		UpdateTrail();
-	}
-
-    private void Update()
-    {
-		if (characterController.IsWalking)
-		{
-			stepTimer += Time.deltaTime;
-			if (stepTimer >= stepTime)
-			{
-				stepTimer = 0f;
-				Sound.StepSound();
-			}
-		}
 	}
 
     private void UpdateBoost()
