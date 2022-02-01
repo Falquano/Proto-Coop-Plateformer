@@ -6,12 +6,13 @@ public class PlayerSoundEmitter : MonoBehaviour
 {
 	public void StepSound()
 	{
-		FMODUnity.RuntimeManager.PlayOneShot("event:/walk");
+		FMODUnity.RuntimeManager.PlayOneShot("event:/updated SD/betterWalk");
 	}
 
 	public void JumpSound()
 	{
-		FMODUnity.RuntimeManager.PlayOneShot("event:/jump");
+		FMODUnity.RuntimeManager.PlayOneShot("event:/updated SD/betterJump");
+		Debug.Log("SautSon");
 	}
 
 	public void HelpSound()
