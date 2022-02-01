@@ -34,13 +34,13 @@ public class PlayerHelp : MonoBehaviour
         if (FX == null)
             FX = GetComponent<PlayerFXEmitter>();
 
-        FX.UpdateHelpScale(helpRadius * ((bcc.isCrowned) ? crownHelpRadiusMultiplier : 1));
+        FX.UpdateHelpScale(helpRadius * ((bcc.IsCrowned) ? crownHelpRadiusMultiplier : 1));
     }
 
     private void Update()
     {
         helpRadiusMod = Mathf.Clamp(helpRadiusMod + helpRadiusModRecoveryPerSecond * Time.deltaTime, 0f, 1f);
-        FX.UpdateHelpScale(helpRadius * ((bcc.isCrowned) ? crownHelpRadiusMultiplier : 1)); // Mise � jour de la taille du cercle
+        FX.UpdateHelpScale(helpRadius * ((bcc.IsCrowned) ? crownHelpRadiusMultiplier : 1)); // Mise � jour de la taille du cercle
         helpTime += Time.deltaTime;
     }
 
@@ -51,7 +51,7 @@ public class PlayerHelp : MonoBehaviour
             if (otherPlayer.Equals(player))
                 continue;
 
-            if (Vector2.Distance(transform.position, otherPlayer.transform.position) <= helpRadius * ((bcc.isCrowned) ? crownHelpRadiusMultiplier : 1))
+            if (Vector2.Distance(transform.position, otherPlayer.transform.position) <= helpRadius * ((bcc.IsCrowned) ? crownHelpRadiusMultiplier : 1))
             {
                 //otherPlayer.PullUp();
                 //otherPlayer.HelpMe(this);
