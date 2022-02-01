@@ -97,7 +97,7 @@ public class BetterCharacterController2D : ICharacterController2D
     [SerializeField] float crownWallJumpMultiplier = 1f;
     [SerializeField] float crownHorizontalWallJumpMultiplier = 1f;
     bool wasCrowned = false;
-    public GameObject crownGO {set;get;}
+    public GameObject crownGO { set; get; }
 
     [Header("Stun")]
     [SerializeField] float stunTimeInSecond;
@@ -208,6 +208,7 @@ public class BetterCharacterController2D : ICharacterController2D
                 body.velocity = Vector2.zero;
 
             body.AddForce(new Vector2(((wallDirection == WallDirection.Left) ? 1 : -1) * horizontalWallJumpForce * (IsCrowned ? crownHorizontalWallJumpMultiplier : 1), wallJumpForce * (IsCrowned ? crownWallJumpMultiplier : 1)), ForceMode2D.Impulse);  //Wall Jump
+            OnJump.Invoke();
             jumped = true;
             coyoteTimeLeft = -1; //Set it under 0 so no mistake is made
             jumpBufferTimeLeft = -1;
