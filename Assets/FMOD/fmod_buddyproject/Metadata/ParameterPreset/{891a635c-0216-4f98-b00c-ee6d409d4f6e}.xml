@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.02.00">
+	<object class="ParameterPreset" id="{891a635c-0216-4f98-b00c-ee6d409d4f6e}">
+		<property name="name">
+			<value>isSliding</value>
+		</property>
+		<relationship name="folder">
+			<destination>{8805bc95-e32b-4851-b810-388b0252fd18}</destination>
+		</relationship>
+		<relationship name="parameter">
+			<destination>{dc9d323e-0e0a-4581-9e41-afda63189ae6}</destination>
+		</relationship>
+	</object>
+	<object class="GameParameter" id="{dc9d323e-0e0a-4581-9e41-afda63189ae6}">
+		<property name="initialValue">
+			<value>0</value>
+		</property>
+	</object>
+</objects>

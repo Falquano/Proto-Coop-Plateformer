@@ -1,5 +1,29 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-9153140295552789806
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/betterLanding/PlayersNumber
+  m_EditorClassIdentifier: 
+  Name: PlayersNumber
+  StudioPath: 
+  Min: 1
+  Max: 6
+  Default: 1
+  ID:
+    data1: 0
+    data2: 0
+  Type: 0
+  IsGlobal: 0
+  Labels: []
+  Exists: 0
 --- !u!114 &-9147278401612088429
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -77,10 +101,10 @@ MonoBehaviour:
   Is3D: 0
   IsOneShot: 1
   Parameters:
-  - {fileID: -4503099888541428578}
+  - {fileID: 7723869863311531058}
   MinDistance: 1
   MaxDistance: 20
-  Length: 600
+  Length: 3200
 --- !u!114 &-8498513021329375297
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -133,6 +157,30 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 202
+--- !u!114 &-8398563848780607719
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/betterLanding/PlayersNumber
+  m_EditorClassIdentifier: 
+  Name: PlayersNumber
+  StudioPath: 
+  Min: 1
+  Max: 6
+  Default: 1
+  ID:
+    data1: 0
+    data2: 0
+  Type: 0
+  IsGlobal: 0
+  Labels: []
+  Exists: 0
 --- !u!114 &-8318269530313395141
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -148,10 +196,10 @@ MonoBehaviour:
   Path: Assets/FMOD/fmod_buddyproject/Build/Desktop/Master.strings.bank
   Name: Master.strings
   StudioPath: bank:/Master.strings
-  lastModified: 637793150480000000
+  lastModified: 637793471440000000
   FileSizes:
   - Name: Desktop
-    Value: 1290
+    Value: 1368
   Exists: 1
 --- !u!114 &-7864900491117923929
 MonoBehaviour:
@@ -180,6 +228,201 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 400
+--- !u!114 &-7849160725232976876
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/Music/kingPresence
+  m_EditorClassIdentifier: 
+  Name: kingPresence
+  StudioPath: 
+  Min: 0
+  Max: 1
+  Default: 0
+  ID:
+    data1: 0
+    data2: 0
+  Type: 0
+  IsGlobal: 0
+  Labels: []
+  Exists: 0
+--- !u!114 &-7451687565070149351
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/betterWalk/PlayersNumber
+  m_EditorClassIdentifier: 
+  Name: PlayersNumber
+  StudioPath: 
+  Min: 1
+  Max: 6
+  Default: 1
+  ID:
+    data1: 0
+    data2: 0
+  Type: 0
+  IsGlobal: 0
+  Labels: []
+  Exists: 0
+--- !u!114 &-6962907690214404443
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/betterLanding/PlayersNumber
+  m_EditorClassIdentifier: 
+  Name: PlayersNumber
+  StudioPath: 
+  Min: 1
+  Max: 6
+  Default: 1
+  ID:
+    data1: 0
+    data2: 0
+  Type: 0
+  IsGlobal: 0
+  Labels: []
+  Exists: 0
+--- !u!114 &-6426639475659866651
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/Music/kingPresence
+  m_EditorClassIdentifier: 
+  Name: kingPresence
+  StudioPath: 
+  Min: 0
+  Max: 1
+  Default: 0
+  ID:
+    data1: 0
+    data2: 0
+  Type: 0
+  IsGlobal: 0
+  Labels: []
+  Exists: 0
+--- !u!114 &-5261263508967988940
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/betterJump/PlayersNumber
+  m_EditorClassIdentifier: 
+  Name: PlayersNumber
+  StudioPath: 
+  Min: 1
+  Max: 6
+  Default: 1
+  ID:
+    data1: 0
+    data2: 0
+  Type: 0
+  IsGlobal: 0
+  Labels: []
+  Exists: 0
+--- !u!114 &-5198039873527478742
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/updated SD/wallSlide
+  m_EditorClassIdentifier: 
+  Path: event:/updated SD/wallSlide
+  Guid:
+    Data1: 50419307
+    Data2: 1294562697
+    Data3: 1040021148
+    Data4: -1901968964
+  Banks:
+  - {fileID: -4426976689130752954}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 0
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 3692
+--- !u!114 &-5060695192427251184
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/betterLanding/PlayersNumber
+  m_EditorClassIdentifier: 
+  Name: PlayersNumber
+  StudioPath: 
+  Min: 1
+  Max: 6
+  Default: 1
+  ID:
+    data1: 0
+    data2: 0
+  Type: 0
+  IsGlobal: 0
+  Labels: []
+  Exists: 0
+--- !u!114 &-4557297755807608429
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/betterWalk/PlayersNumber
+  m_EditorClassIdentifier: 
+  Name: PlayersNumber
+  StudioPath: 
+  Min: 1
+  Max: 6
+  Default: 1
+  ID:
+    data1: 0
+    data2: 0
+  Type: 0
+  IsGlobal: 0
+  Labels: []
+  Exists: 0
 --- !u!114 &-4503099888541428578
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -219,10 +462,10 @@ MonoBehaviour:
   Path: Assets/FMOD/fmod_buddyproject/Build/Desktop/Master.bank
   Name: Master
   StudioPath: bank:/Master
-  lastModified: 637793150480000000
+  lastModified: 637793471440000000
   FileSizes:
   - Name: Desktop
-    Value: 918208
+    Value: 975040
   Exists: 1
 --- !u!114 &-4054456926414538678
 MonoBehaviour:
@@ -275,7 +518,7 @@ MonoBehaviour:
   Is3D: 0
   IsOneShot: 0
   Parameters:
-  - {fileID: 3967050865762706270}
+  - {fileID: 289270583733507879}
   MinDistance: 1
   MaxDistance: 20
   Length: 92200
@@ -306,6 +549,126 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 1200
+--- !u!114 &-2704546646307203316
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/betterJump/PlayersNumber
+  m_EditorClassIdentifier: 
+  Name: PlayersNumber
+  StudioPath: 
+  Min: 1
+  Max: 6
+  Default: 1
+  ID:
+    data1: 0
+    data2: 0
+  Type: 0
+  IsGlobal: 0
+  Labels: []
+  Exists: 0
+--- !u!114 &-2605437019152722597
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/betterWalk/PlayersNumber
+  m_EditorClassIdentifier: 
+  Name: PlayersNumber
+  StudioPath: 
+  Min: 1
+  Max: 6
+  Default: 1
+  ID:
+    data1: 0
+    data2: 0
+  Type: 0
+  IsGlobal: 0
+  Labels: []
+  Exists: 0
+--- !u!114 &-2271299537500891692
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/Music/kingPresence
+  m_EditorClassIdentifier: 
+  Name: kingPresence
+  StudioPath: 
+  Min: 0
+  Max: 1
+  Default: 0
+  ID:
+    data1: 0
+    data2: 0
+  Type: 0
+  IsGlobal: 0
+  Labels: []
+  Exists: 0
+--- !u!114 &-1499340788738510234
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/Music/kingPresence
+  m_EditorClassIdentifier: 
+  Name: kingPresence
+  StudioPath: 
+  Min: 0
+  Max: 1
+  Default: 0
+  ID:
+    data1: 0
+    data2: 0
+  Type: 0
+  IsGlobal: 0
+  Labels: []
+  Exists: 0
+--- !u!114 &-1434556210123142430
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/betterWalk/PlayersNumber
+  m_EditorClassIdentifier: 
+  Name: PlayersNumber
+  StudioPath: 
+  Min: 1
+  Max: 6
+  Default: 1
+  ID:
+    data1: 0
+    data2: 0
+  Type: 0
+  IsGlobal: 0
+  Labels: []
+  Exists: 1
 --- !u!114 &-1416139976665931391
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -332,6 +695,30 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 400
+--- !u!114 &-1312019881497827369
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/betterLanding/PlayersNumber
+  m_EditorClassIdentifier: 
+  Name: PlayersNumber
+  StudioPath: 
+  Min: 1
+  Max: 6
+  Default: 1
+  ID:
+    data1: 0
+    data2: 0
+  Type: 0
+  IsGlobal: 0
+  Labels: []
+  Exists: 0
 --- !u!114 &-1100759396553107596
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -356,10 +743,34 @@ MonoBehaviour:
   Is3D: 0
   IsOneShot: 1
   Parameters:
-  - {fileID: 5997371072629637209}
+  - {fileID: -1434556210123142430}
   MinDistance: 1
   MaxDistance: 20
-  Length: 600
+  Length: 400
+--- !u!114 &-479888930490931926
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/betterJump/PlayersNumber
+  m_EditorClassIdentifier: 
+  Name: PlayersNumber
+  StudioPath: 
+  Min: 1
+  Max: 6
+  Default: 1
+  ID:
+    data1: 0
+    data2: 0
+  Type: 0
+  IsGlobal: 0
+  Labels: []
+  Exists: 0
 --- !u!114 &-235520027026742938
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -413,13 +824,111 @@ MonoBehaviour:
   - {fileID: -3332808167377153265}
   - {fileID: 2114033077298458995}
   - {fileID: -8815820737976965154}
+  - {fileID: 3653401735612377699}
+  - {fileID: -5198039873527478742}
   EditorParameters: []
   MasterBanks:
   - {fileID: -4426976689130752954}
   StringsBanks:
   - {fileID: -8318269530313395141}
-  cacheTime: 637793150480000000
+  cacheTime: 637793471440000000
   cacheVersion: 9
+--- !u!114 &289270583733507879
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/Music/kingPresence
+  m_EditorClassIdentifier: 
+  Name: kingPresence
+  StudioPath: 
+  Min: 0
+  Max: 1
+  Default: 0
+  ID:
+    data1: 0
+    data2: 0
+  Type: 0
+  IsGlobal: 0
+  Labels: []
+  Exists: 1
+--- !u!114 &340954823504927373
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/Music/kingPresence
+  m_EditorClassIdentifier: 
+  Name: kingPresence
+  StudioPath: 
+  Min: 0
+  Max: 1
+  Default: 0
+  ID:
+    data1: 0
+    data2: 0
+  Type: 0
+  IsGlobal: 0
+  Labels: []
+  Exists: 0
+--- !u!114 &904923139459565594
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/betterWalk/PlayersNumber
+  m_EditorClassIdentifier: 
+  Name: PlayersNumber
+  StudioPath: 
+  Min: 1
+  Max: 6
+  Default: 1
+  ID:
+    data1: 0
+    data2: 0
+  Type: 0
+  IsGlobal: 0
+  Labels: []
+  Exists: 0
+--- !u!114 &938128993577708294
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/betterLanding/PlayersNumber
+  m_EditorClassIdentifier: 
+  Name: PlayersNumber
+  StudioPath: 
+  Min: 1
+  Max: 6
+  Default: 1
+  ID:
+    data1: 0
+    data2: 0
+  Type: 0
+  IsGlobal: 0
+  Labels: []
+  Exists: 0
 --- !u!114 &1352900850234991535
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -447,6 +956,78 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 800
+--- !u!114 &1570774781635843707
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/betterJump/PlayersNumber
+  m_EditorClassIdentifier: 
+  Name: PlayersNumber
+  StudioPath: 
+  Min: 1
+  Max: 6
+  Default: 1
+  ID:
+    data1: 0
+    data2: 0
+  Type: 0
+  IsGlobal: 0
+  Labels: []
+  Exists: 0
+--- !u!114 &1571483159564876209
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/betterWalk/PlayersNumber
+  m_EditorClassIdentifier: 
+  Name: PlayersNumber
+  StudioPath: 
+  Min: 1
+  Max: 6
+  Default: 1
+  ID:
+    data1: 0
+    data2: 0
+  Type: 0
+  IsGlobal: 0
+  Labels: []
+  Exists: 0
+--- !u!114 &1989129655762538810
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/Music/kingPresence
+  m_EditorClassIdentifier: 
+  Name: kingPresence
+  StudioPath: 
+  Min: 0
+  Max: 1
+  Default: 0
+  ID:
+    data1: 0
+    data2: 0
+  Type: 0
+  IsGlobal: 0
+  Labels: []
+  Exists: 0
 --- !u!114 &2114033077298458995
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -474,6 +1055,30 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 1600
+--- !u!114 &2212247619126190586
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/betterJump/PlayersNumber
+  m_EditorClassIdentifier: 
+  Name: PlayersNumber
+  StudioPath: 
+  Min: 1
+  Max: 6
+  Default: 1
+  ID:
+    data1: 0
+    data2: 0
+  Type: 0
+  IsGlobal: 0
+  Labels: []
+  Exists: 0
 --- !u!114 &2404744915927787212
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -500,6 +1105,106 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 1200
+--- !u!114 &2600191636405151015
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/betterWalk/PlayersNumber
+  m_EditorClassIdentifier: 
+  Name: PlayersNumber
+  StudioPath: 
+  Min: 1
+  Max: 6
+  Default: 1
+  ID:
+    data1: 0
+    data2: 0
+  Type: 0
+  IsGlobal: 0
+  Labels: []
+  Exists: 0
+--- !u!114 &2841804189743832516
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/betterJump/PlayersNumber
+  m_EditorClassIdentifier: 
+  Name: PlayersNumber
+  StudioPath: 
+  Min: 1
+  Max: 6
+  Default: 1
+  ID:
+    data1: 0
+    data2: 0
+  Type: 0
+  IsGlobal: 0
+  Labels: []
+  Exists: 0
+--- !u!114 &3452934582145512743
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/betterLanding/PlayersNumber
+  m_EditorClassIdentifier: 
+  Name: PlayersNumber
+  StudioPath: 
+  Min: 1
+  Max: 6
+  Default: 1
+  ID:
+    data1: 0
+    data2: 0
+  Type: 0
+  IsGlobal: 0
+  Labels: []
+  Exists: 0
+--- !u!114 &3653401735612377699
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/updated SD/betterLanding
+  m_EditorClassIdentifier: 
+  Path: event:/updated SD/betterLanding
+  Guid:
+    Data1: -14371240
+    Data2: 1206664209
+    Data3: -574706557
+    Data4: 1604827015
+  Banks:
+  - {fileID: -4426976689130752954}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters:
+  - {fileID: 7460734243574357851}
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 3200
 --- !u!114 &3967050865762706270
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -524,6 +1229,126 @@ MonoBehaviour:
   IsGlobal: 0
   Labels: []
   Exists: 1
+--- !u!114 &4453316295446630332
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/betterLanding/PlayersNumber
+  m_EditorClassIdentifier: 
+  Name: PlayersNumber
+  StudioPath: 
+  Min: 1
+  Max: 6
+  Default: 1
+  ID:
+    data1: 0
+    data2: 0
+  Type: 0
+  IsGlobal: 0
+  Labels: []
+  Exists: 0
+--- !u!114 &4556125266861576559
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/Music/kingPresence
+  m_EditorClassIdentifier: 
+  Name: kingPresence
+  StudioPath: 
+  Min: 0
+  Max: 1
+  Default: 0
+  ID:
+    data1: 0
+    data2: 0
+  Type: 0
+  IsGlobal: 0
+  Labels: []
+  Exists: 0
+--- !u!114 &4581651414081417888
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/betterJump/PlayersNumber
+  m_EditorClassIdentifier: 
+  Name: PlayersNumber
+  StudioPath: 
+  Min: 1
+  Max: 6
+  Default: 1
+  ID:
+    data1: 0
+    data2: 0
+  Type: 0
+  IsGlobal: 0
+  Labels: []
+  Exists: 0
+--- !u!114 &5646725087200449915
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/betterJump/PlayersNumber
+  m_EditorClassIdentifier: 
+  Name: PlayersNumber
+  StudioPath: 
+  Min: 1
+  Max: 6
+  Default: 1
+  ID:
+    data1: 0
+    data2: 0
+  Type: 0
+  IsGlobal: 0
+  Labels: []
+  Exists: 0
+--- !u!114 &5714810717005504793
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/betterJump/PlayersNumber
+  m_EditorClassIdentifier: 
+  Name: PlayersNumber
+  StudioPath: 
+  Min: 1
+  Max: 6
+  Default: 1
+  ID:
+    data1: 0
+    data2: 0
+  Type: 0
+  IsGlobal: 0
+  Labels: []
+  Exists: 0
 --- !u!114 &5997371072629637209
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -548,6 +1373,198 @@ MonoBehaviour:
   IsGlobal: 0
   Labels: []
   Exists: 1
+--- !u!114 &6045098189524781064
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/betterWalk/PlayersNumber
+  m_EditorClassIdentifier: 
+  Name: PlayersNumber
+  StudioPath: 
+  Min: 1
+  Max: 6
+  Default: 1
+  ID:
+    data1: 0
+    data2: 0
+  Type: 0
+  IsGlobal: 0
+  Labels: []
+  Exists: 0
+--- !u!114 &7278751652208195825
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/Music/kingPresence
+  m_EditorClassIdentifier: 
+  Name: kingPresence
+  StudioPath: 
+  Min: 0
+  Max: 1
+  Default: 0
+  ID:
+    data1: 0
+    data2: 0
+  Type: 0
+  IsGlobal: 0
+  Labels: []
+  Exists: 0
+--- !u!114 &7460734243574357851
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/betterLanding/PlayersNumber
+  m_EditorClassIdentifier: 
+  Name: PlayersNumber
+  StudioPath: 
+  Min: 1
+  Max: 6
+  Default: 1
+  ID:
+    data1: 0
+    data2: 0
+  Type: 0
+  IsGlobal: 0
+  Labels: []
+  Exists: 1
+--- !u!114 &7723869863311531058
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/betterJump/PlayersNumber
+  m_EditorClassIdentifier: 
+  Name: PlayersNumber
+  StudioPath: 
+  Min: 1
+  Max: 6
+  Default: 1
+  ID:
+    data1: 0
+    data2: 0
+  Type: 0
+  IsGlobal: 0
+  Labels: []
+  Exists: 1
+--- !u!114 &8033309268965615957
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/betterWalk/PlayersNumber
+  m_EditorClassIdentifier: 
+  Name: PlayersNumber
+  StudioPath: 
+  Min: 1
+  Max: 6
+  Default: 1
+  ID:
+    data1: 0
+    data2: 0
+  Type: 0
+  IsGlobal: 0
+  Labels: []
+  Exists: 0
+--- !u!114 &8214026856386984598
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/betterLanding/PlayersNumber
+  m_EditorClassIdentifier: 
+  Name: PlayersNumber
+  StudioPath: 
+  Min: 1
+  Max: 6
+  Default: 1
+  ID:
+    data1: 0
+    data2: 0
+  Type: 0
+  IsGlobal: 0
+  Labels: []
+  Exists: 0
+--- !u!114 &8441215495050005154
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/Music/kingPresence
+  m_EditorClassIdentifier: 
+  Name: kingPresence
+  StudioPath: 
+  Min: 0
+  Max: 1
+  Default: 0
+  ID:
+    data1: 0
+    data2: 0
+  Type: 0
+  IsGlobal: 0
+  Labels: []
+  Exists: 0
+--- !u!114 &8529846254510103418
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/betterWalk/PlayersNumber
+  m_EditorClassIdentifier: 
+  Name: PlayersNumber
+  StudioPath: 
+  Min: 1
+  Max: 6
+  Default: 1
+  ID:
+    data1: 0
+    data2: 0
+  Type: 0
+  IsGlobal: 0
+  Labels: []
+  Exists: 0
 --- !u!114 &8719822981537522442
 MonoBehaviour:
   m_ObjectHideFlags: 0
