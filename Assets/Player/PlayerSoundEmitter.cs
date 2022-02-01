@@ -16,12 +16,13 @@ public class PlayerSoundEmitter : MonoBehaviour
 
     public void StepSound()
 	{
-		FMODUnity.RuntimeManager.PlayOneShot("event:/walk");
+		FMODUnity.RuntimeManager.PlayOneShot("event:/updated SD/betterWalk");
 	}
 
 	public void JumpSound()
 	{
-		FMODUnity.RuntimeManager.PlayOneShot("event:/jump");
+		FMODUnity.RuntimeManager.PlayOneShot("event:/updated SD/betterJump");
+		Debug.Log("SautSon");
 	}
 
 	public void HelpSound()
@@ -36,11 +37,16 @@ public class PlayerSoundEmitter : MonoBehaviour
 
 	public void LandSound()
 	{
-		FMODUnity.RuntimeManager.PlayOneShot("event:/landing");
+		FMODUnity.RuntimeManager.PlayOneShot("event:/updated SD/betterLanding");
 	}
 
-	public void WallGrabSound()
+	public void WallSlideSound()
 	{
-		FMODUnity.RuntimeManager.PlayOneShot("event:/wallgrab");
+		FMODUnity.RuntimeManager.PlayOneShot("event:/updated SD/wallSlide");
+	}
+
+	public void CrownHarvestSound()
+    {
+		FMODUnity.RuntimeManager.PlayOneShot("event:/updated SD/crownHarvest");
 	}
 }
