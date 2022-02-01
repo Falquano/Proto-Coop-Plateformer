@@ -40,9 +40,9 @@ public class PlayerSoundEmitter : MonoBehaviour
 		FMODUnity.RuntimeManager.PlayOneShot("event:/updated SD/betterLanding");
 	}
 
-	public void WallGrabSound()
+	public void WallSlideSound()
 	{
-		FMODUnity.RuntimeManager.PlayOneShot("event:/wallgrab");
+		FMODUnity.RuntimeManager.PlayOneShot("event:/updated SD/wallSlide");
 	}
 
 	public void CrownHarvestSound()
