@@ -27,17 +27,14 @@ public class PlayerSoundEmitter : MonoBehaviour
 
 		wasCrowned = IsCrowned;
 
-		if (characterController.IsWalking)
+		stepTimer += Time.deltaTime;
+		if (stepTimer >= stepTime)
 		{
-			stepTimer += Time.deltaTime;
-			if (stepTimer >= stepTime)
-			{
-				stepTimer = 0f;
-				if (characterController.IsGrounded)
-					StepSound();
-				else if (characterController.IsWallSliding)
-					WallSlideSound();
-			}
+			stepTimer = 0f;
+			if (characterController.IsWalking)
+				StepSound();
+			else if (characterController.IsWallSliding)
+				WallSlideSound();
 		}
 	}
 
