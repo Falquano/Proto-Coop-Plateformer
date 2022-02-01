@@ -40,6 +40,7 @@ public class Player : MonoBehaviour
 	/// L'État du joueur. Voir <see cref="PlayerState"/>.
 	/// </summary>
 	public PlayerState State { get => state; set => SetPlayerState(value); }
+	private float ejectionStrength;
 
 	// MISES A JOUR
 
@@ -111,7 +112,7 @@ public class Player : MonoBehaviour
 			return;
 		}
 
-		Vector2 targetVelocity = helpDirection * currentHelpStrength * help.Strength;
+		Vector2 targetVelocity = helpDirection * currentHelpStrength * ejectionStrength;
 		currentHelpStrength -= help.Loss;
 
 		body.velocity = targetVelocity;
@@ -205,30 +206,31 @@ public class Player : MonoBehaviour
 
 	// ACTIONS
 
-	public void PullMe(Player otherPlayer)
+	public void PullMe(Player otherPlayer, float strength)
 	{
 		helpDirection = (otherPlayer.transform.position - transform.position).normalized;
-		ActivateBoost();
+		ActivateBoost(strength);
 	}
 
-	public void PushMe(Player otherPlayer)
+	public void PushMe(Player otherPlayer, float strength)
 	{
 		helpDirection = (transform.position - otherPlayer.transform.position).normalized;
-		ActivateBoost();
+		ActivateBoost(strength);
 	}
 
 	/// <summary>
 	/// Lance le joueur vers le haut.
 	/// </summary>
-	public void PullUp()
-    {
-		helpDirection = Vector3.up;
-		ActivateBoost();
-	}
+	// public void PullUp()
+    // {
+	// 	helpDirection = Vector3.up;
+	// 	ActivateBoost();
+	// }
 
-	private void ActivateBoost()
+	private void ActivateBoost(float strength)
 	{
-		currentHelpStrength = 1f;
+		ejectionStrength = strength;
+		currentHelpStrength = 1;
 		State = PlayerState.Boost;
 		help.SetAvailable();
 		sound.HelpedSound();
