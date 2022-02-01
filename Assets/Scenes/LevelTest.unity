@@ -316,6 +316,7 @@ GameObject:
   - component: {fileID: 519420029}
   - component: {fileID: 519420030}
   - component: {fileID: 519420033}
+  - component: {fileID: 519420034}
   m_Layer: 7
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -352,7 +353,7 @@ MonoBehaviour:
   m_AssetsPPU: 8
   m_RefResolutionX: 640
   m_RefResolutionY: 360
-  m_UpscaleRT: 0
+  m_UpscaleRT: 1
   m_PixelSnapping: 1
   m_CropFrameX: 0
   m_CropFrameY: 0
@@ -384,7 +385,7 @@ Camera:
   far clip plane: 5000
   field of view: 40
   orthographic: 1
-  orthographic size: 33.75
+  orthographic size: -20.559998
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -423,6 +424,21 @@ Skybox:
   m_GameObject: {fileID: 519420028}
   m_Enabled: 1
   m_CustomSkybox: {fileID: 2100000, guid: dfc4fc5d8ce14bf4ab8c3e04e7d6f503, type: 2}
+--- !u!114 &519420034
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 519420028}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aab0e9122b4da22489bc0851381050a6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cam: {fileID: 519420031}
+  boundarySize: {x: 100, y: 117.64}
+  activated: 1
 --- !u!1 &879759974
 GameObject:
   m_ObjectHideFlags: 0
