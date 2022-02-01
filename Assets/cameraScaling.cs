@@ -19,9 +19,9 @@ public class cameraScaling : MonoBehaviour
     {
         if (!activated) return;
 
-        ppc.assetsPPU = Screen.width / tm.size.x;
+        ppc.assetsPPU = Screen.width / tm.size.x * 2;
 
-        Debug.Log((Screen.width > Screen.height) ? 1 : 2);
+        //Debug.Log((Screen.width > Screen.height) ? 1 : 2);
     }
 
 
