@@ -208,6 +208,7 @@ public class BetterCharacterController2D : ICharacterController2D
                 body.velocity = Vector2.zero;
 
             body.AddForce(new Vector2(((wallDirection == WallDirection.Left) ? 1 : -1) * horizontalWallJumpForce * (isCrowned ? crownHorizontalWallJumpMultiplier : 1), wallJumpForce * (isCrowned ? crownWallJumpMultiplier : 1)), ForceMode2D.Impulse);  //Wall Jump
+            OnJump.Invoke();
             jumped = true;
             coyoteTimeLeft = -1; //Set it under 0 so no mistake is made
             jumpBufferTimeLeft = -1;
