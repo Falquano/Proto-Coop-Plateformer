@@ -10080,6 +10080,7 @@ MonoBehaviour:
   baseHelpRadius: 4.2
   helpRadiusDecay: 0.33
   helpRadiusModRecoveryPerSecond: 0.15
+  crownHelpRadiusMultiplier: 1
 --- !u!114 &5218539970189129574
 MonoBehaviour:
   m_ObjectHideFlags: 0

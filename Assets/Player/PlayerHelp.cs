@@ -27,6 +27,7 @@ public class PlayerHelp : MonoBehaviour
     public bool CanHelp => helpAvailable && helpTime >= helpCooldown;
     public float HelpMod { get; set; } = 1f;
     [SerializeField] private float crownHelpRadiusMultiplier = 1f;
+    [SerializeField] private float crownHelpStrengthMultiplier = 1f;
     private void Awake()
     {
         player = GetComponent<Player>();
@@ -56,9 +57,9 @@ public class PlayerHelp : MonoBehaviour
                 //otherPlayer.PullUp();
                 //otherPlayer.HelpMe(this);
                 if (HelpMod >= 1f)
-                    otherPlayer.PushMe(player);
+                    otherPlayer.PushMe(player, (bcc.isCrowned)?Strength * crownHelpStrengthMultiplier:Strength);
                 else
-                    otherPlayer.PullMe(player);
+                    otherPlayer.PullMe(player, (bcc.isCrowned)?Strength * crownHelpStrengthMultiplier:Strength);
 
                 player.State = PlayerState.Moving;
                 helpTime = 0f;
