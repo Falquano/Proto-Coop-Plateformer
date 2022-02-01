@@ -8,6 +8,7 @@ public class PlayerHelp : MonoBehaviour
 	[Space]
 	[SerializeField] private PlayerFXEmitter FX;
 	private Player player;
+	private BetterCharacterController2D bcc;
 
 	[Header("Values")]
 	[Space]
@@ -25,20 +26,21 @@ public class PlayerHelp : MonoBehaviour
 	private float helpTime = 10f;
 	public bool CanHelp => helpAvailable && helpTime >= helpCooldown;
 	public float HelpMod { get; set; } = 1f;
-
+	[SerializeField] private float crownHelpRadiusMultiplier = 1f;
 	private void Awake()
 	{
 		player = GetComponent<Player>();
+		bcc = GetComponent<BetterCharacterController2D>();
 		if (FX == null)
 			FX = GetComponent<PlayerFXEmitter>();
 
-		FX.UpdateHelpScale(helpRadius);
+		FX.UpdateHelpScale(helpRadius*((bcc.isCrowned)?crownHelpRadiusMultiplier:1));
 	}
 
 	private void Update()
 	{
 		helpRadiusMod = Mathf.Clamp(helpRadiusMod + helpRadiusModRecoveryPerSecond * Time.deltaTime, 0f, 1f);
-		FX.UpdateHelpScale(helpRadius); // Mise � jour de la taille du cercle
+		FX.UpdateHelpScale(helpRadius*((bcc.isCrowned)?crownHelpRadiusMultiplier:1)); // Mise � jour de la taille du cercle
 		helpTime += Time.deltaTime;
 	}
 
@@ -49,7 +51,7 @@ public class PlayerHelp : MonoBehaviour
 			if (otherPlayer.Equals(player))
 				continue;
 
-			if (Vector2.Distance(transform.position, otherPlayer.transform.position) <= helpRadius)
+			if (Vector2.Distance(transform.position, otherPlayer.transform.position) <= helpRadius*((bcc.isCrowned)?crownHelpRadiusMultiplier:1))
 			{
 				//otherPlayer.PullUp();
 				//otherPlayer.HelpMe(this);
