@@ -14,3 +14,7 @@
 [LOG] PlaybackSystem::init                     : done
 [LOG] Thread::initThread                       : Init FMOD Studio bank load thread. Affinity: 0x4000000000000003, Priority: 0xFFFF7FFD, Stack Size: 98304, Semaphore: No, Sleep Time: 1, Looping: No.
 [LOG] Manager::init                            : done.
+[LOG] Manager::readBank                        : fileversion = 141, compatVersion = 140 (oldest = 44, newest = 141)
+[LOG] Manager::readBank                        : fileversion = 141, compatVersion = 140 (oldest = 44, newest = 141)
+[LOG] Manager::readBank                        : fileversion = 141, compatVersion = 140 (oldest = 44, newest = 141)
+[LOG] PlaybackSystem::acquireMasterBus         : Setting master channel group format to 6

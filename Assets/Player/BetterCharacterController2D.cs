@@ -64,6 +64,7 @@ public class BetterCharacterController2D : ICharacterController2D
     float regularGravityScale = 0;
     [SerializeField] float timeBeforeWallGrabStopInSeconds = 3f;
     float currentTimeBeforeWallGrabStop = -1;
+    bool isDirWallSameAsControllerDir;
 
 
     [Header("Velocity cancels")]
@@ -131,6 +132,7 @@ public class BetterCharacterController2D : ICharacterController2D
 
     private void Update()
     {
+        isDirWallSameAsControllerDir = (wallDirection == WallDirection.Left && HorizontalMovement < 0) || (wallDirection == WallDirection.Right && HorizontalMovement > 0);
         isBoostState = (player.State == PlayerState.Boost);
         isOfferingState = (player.State == PlayerState.OfferingHelp);
 
@@ -200,7 +202,7 @@ public class BetterCharacterController2D : ICharacterController2D
             coyoteTimeLeft = -1; //Set it under 0 so no mistake is made
             jumpBufferTimeLeft = -1;
         }
-        else if (!IsGrounded && jumpBufferTimeLeft >= 0 && !jumped && IsOnWall)
+        else if (!IsGrounded && jumpBufferTimeLeft >= 0 && !jumped && IsOnWall && isDirWallSameAsControllerDir)
         {
             if (cancelWhenWallJump)
                 body.velocity = Vector2.zero;
@@ -234,7 +236,6 @@ public class BetterCharacterController2D : ICharacterController2D
             isFastFalling = false;
         }
 
-        var isDirWallSameAsControllerDir = (wallDirection == WallDirection.Left && HorizontalMovement < 0) || (wallDirection == WallDirection.Right && HorizontalMovement > 0);
 
         if (!(!isDirWallSameAsControllerDir && currentTimeBeforeWallGrabStop > 0 && IsOnWall))
             currentTimeBeforeWallGrabStop -= Time.deltaTime;
