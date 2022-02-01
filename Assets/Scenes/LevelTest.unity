@@ -438,9 +438,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cam: {fileID: 519420031}
   ppc: {fileID: 519420030}
-  boundarySize: {x: 122, y: 68}
+  boundarySize: {x: 100, y: 117.64}
   activated: 1
   tm: {fileID: 2034361891}
+  zoom: 2
 --- !u!1 &879759974
 GameObject:
   m_ObjectHideFlags: 0

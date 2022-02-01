@@ -11,6 +11,8 @@ public class cameraScaling : MonoBehaviour
     [SerializeField] Vector2 boundarySize;
     [SerializeField] bool activated = true;
     [SerializeField] Tilemap tm;
+    [SerializeField] float zoom;
+
 
     /// <summary>
     /// Update is called every frame, if the MonoBehaviour is enabled.
@@ -19,7 +21,7 @@ public class cameraScaling : MonoBehaviour
     {
         if (!activated) return;
 
-        ppc.assetsPPU = Screen.width / tm.size.x * 2;
+        ppc.assetsPPU = (int) (Screen.width / tm.size.x * zoom);
 
         //Debug.Log((Screen.width > Screen.height) ? 1 : 2);
     }
