@@ -9870,6 +9870,7 @@ GameObject:
   - component: {fileID: 8707017243973070237}
   - component: {fileID: 5478215713898102289}
   - component: {fileID: 5478215713898102288}
+  - component: {fileID: 1812939087537107150}
   m_Layer: 3
   m_Name: Player
   m_TagString: Player
@@ -9918,7 +9919,6 @@ MonoBehaviour:
   characterController: {fileID: 5218539970189129574}
   animator: {fileID: 8707017243973070237}
   crown: {fileID: 8436896029188979214}
-  stepTime: 0.3
 --- !u!114 &5478215713898102295
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10081,6 +10081,7 @@ MonoBehaviour:
   helpRadiusDecay: 0.33
   helpRadiusModRecoveryPerSecond: 0.15
   crownHelpRadiusMultiplier: 1
+  crownHelpStrengthMultiplier: 1
 --- !u!114 &5218539970189129574
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10181,6 +10182,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb1f24809830248448e1c1d74fb65f31, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  stepTime: 0.6
 --- !u!114 &8707017243973070237
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10244,6 +10246,36 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.95, y: 0.98}
   m_EdgeRadius: 0
+--- !u!114 &1812939087537107150
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5478215713898102318}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CollisionTag: 
+  EventReference:
+    Guid:
+      Data1: 50419307
+      Data2: 1294562697
+      Data3: 1040021148
+      Data4: -1901968964
+    Path: event:/updated SD/wallSlide
+  Event: 
+  PlayEvent: 1
+  StopEvent: 2
+  AllowFadeout: 1
+  TriggerOnce: 0
+  Preload: 0
+  Params: []
+  OverrideAttenuation: 0
+  OverrideMinDistance: 1
+  OverrideMaxDistance: 20
 --- !u!1 &5478215714746086248
 GameObject:
   m_ObjectHideFlags: 0
