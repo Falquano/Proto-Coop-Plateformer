@@ -5,21 +5,21 @@ using UnityEngine;
 public class MusicManagerManager : MonoBehaviour
 {
 	private FMOD.Studio.EventInstance music;
-	bool hasAKing = false;
+	float hasAKing;
 	PlayerManager playerManager;
 
 	private void Start()
 	{
 		if (playerManager == null)
-			playerManager = GameObject.Find("@Player Manager").GetComponent<PlayerManager>();
+		playerManager = GameObject.Find("@Player Manager").GetComponent<PlayerManager>();
 		music = FMODUnity.RuntimeManager.CreateInstance("event:/updated SD/Music");
 		music.start();
 	}
 
     private void Update()
     {
-		//music.setParameterByName("kingPresence", laVariableIsCrowned);
-
+		hasAKing = UpdateKing() ? 1f : 0f;
+		music.setParameterByName("kingPresence", hasAKing);
 	}
 
 	bool UpdateKing()
