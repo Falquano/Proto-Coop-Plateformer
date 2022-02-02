@@ -19,7 +19,7 @@ public class Player : MonoBehaviour
 	[SerializeField] private PlayerFXEmitter fx;
 	[SerializeField] private PlayerHelp help;
 	[SerializeField] private GameObject model;
-	[SerializeField] private ICharacterController2D characterController;
+	[SerializeField] public ICharacterController2D characterController {get; private set;}
 	[SerializeField] private PlayerAnimator animator;
 	[SerializeField] private GameObject crown;
 
