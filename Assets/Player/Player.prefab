@@ -10183,6 +10183,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stepTime: 0.6
+  wallSlideEmitter: {fileID: 1812939087537107150}
 --- !u!114 &8707017243973070237
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10272,7 +10273,9 @@ MonoBehaviour:
   AllowFadeout: 1
   TriggerOnce: 0
   Preload: 0
-  Params: []
+  Params:
+  - Name: isSliding
+    Value: 0
   OverrideAttenuation: 0
   OverrideMinDistance: 1
   OverrideMaxDistance: 20

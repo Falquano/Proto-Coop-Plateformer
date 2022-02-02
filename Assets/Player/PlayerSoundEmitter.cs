@@ -12,6 +12,8 @@ public class PlayerSoundEmitter : MonoBehaviour
 	[SerializeField] private float stepTime = .6f;
 	private float stepTimer;
 
+	[SerializeField] private FMODUnity.StudioEventEmitter wallSlideEmitter;
+
 	private void Start()
     {
 		characterController = GetComponent<ICharacterController2D>();
@@ -33,9 +35,11 @@ public class PlayerSoundEmitter : MonoBehaviour
 			stepTimer = 0f;
 			if (characterController.IsWalking)
 				StepSound();
-			else if (characterController.IsWallSliding)
-				WallSlideSound();
+			/*else if (characterController.IsWallSliding)
+				WallSlideSound();*/
 		}
+
+		wallSlideEmitter.SetParameter("isSliding", characterController.IsWallSliding ? 0f : 1f);
 	}
 
     public void StepSound()
@@ -63,11 +67,11 @@ public class PlayerSoundEmitter : MonoBehaviour
 		FMODUnity.RuntimeManager.PlayOneShot("event:/updated SD/betterLanding");
 	}
 
-	public void WallSlideSound()
+	/*public void WallSlideSound()
 	{
 		FMODUnity.RuntimeManager.PlayOneShot("event:/updated SD/wallSlide");
 		Debug.Log("SCRRRRRRRRR");
-	}
+	}*/
 
 	public void CrownHarvestSound()
     {

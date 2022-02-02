@@ -48,7 +48,7 @@ MonoBehaviour:
   Is3D: 0
   IsOneShot: 1
   Parameters:
-  - {fileID: 6872243060754096549}
+  - {fileID: 2970464144640141620}
   MinDistance: 1
   MaxDistance: 20
   Length: 400
@@ -75,7 +75,8 @@ MonoBehaviour:
   IsStream: 0
   Is3D: 0
   IsOneShot: 0
-  Parameters: []
+  Parameters:
+  - {fileID: -531955857035420608}
   MinDistance: 1
   MaxDistance: 20
   Length: 3692
@@ -130,7 +131,7 @@ MonoBehaviour:
   Is3D: 0
   IsOneShot: 0
   Parameters:
-  - {fileID: -7914036252756389673}
+  - {fileID: 2649953111908395440}
   MinDistance: 1
   MaxDistance: 20
   Length: 92200
@@ -209,7 +210,7 @@ MonoBehaviour:
   Is3D: 0
   IsOneShot: 1
   Parameters:
-  - {fileID: 7610228730905596139}
+  - {fileID: 6352224766146719690}
   MinDistance: 1
   MaxDistance: 20
   Length: 3200
@@ -303,10 +304,10 @@ MonoBehaviour:
   Path: Assets/FMOD/fmod_buddyproject/Build/Desktop/Master.bank
   Name: Master
   StudioPath: bank:/Master
-  lastModified: 637793512300000000
+  lastModified: 637794084104457452
   FileSizes:
   - Name: Desktop
-    Value: 975040
+    Value: 975456
   Exists: 1
 --- !u!114 &-3220495102944513287
 MonoBehaviour:
@@ -431,6 +432,54 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 800
+--- !u!114 &-531955857035420608
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/wallSlide/isSliding
+  m_EditorClassIdentifier: 
+  Name: isSliding
+  StudioPath: 
+  Min: 0
+  Max: 1
+  Default: 0
+  ID:
+    data1: 0
+    data2: 0
+  Type: 0
+  IsGlobal: 0
+  Labels: []
+  Exists: 1
+--- !u!114 &-461267519266551689
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/betterLanding/PlayersNumber
+  m_EditorClassIdentifier: 
+  Name: PlayersNumber
+  StudioPath: 
+  Min: 1
+  Max: 6
+  Default: 1
+  ID:
+    data1: 0
+    data2: 0
+  Type: 0
+  IsGlobal: 0
+  Labels: []
+  Exists: 1
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -464,8 +513,56 @@ MonoBehaviour:
   - {fileID: -3666191915142273053}
   StringsBanks:
   - {fileID: 8942703926195992588}
-  cacheTime: 637793512300000000
+  cacheTime: 637794084104457452
   cacheVersion: 9
+--- !u!114 &2649953111908395440
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/Music/kingPresence
+  m_EditorClassIdentifier: 
+  Name: kingPresence
+  StudioPath: 
+  Min: 0
+  Max: 1
+  Default: 0
+  ID:
+    data1: 0
+    data2: 0
+  Type: 0
+  IsGlobal: 0
+  Labels: []
+  Exists: 1
+--- !u!114 &2970464144640141620
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/betterWalk/PlayersNumber
+  m_EditorClassIdentifier: 
+  Name: PlayersNumber
+  StudioPath: 
+  Min: 1
+  Max: 6
+  Default: 1
+  ID:
+    data1: 0
+    data2: 0
+  Type: 0
+  IsGlobal: 0
+  Labels: []
+  Exists: 1
 --- !u!114 &3166733002870704942
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -544,6 +641,30 @@ MonoBehaviour:
   IsGlobal: 0
   Labels: []
   Exists: 0
+--- !u!114 &6352224766146719690
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/betterJump/PlayersNumber
+  m_EditorClassIdentifier: 
+  Name: PlayersNumber
+  StudioPath: 
+  Min: 1
+  Max: 6
+  Default: 1
+  ID:
+    data1: 0
+    data2: 0
+  Type: 0
+  IsGlobal: 0
+  Labels: []
+  Exists: 1
 --- !u!114 &6541571083500231165
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -568,7 +689,7 @@ MonoBehaviour:
   Is3D: 0
   IsOneShot: 1
   Parameters:
-  - {fileID: -4887326100966091052}
+  - {fileID: -461267519266551689}
   MinDistance: 1
   MaxDistance: 20
   Length: 3200
@@ -686,8 +807,8 @@ MonoBehaviour:
   Path: Assets/FMOD/fmod_buddyproject/Build/Desktop/Master.strings.bank
   Name: Master.strings
   StudioPath: bank:/Master.strings
-  lastModified: 637793512300000000
+  lastModified: 637794084104457452
   FileSizes:
   - Name: Desktop
-    Value: 1368
+    Value: 1408
   Exists: 1
