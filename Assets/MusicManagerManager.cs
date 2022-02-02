@@ -24,7 +24,6 @@ public class MusicManagerManager : MonoBehaviour
 
 	bool UpdateKing()
 	{
-		var x = false;
 		foreach(Player p in playerManager.Players)
 		{
 			if(p.characterController.IsCrowned)
