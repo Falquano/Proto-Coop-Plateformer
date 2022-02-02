@@ -441,7 +441,7 @@ MonoBehaviour:
   boundarySize: {x: 100, y: 117.64}
   activated: 1
   tm: {fileID: 2034361891}
-  zoom: 2
+  zoom: 0.94
 --- !u!1 &879759974
 GameObject:
   m_ObjectHideFlags: 0
