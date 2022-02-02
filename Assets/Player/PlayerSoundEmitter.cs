@@ -6,7 +6,7 @@ public class PlayerSoundEmitter : MonoBehaviour
 {
 	private ICharacterController2D characterController;
 
-    private void Start()
+	private void Start()
     {
 		characterController = GetComponent<ICharacterController2D>();
 
