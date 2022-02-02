@@ -7,14 +7,104 @@
 [LOG] OutputWASAPI::init                       : Output buffer size: 4096 samples, latency: 0.00ms, period: 10.00ms, DSP buffer: 1024 * 4
 [LOG] Thread::initThread                       : Init FMOD stream thread. Affinity: 0x4000000000000003, Priority: 0xFFFF7FFB, Stack Size: 98304, Semaphore: No, Sleep Time: 10, Looping: Yes.
 [LOG] Thread::initThread                       : Init FMOD mixer thread. Affinity: 0x4000000000000001, Priority: 0xFFFF7FFA, Stack Size: 81920, Semaphore: No, Sleep Time: 0, Looping: Yes.
-[LOG] AsyncManager::init                       : manager 00000232712D0EB8 isAsync 0 updatePeriod 0.02
+[LOG] AsyncManager::init                       : manager 000002326CD6ECF8 isAsync 0 updatePeriod 0.02
 [LOG] AsyncManager::init                       : done
 [LOG] PlaybackSystem::init                     : 
 [LOG] Thread::initThread                       : Init FMOD Studio sample load thread. Affinity: 0x4000000000000003, Priority: 0xFFFF7FFD, Stack Size: 98304, Semaphore: No, Sleep Time: 1, Looping: No.
 [LOG] PlaybackSystem::init                     : done
 [LOG] Thread::initThread                       : Init FMOD Studio bank load thread. Affinity: 0x4000000000000003, Priority: 0xFFFF7FFD, Stack Size: 98304, Semaphore: No, Sleep Time: 1, Looping: No.
 [LOG] Manager::init                            : done.
-[LOG] Manager::readBank                        : fileversion = 141, compatVersion = 140 (oldest = 44, newest = 141)
-[LOG] Manager::readBank                        : fileversion = 141, compatVersion = 140 (oldest = 44, newest = 141)
-[LOG] Manager::readBank                        : fileversion = 141, compatVersion = 140 (oldest = 44, newest = 141)
-[LOG] PlaybackSystem::acquireMasterBus         : Setting master channel group format to 6
+[LOG] SystemI::createSoundInternal             : Create name='', mode=0x02000202
+[LOG] SystemI::createSoundInternal             : exinfo->cbsize             = 224
+[LOG] SystemI::createSoundInternal             : exinfo->length             = 955232
+[LOG] SystemI::createSoundInternal             : exinfo->fileoffset         = 19808
+[LOG] SystemI::createSoundInternal             : exinfo->numsubsounds       = 1
+[LOG] SystemI::createSoundInternal             : exinfo->inclusionlist      = 000000A7983EF488
+[LOG] SystemI::createSoundInternal             : exinfo->inclusionlistnum   = 1
+[LOG] SystemI::createSoundInternal             : exinfo->suggestedsoundtype = 5
+[LOG] SystemI::createSoundInternal             : exinfo->useropen           = 00007FFBF553F920
+[LOG] SystemI::createSoundInternal             : exinfo->userclose          = 00007FFBF553F8F0
+[LOG] SystemI::createSoundInternal             : exinfo->userread           = 00007FFBF553F9F0
+[LOG] SystemI::createSoundInternal             : exinfo->userseek           = 00007FFBF553FAB0
+[LOG] SystemI::createSoundInternal             : exinfo->fileuserdata       = 000002326DC20688
+[LOG] SystemI::createSoundInternal             : exinfo->initialseekpostype = 1
+[LOG] SystemI::DSPCodecPoolRegister            : register codec pool for pool type 5
+[LOG] SystemI::createSoundInternal             : Sample 0/1: name='FB_BetterLanding', format=5, channels=2, frequency=48000, lengthbytes=12864, lengthpcm=153600, pcmblocksize=0, loopstart=0, loopend=0, mode=0x00000000, channelmask=0x00000000, channelorder=0, peakvolume=0.106110.
+[LOG] SystemI::createSoundInternal             : Create name='', mode=0x02000202
+[LOG] SystemI::createSoundInternal             : exinfo->cbsize             = 224
+[LOG] SystemI::createSoundInternal             : exinfo->length             = 955232
+[LOG] SystemI::createSoundInternal             : exinfo->fileoffset         = 19808
+[LOG] SystemI::createSoundInternal             : exinfo->numsubsounds       = 1
+[LOG] SystemI::createSoundInternal             : exinfo->inclusionlist      = 000000A7983EF488
+[LOG] SystemI::createSoundInternal             : exinfo->inclusionlistnum   = 1
+[LOG] SystemI::createSoundInternal             : exinfo->suggestedsoundtype = 5
+[LOG] SystemI::createSoundInternal             : exinfo->useropen           = 00007FFBF553F920
+[LOG] SystemI::createSoundInternal             : exinfo->userclose          = 00007FFBF553F8F0
+[LOG] SystemI::createSoundInternal             : exinfo->userread           = 00007FFBF553F9F0
+[LOG] SystemI::createSoundInternal             : exinfo->userseek           = 00007FFBF553FAB0
+[LOG] SystemI::createSoundInternal             : exinfo->fileuserdata       = 000002326782B108
+[LOG] SystemI::createSoundInternal             : exinfo->initialseekpostype = 1
+[LOG] SystemI::DSPCodecPoolRegister            : register codec pool for pool type 5
+[LOG] SystemI::createSoundInternal             : Sample 0/1: name='FB_BetterJump2', format=5, channels=2, frequency=48000, lengthbytes=4288, lengthpcm=153600, pcmblocksize=0, loopstart=0, loopend=0, mode=0x00000000, channelmask=0x00000000, channelorder=0, peakvolume=0.005615.
+[LOG] SystemI::createSound                     : filename = Assets/FMOD/fmod_buddyproject/Build/Desktop/Master.bank : mode 02010082
+[LOG] SystemI::createSound                     : FMOD_NONBLOCKING specified.  Putting into queue to be opened asynchronously!
+[LOG] Thread::initThread                       : Init FMOD nonblocking thread (0). Affinity: 0x4000000000000003, Priority: 0xFFFF7FFC, Stack Size: 114688, Semaphore: Yes, Sleep Time: 0, Looping: Yes.
+[LOG] SystemI::createSound                     : setdata soundi = 00000234D63D1038 : node = 0000023405C894D0
+[LOG] SystemI::createSound                     : add node to async list : head = 000002326AEBF398.  list count = 0
+[LOG] AsyncThread::threadFunc                  : Starting Asynchronous operation on sound 00000234D63D1038
+[LOG] SystemI::createSoundInternal             :     Create name='Assets/FMOD/fmod_buddyproject/Build/Desktop/Master.bank', mode=0x02010082
+[LOG] SystemI::createSound                     :     filename = Assets/FMOD/fmod_buddyproject/Build/Desktop/Master.bank : mode 02010082
+[LOG] SystemI::createSoundInternal             :     exinfo->cbsize             = 224
+[LOG] SystemI::createSound                     :     FMOD_NONBLOCKING specified.  Putting into queue to be opened asynchronously!
+[LOG] SystemI::createSoundInternal             :     exinfo->length             = 955232
+[LOG] SystemI::createSound                     :     setdata soundi = 00000234D63D0618 : node = 0000023405C89890
+[LOG] SystemI::createSoundInternal             :     exinfo->fileoffset         = 19808
+[LOG] SystemI::createSound                     :     add node to async list : head = 000002326AEBF398.  list count = 0
+[LOG] SystemI::createSoundInternal             :     exinfo->numsubsounds       = 1
+[LOG] SystemI::createSoundInternal             :     exinfo->inclusionlist      = 0000023405C895E0
+[LOG] SystemI::createSoundInternal             :     exinfo->inclusionlistnum   = 1
+[LOG] SystemI::createSoundInternal             :     exinfo->suggestedsoundtype = 5
+[LOG] SystemI::createSoundInternal             :     exinfo->initialseekpostype = 1
+[LOG] SystemI::createSoundInternal             :     Stream 0/1: name='Music_NormalLoop', format=5, channels=2, frequency=48000, lengthbytes=409216, lengthpcm=1843200, pcmblocksize=0, loopstart=0, loopend=0, mode=0x00000000, channelmask=0x00000000, channelorder=0, peakvolume=0.766846.
+[LOG] Thread::initThread                       :     Init FMOD file thread. Affinity: 0x4000000000000003, Priority: 0xFFFF7FFC, Stack Size: 65536, Semaphore: No, Sleep Time: 10, Looping: Yes.
+[LOG] AsyncThread::threadFunc                  : Finished Asynchronous operation on sound 00000234D63D1038
+[LOG] AsyncThread::threadFunc                  : Starting Asynchronous operation on sound 00000234D63D0618
+[LOG] SystemI::createSoundInternal             :     Create name='Assets/FMOD/fmod_buddyproject/Build/Desktop/Master.bank', mode=0x02010082
+[LOG] SystemI::createSoundInternal             :     exinfo->cbsize             = 224
+[LOG] SystemI::createSoundInternal             :     exinfo->length             = 955232
+[LOG] SystemI::createSoundInternal             :     exinfo->fileoffset         = 19808
+[LOG] SystemI::createSoundInternal             :     exinfo->numsubsounds       = 1
+[LOG] SystemI::createSoundInternal             :     exinfo->inclusionlist      = 0000023405C899A0
+[LOG] SystemI::createSoundInternal             :     exinfo->inclusionlistnum   = 1
+[LOG] SystemI::createSoundInternal             :     exinfo->suggestedsoundtype = 5
+[LOG] SystemI::createSoundInternal             :     exinfo->initialseekpostype = 1
+[LOG] SystemI::createSoundInternal             :     Stream 0/1: name='Music_NormalLoop', format=5, channels=2, frequency=48000, lengthbytes=409216, lengthpcm=1843200, pcmblocksize=0, loopstart=0, loopend=0, mode=0x00000000, channelmask=0x00000000, channelorder=0, peakvolume=0.766846.
+[LOG] AsyncThread::threadFunc                  : Finished Asynchronous operation on sound 00000234D63D0618
+[LOG] SoundI::release                          : Music_NormalLoop (00000234D63D0618)
+[LOG] SoundI::release                          :     Music_NormalLoop (00000234CA2542F8)
+[LOG] SoundI::release                          :     Music_NormalLoop (00000234CA612A38)
+[LOG] SoundI::release                          : Music_NormalLoop (00000234D63D1038)
+[LOG] SoundI::release                          :     Music_NormalLoop (00000234CA256ED8)
+[LOG] SoundI::release                          :     Music_NormalLoop (00000234CA612018)
+[LOG] SoundI::release                          :  (00000234064B3CD8)
+[LOG] SoundI::release                          :     FB_BetterJump2 (00000234CA254CB8)
+[LOG] SoundI::release                          :  (00000234064B0638)
+[LOG] SoundI::release                          :     Music_Calm2Nrv31 (00000234CA24B3F8)
+[LOG] SoundI::release                          :  (00000234064B2B98)
+[LOG] SoundI::release                          :     Music_Calm2Nrv23 (00000234CA24ABD8)
+[LOG] SoundI::release                          :  (00000234064B4858)
+[LOG] SoundI::release                          :     Music_Intro (00000234CA24B258)
+[LOG] SoundI::release                          :  (00000234064B1A58)
+[LOG] SoundI::release                          :     Music_Calm2Nrv12 (00000234CA24BC18)
+[LOG] SoundI::release                          :  (00000234064B39F8)
+[LOG] SoundI::release                          :     FB_BetterLanding (00000234CA250BB8)
+[LOG] Thread::callback                         : FMOD Studio update thread finished.
+[LOG] Thread::callback                         : FMOD Studio bank load thread finished.
+[LOG] Profile::disconnectAll                   : Profiler disconnecting all clients
+[LOG] Thread::callback                         : FMOD Studio sample load thread finished.
+[LOG] LiveUpdate::release                      : 
+[LOG] LiveUpdate::reset                        : Reset connection (reason Disconnected)
+[LOG] Thread::callback                         : FMOD stream thread finished.
+[LOG] Thread::callback                         : FMOD mixer thread finished.
+[LOG] Profile::disconnectAll                   : Profiler disconnecting all clients
+[LOG] SystemI::close                           : Closed.
