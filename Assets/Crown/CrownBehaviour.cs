@@ -47,7 +47,7 @@ public class CrownBehaviour : MonoBehaviour
 
     void Catch(GameObject C)
     {
-        C.GetComponent<BetterCharacterController2D>().isCrowned = true;
+        C.GetComponent<BetterCharacterController2D>().IsCrowned = true;
         C.GetComponent<BetterCharacterController2D>().crownGO = gameObject;
         C.GetComponent<Player>().SetCrown(true);
         gameObject.SetActive(false);

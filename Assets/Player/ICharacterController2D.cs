@@ -19,6 +19,7 @@ public abstract class ICharacterController2D : MonoBehaviour
     /// Indique si le personnage est sur le sol ou sur un autre joueur.
     /// </summary>
     public bool IsGrounded { get; protected set; }
+    public bool IsWallSliding {get; protected set;}
     /// <summary>
     /// Indique si le joueur était sur le sol ou sur un autre joueur lors de la dernière frame.
     /// </summary>
@@ -72,7 +73,7 @@ public abstract class ICharacterController2D : MonoBehaviour
     /// Indique si le joueur était sur un mur ou non lors de la dernière frame.
     /// </summary>
     public bool WasOnWall { get; protected set; }
-    public bool isCrowned { get; set;}
+    public bool IsCrowned { get; set;}
 }
 
 public enum CollisionType

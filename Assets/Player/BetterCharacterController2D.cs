@@ -97,7 +97,7 @@ public class BetterCharacterController2D : ICharacterController2D
     [SerializeField] float crownWallJumpMultiplier = 1f;
     [SerializeField] float crownHorizontalWallJumpMultiplier = 1f;
     bool wasCrowned = false;
-    public GameObject crownGO {set;get;}
+    public GameObject crownGO { set; get; }
 
     [Header("Stun")]
     [SerializeField] float stunTimeInSecond;
@@ -145,9 +145,9 @@ public class BetterCharacterController2D : ICharacterController2D
         if (!wasOfferingState && isOfferingState)
             timeSinceLastOffering = techableWindowTimeSinceLastOffering;
 
-        if (wasCrowned != isCrowned)
+        if (wasCrowned != IsCrowned)
         {
-            Debug.Log(isCrowned ? "Couronné" : "A perdu la couronne");
+            Debug.Log(IsCrowned ? "Couronné" : "A perdu la couronne");
         }
 
         List<ContactPoint2D> other = new List<ContactPoint2D>();
@@ -161,7 +161,7 @@ public class BetterCharacterController2D : ICharacterController2D
         if (!isStunned) UpdateJump();
 
         previousHorizontalMovement = HorizontalMovement;
-        wasCrowned = isCrowned;
+        wasCrowned = IsCrowned;
         wasBoostState = isBoostState;
         wasOfferingState = isOfferingState;
     }
@@ -196,7 +196,7 @@ public class BetterCharacterController2D : ICharacterController2D
             if (coyoteTimeLeft >= 0)
                 body.velocity = new Vector2(body.velocity.x, 0);
 
-            body.AddForce(new Vector2(HorizontalMovement * horizontalJumpForce * (isCrowned ? crownHorizontalJumpMultiplier : 1), jumpForce * (isCrowned ? crownJumpMultiplier : 1)), ForceMode2D.Impulse); //Jump
+            body.AddForce(new Vector2(HorizontalMovement * horizontalJumpForce * (IsCrowned ? crownHorizontalJumpMultiplier : 1), jumpForce * (IsCrowned ? crownJumpMultiplier : 1)), ForceMode2D.Impulse); //Jump
             OnJump.Invoke();
             jumped = true;
             coyoteTimeLeft = -1; //Set it under 0 so no mistake is made
@@ -207,7 +207,8 @@ public class BetterCharacterController2D : ICharacterController2D
             if (cancelWhenWallJump)
                 body.velocity = Vector2.zero;
 
-            body.AddForce(new Vector2(((wallDirection == WallDirection.Left) ? 1 : -1) * horizontalWallJumpForce * (isCrowned ? crownHorizontalWallJumpMultiplier : 1), wallJumpForce * (isCrowned ? crownWallJumpMultiplier : 1)), ForceMode2D.Impulse);  //Wall Jump
+            body.AddForce(new Vector2(((wallDirection == WallDirection.Left) ? 1 : -1) * horizontalWallJumpForce * (IsCrowned ? crownHorizontalWallJumpMultiplier : 1), wallJumpForce * (IsCrowned ? crownWallJumpMultiplier : 1)), ForceMode2D.Impulse);  //Wall Jump
+            OnJump.Invoke();
             jumped = true;
             coyoteTimeLeft = -1; //Set it under 0 so no mistake is made
             jumpBufferTimeLeft = -1;
@@ -248,10 +249,10 @@ public class BetterCharacterController2D : ICharacterController2D
         }
 
         if ((IsGrounded || (!IsGrounded && canMoveInTheAir)) && (!(disableMovementIfOffering) || !(disableMovementIfOffering && isOfferingState)))
-            body.AddForce(new Vector2(HorizontalMovement * (IsGrounded ? groundHorizontalSpeed * (isCrowned ? crownGroundSpeedMultiplier : 1) : airHorizontalSpeed * (isCrowned ? crownAirSpeedMultiplier : 1)) * (isStunned ? stunSpeedMultiplier : 1), 0) * Time.deltaTime, ForceMode2D.Force);
+            body.AddForce(new Vector2(HorizontalMovement * (IsGrounded ? groundHorizontalSpeed * (IsCrowned ? crownGroundSpeedMultiplier : 1) : airHorizontalSpeed * (IsCrowned ? crownAirSpeedMultiplier : 1)) * (isStunned ? stunSpeedMultiplier : 1), 0) * Time.deltaTime, ForceMode2D.Force);
         //CLAMP
         if (isUsingMaxHorizontalSpeed && (!(notUseMaxHorizontalSpeedIfOffering) || (notUseMaxHorizontalSpeedIfOffering && !isOfferingState)))
-            body.velocity = new Vector2(Mathf.Clamp(body.velocity.x, -maxHorizontalSpeed * (isCrowned ? crownMaxSpeedMultiplier : 1), maxHorizontalSpeed * (isCrowned ? crownMaxSpeedMultiplier : 1)), body.velocity.y);
+            body.velocity = new Vector2(Mathf.Clamp(body.velocity.x, -maxHorizontalSpeed * (IsCrowned ? crownMaxSpeedMultiplier : 1), maxHorizontalSpeed * (IsCrowned ? crownMaxSpeedMultiplier : 1)), body.velocity.y);
 
 
 
@@ -276,9 +277,9 @@ public class BetterCharacterController2D : ICharacterController2D
         {
             body.gravityScale = regularGravityScale;
         }
-
+        IsWallSliding = ((body.velocity.y < 0 && IsOnWall && slowDownOnWalls && currentTimeBeforeWallGrabStop < 0) && isDirWallSameAsControllerDir && !IsGrounded);
         //WALL SLIDE
-        if ((body.velocity.y < 0 && IsOnWall && slowDownOnWalls && currentTimeBeforeWallGrabStop < 0) && isDirWallSameAsControllerDir && !IsGrounded)
+        if (IsWallSliding)
         {
             body.velocity = new Vector2(body.velocity.x, Mathf.Clamp(body.velocity.y, (isPlayerOnTop) ? slowDownOnWallsMaxSpeedPlayerOnTop : slowDownOnWallsMaxSpeed, 0f));
         }
@@ -415,7 +416,7 @@ public class BetterCharacterController2D : ICharacterController2D
 
     void strongCollision()
     {
-        isCrowned = false;
+        IsCrowned = false;
         player.SetCrown(false);
         Destroy(crownGO);
         //Ignore strong collision on tech
