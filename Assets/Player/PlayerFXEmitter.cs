@@ -14,6 +14,7 @@ public class PlayerFXEmitter : MonoBehaviour
 	[SerializeField] private GameObject ImpactParticlePrefab;
 	[SerializeField] private ParticleSystem PushParticle;
 	[SerializeField] private ParticleSystem PullParticle;
+	[SerializeField] private GameObject helpParticles;
 
 	[SerializeField] private bool onCollisionParticles = true;
 
@@ -85,6 +86,12 @@ public class PlayerFXEmitter : MonoBehaviour
 	{
 		Instantiate(PullParticle, transform.position, Quaternion.identity);
 	}
+
+	public void OnHelp(Player from, Player to)
+    {
+		GameObject particles = Instantiate(helpParticles, from.transform.position, Quaternion.identity);
+		particles.transform.forward = to.transform.position - from.transform.position;
+    }
 
 	/// <summary>
 	/// Start is called on the frame when a script is enabled just before
