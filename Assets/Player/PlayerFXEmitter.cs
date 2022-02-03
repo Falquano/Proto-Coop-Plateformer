@@ -96,6 +96,8 @@ public class PlayerFXEmitter : MonoBehaviour
 		characterController2D = GetComponent<BetterCharacterController2D>();
 
 		characterController2D.OnCollision.AddListener(OnCollision);
+
+		ResetJumpTrail();
 	}
 
 	private bool wasWalking;
