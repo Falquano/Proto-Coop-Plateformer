@@ -81,7 +81,7 @@ public class Player : MonoBehaviour
 				break;
         }
 
-		UpdateTrail();
+		//UpdateTrail();
 	}
 
     private void UpdateBoost()
@@ -100,7 +100,7 @@ public class Player : MonoBehaviour
 		//characterController.CanJump = false;
 	}
 
-	private void UpdateTrail()
+	/*private void UpdateTrail()
     {
 		if (characterController.WasGrounded && !characterController.IsGrounded)
         {
@@ -109,7 +109,7 @@ public class Player : MonoBehaviour
         {
 			fx.StopJumpTrail();
         }			
-    }
+    }*/
 
     // INPUTS
 

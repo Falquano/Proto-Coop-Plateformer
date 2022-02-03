@@ -21,8 +21,9 @@ public class cameraScaling : MonoBehaviour
     {
         if (!activated) return;
 
-        ppc.assetsPPU = (int) (Screen.width / tm.size.x * zoom);
+        ppc.assetsPPU = (int)(Screen.width / tm.size.x * zoom);
 
+        //Debug.Log($"Screen width : {Screen.width}, Tilemap size : {tm.size.x}, assets ppu : {ppc.assetsPPU}");
         //Debug.Log((Screen.width > Screen.height) ? 1 : 2);
     }
 
@@ -34,6 +35,4 @@ public class cameraScaling : MonoBehaviour
     {
         Gizmos.DrawWireCube(transform.position, new Vector3(boundarySize.x, boundarySize.y, 0));
     }
-
-
 }
