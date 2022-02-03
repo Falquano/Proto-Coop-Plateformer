@@ -22,7 +22,12 @@ public class MusicManagerManager : MonoBehaviour
 		music.setParameterByName("kingPresence", hasAKing);
 	}
 
-	bool UpdateKing()
+    private void OnDestroy()
+    {
+		music.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
+    }
+
+    bool UpdateKing()
 	{
 		foreach(Player p in playerManager.Players)
 		{
