@@ -10169,6 +10169,7 @@ MonoBehaviour:
   ImpactParticlePrefab: {fileID: 3880576406777092154, guid: 6862013d7416be34cb2a6f87a20a3379, type: 3}
   PushParticle: {fileID: 7712990121167260859}
   PullParticle: {fileID: 6658140291502188528}
+  helpParticles: {fileID: 2647905270502021326, guid: dd6e822881135c241af22e9f48701cad, type: 3}
   onCollisionParticles: 0
 --- !u!114 &2694868286265927042
 MonoBehaviour:
